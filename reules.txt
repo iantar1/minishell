@@ -1,0 +1,41 @@
+I. SPLIT YOUR STRING
+
+	1)   >  <  | : 11111
+
+	2)   >> <<   : 22222
+
+	3)   ||   && : 22222
+
+	4)   <> and >< : ask first how they work, and test them.
+
+	5)   " " and ' ' 
+
+	6)    $
+
+	7)    |||... &&&... : 3333 : syntax error
+
+	ls>file||cat file2&&
+	00200002200010000022
+
+II. REMOVE THE QUOTE.
+
+	1) "" ''
+		"hello world" -> hello world
+		'"hi"' -> "hi"
+		""''""hi""'' -> hi
+	2)_here_doc_
+		"hello -> store hello  and shore your here_doc and store any input , and show the output after 
+					typing " which is the limiter.
+		'hello -> the limiter is '
+
+
+
+
+
+
+
+ ------------------------
+| input: fd_infile or 0  |
+|                        | -> it must be in your struct.
+| outpud:fd_outfile or 1 |
+ ------------------------
