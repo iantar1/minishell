@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 09:52:08 by iantar            #+#    #+#             */
-/*   Updated: 2023/02/27 13:10:35 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/07 11:39:13 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ char	**upgrade_split(char *str, char *mark)
 		i++;
 	}
 	ptr[j] = NULL;
-	return (ptr);
+	return (free(mark), ptr);
 }

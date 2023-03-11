@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 13:28:27 by iantar            #+#    #+#             */
-/*   Updated: 2022/10/19 20:00:54 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/07 11:10:37 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 			return ((char *)(haystack + i));
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

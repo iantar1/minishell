@@ -39,3 +39,8 @@ II. REMOVE THE QUOTE.
 |                        | -> it must be in your struct.
 | outpud:fd_outfile or 1 |
  ------------------------
+
+
+ III. EXPANDING:
+
+	1)""  ;  here_doc  ;  ''  ;   "''"   ;   $?   ;   here_doc with "" and ''   ;  

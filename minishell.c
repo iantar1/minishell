@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/03 16:02:02 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:41:13 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ void	show_result(char **buf, t_env *env_no)
 
 	i = -1;
 	printf(" -------------\n");
+	(void)env_no;
 	while (buf[++i])
 	{
-		if (need_expand(buf[i]))
-			printf("cmd:%s\n", expand(&buf[i][1], env_no));
-		else if (closed_quote(buf[i]))
-			printf("cmd:%s\n", remove_quote(buf[i]));
-		else
-			printf("syntax error\n");
+		printf("%s\n", buf[i]);
+		// if (!closed_quote(buf[i]))
+		// 	printf("syntax error\n");
+		// else
+		// {
+		// 	// if (need_expand(buf[i]))
+		// 	// 	expand(&buf, env_no);
+		// 	// else if (closed_quote(buf[i]))
+		// 	// 	printf("cmd:%s\n", remove_quote(buf[i]));
+		// }
 	}
 	printf(" -------------\n");
 }
@@ -59,9 +64,13 @@ int	main(int ac, char *av[], char **env)
 		line = readline("minishell>");
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
-		mark = ft_mark(line);
+		//mark = ft_mark(line);
+		mark = expand_mark(line);
 		buf = upgrade_split(line, mark);
-		show_result(buf, env_no);
+		printf("	  %s\n", mark);
+		//show_result(buf, env_no);
+		if (buf[0])
+			add_history(line);
 		free(mark);
 	}
 	return (0);

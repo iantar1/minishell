@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/03 13:15:52 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:28:34 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ char	*remove_quote(char *str);
 t_env	*create_env(char **env);
 char	*expand(char *key, t_env *head_env);
 int		need_expand(char *str);
+char	*expand_mark(char *str);
 
 #endif
