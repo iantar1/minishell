@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/07 11:53:34 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:51:34 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	need_expand(char *str)
 	return (0);
 }
 
-char	*exp_from_env(char *key, t_env *head_env, char exit_status)
+char	*exp_from_env(char *key, t_env *g_env, char exit_status)
 {
 	int		i;
 	t_env	*tmp;
 
 	i = 0;
-	tmp = head_env;
+	tmp = g_env;
 	while (tmp)
 	{
 		if (!ft_strncmp(key, tmp->var_name, ft_strlen(key)))
@@ -87,18 +87,112 @@ char	*exp_from_env(char *key, t_env *head_env, char exit_status)
 	return (NULL);
 }
 
-char	*ft_expand(char *str, t_env *head_env)
+char	*join_evrything(char **splt)
+{
+	char	*rtn_str;
+	int		len;
+	int		i;
+	int		j;
+
+	len = 0;
+	i = -1;
+	while (splt[++i])
+	{
+		j = -1;
+		while (splt[i][++j])
+			len++;
+	}
+	rtn_str = malloc(len + 1);
+	len = -1;
+	while (splt[++i])
+	{
+		j = -1;
+		while (splt[i][++j])
+			rtn_str[++len] = splt[i][j];
+	}
+	rtn_str[i] = '\0';
+}
+
+char	*ft_expand(char *str, t_env g_env)
 {
 	char	**splt;
-	int		i;
+	t_vars	var;
 
-	i = 0;
+	var.i = -1;
 	splt = upgrade_split(str, expand_mark(str));
-	while (splt[i])
+	while (splt[++(var.i)])
 	{
-		if (need_expand(splt[i]))
+		if (need_expand(splt[var.i]))
 		{
-			 
+			var.j = -1;
+			while (splt[var.i][++j])
+			{
+				if (splt[var.i][var.j] == '$')
+				{
+					var.start = var.j;
+					var.end = len_to_exp(&splt[var.i][var.j]);
+					var.str = splt[var.i];
+					splt[var.i] = ft_change_part(var, get_value(
+								&splt[var.i][var.j + 1], len_to_exp(
+									&splt[var.i][var.j])), &(var.j));
+				}
+			}
 		}
 	}
+	return (join_evrything(splt));
+}
+
+int	len_to_exp(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[i] == '?')
+		return (i);
+	while (ft_isalnum(str[i]))
+		i++;
+	return (i);
+}
+
+char	*get_value(char *key, int len)
+{
+	int		i;
+	t_env	*tmp;
+
+	i = 0;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->var_name, key, len))
+			return (tmp->line);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+char	*ft_change_part(t_vars var, char *value, int *curser)
+{
+	int		new_len;
+	int		i;
+	int		j;
+	char	*rtn_str;
+
+	i = -1;
+	j = -1;
+	if (!value)
+		value = "";
+	new_len = ft_strlen(var.str) - (var.end - var.start + 1) + ft_strlen(value);
+	rtn_str = malloc(new_len + 1);
+	if (!rtn_str)
+		return (NULL);
+	while (++i < var.start)
+		rtn_str[i] = var.str[i];
+	while (++j < (int)ft_strlen(value))
+		rtn_str[i++] = value[j];
+	*curser = i;
+	j = 0;
+	while (var.str[var.end + ++j])
+		rtn_str[i++] = var.str[var.end + j];
+	rtn_str[i] = '\0';
+	free(var.str);
+	return (rtn_str);
 }

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/05 18:28:34 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:48:50 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,21 @@ typedef struct s_env
 {
 	char			*line;
 	char			*var_name;
+	int				exit_status;
+	struct s_env	*head;
 	struct s_env	*next;
 }	t_env;
+
+t_env	*g_env;
+
+typedef struct s_vars
+{
+	char	*str;
+	int		i;
+	int		j;
+	int		start;
+	int		end;
+}	t_vars;
 
 char	**upgrade_split(char *str, char *mark);
 char	*ft_mark(char *str);
@@ -53,5 +66,6 @@ t_env	*create_env(char **env);
 char	*expand(char *key, t_env *head_env);
 int		need_expand(char *str);
 char	*expand_mark(char *str);
+char	*ft_change_part(char *str, char *item, int start, int end);
 
 #endif
