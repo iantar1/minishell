@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/11 11:38:53 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:08:41 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,17 @@ void	show_result(char **buf, t_env *env_no)
 	(void)env_no;
 	while (buf[++i])
 	{
-		printf("%s\n", buf[i]);
-		// if (!closed_quote(buf[i]))
-		// 	printf("syntax error\n");
-		// else
-		// {
-		// 	// if (need_expand(buf[i]))
-		// 	// 	expand(&buf, env_no);
-		// 	// else if (closed_quote(buf[i]))
-		// 	// 	printf("cmd:%s\n", remove_quote(buf[i]));
-		// }
+		if (!closed_quote(buf[i]))
+			printf("syntax error\n");
+		else
+		{
+			printf("result:%s\n", remove_quote(ft_expand(buf[i])));
+			//printf("%s\n", get_value(char *key, int len));
+			// if (need_expand(buf[i]))
+			// 	expand(&buf, env_no);
+			// else if (closed_quote(buf[i]))
+			// 	printf("cmd:%s\n", remove_quote(buf[i]));
+		}
 	}
 	printf(" -------------\n");
 }
@@ -55,23 +56,22 @@ int	main(int ac, char *av[], char **env)
 	char	*line;
 	char	*mark;
 	char	**buf;
-	t_env	*env_no;
 
 	((void)av, (void)ac);
-	env_no = create_env(env);
+	g_env = new_line("?=0");
+	g_env->next = create_env(env);
+	//printf("%s\n", ft_expand("hello$PATH"));
 	while (1)
 	{
 		line = readline("minishell>");
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
-		//mark = ft_mark(line);
-		mark = expand_mark(line);
+		mark = ft_mark(line);
 		buf = upgrade_split(line, mark);
-		printf("	  %s\n", mark);
-		//show_result(buf, env_no);
+		//printf("	  %s\n", mark);
+		show_result(buf, g_env);
 		if (buf[0])
 			add_history(line);
-		free(mark);
 	}
 	return (0);
 }

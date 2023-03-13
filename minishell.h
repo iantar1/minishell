@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/11 22:48:50 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:04:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,17 @@ char	**get_env(char **env);
 char	closed_quote(char *str);
 char	*remove_quote(char *str);
 t_env	*create_env(char **env);
-char	*expand(char *key, t_env *head_env);
+//char	*expand(char *key, t_env *head_env);
 int		need_expand(char *str);
 char	*expand_mark(char *str);
-char	*ft_change_part(char *str, char *item, int start, int end);
+char	*ft_change_part(t_vars var, char *value, int *curser);
+char	*ft_expand(char *str);
+char	*ft_change_part(t_vars var, char *value, int *curser);
+char	*get_value(char *key, int len);
+int		len_to_exp(char *str);
+char	*join_evrything(char **splt);
+char	*exp_from_env(char *key, t_env *g_env);
+int		need_expand(char *str);
+t_env	*new_line(char *line);
 
 #endif

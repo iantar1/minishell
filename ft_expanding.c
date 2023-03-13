@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/11 22:51:34 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/13 14:08:09 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ char	*expand_mark(char *str)
 			check[1]++;
 		if (check[0] % 2 || (!(check[1] % 2) && str[i] == 34))
 			mark[i] = '0';
+		else if (!(check[0] % 2) && !(check[1] % 2) && str[i] != 34 && str[i] != 39)
+			mark[i] = '3';
 		else
 			mark[i] = '2';
 	}
 	mark[i] = '\0';
+	//printf("mark:%s\n", mark);
 	return (mark);
 }
 
@@ -62,16 +65,15 @@ int	need_expand(char *str)
 			check1++;
 		if (str[i] == 39 && !(check1 % 2))
 			check2++;
-		if ((str[i] == '$' && ((check1 % 2 || check2 % 2) || (!(check1 % 2)
-						&& !(check2 % 2)))) && (str[i + 1] == '?' || (str[i + 1]
-					>= 65 && str[i + 1] <= 90)
-				|| (str[i + 1] >= 97 && str[i + 1] <= 122)))
+		if ((str[i] == '$' && ((check1 % 2 && !(check2 % 2)) || (!(check1 % 2)
+						&& !(check2 % 2)))) && (str[i + 1] == '?'
+				|| ft_isalnum(str[i + 1])))
 			return (1);
 	}
 	return (0);
 }
 
-char	*exp_from_env(char *key, t_env *g_env, char exit_status)
+char	*exp_from_env(char *key, t_env *g_env)
 {
 	int		i;
 	t_env	*tmp;
@@ -103,43 +105,18 @@ char	*join_evrything(char **splt)
 			len++;
 	}
 	rtn_str = malloc(len + 1);
+	//printf("len:%d\n", len);
 	len = -1;
+	i = -1;
 	while (splt[++i])
 	{
 		j = -1;
+		//printf("hnna:%s\n", splt[i]);
 		while (splt[i][++j])
 			rtn_str[++len] = splt[i][j];
 	}
-	rtn_str[i] = '\0';
-}
-
-char	*ft_expand(char *str, t_env g_env)
-{
-	char	**splt;
-	t_vars	var;
-
-	var.i = -1;
-	splt = upgrade_split(str, expand_mark(str));
-	while (splt[++(var.i)])
-	{
-		if (need_expand(splt[var.i]))
-		{
-			var.j = -1;
-			while (splt[var.i][++j])
-			{
-				if (splt[var.i][var.j] == '$')
-				{
-					var.start = var.j;
-					var.end = len_to_exp(&splt[var.i][var.j]);
-					var.str = splt[var.i];
-					splt[var.i] = ft_change_part(var, get_value(
-								&splt[var.i][var.j + 1], len_to_exp(
-									&splt[var.i][var.j])), &(var.j));
-				}
-			}
-		}
-	}
-	return (join_evrything(splt));
+	rtn_str[++len] = '\0';
+	return (rtn_str);
 }
 
 int	len_to_exp(char *str)
@@ -148,7 +125,7 @@ int	len_to_exp(char *str)
 
 	i = 1;
 	if (str[i] == '?')
-		return (i);
+		return (2);
 	while (ft_isalnum(str[i]))
 		i++;
 	return (i);
@@ -160,9 +137,10 @@ char	*get_value(char *key, int len)
 	t_env	*tmp;
 
 	i = 0;
+	tmp = g_env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var_name, key, len))
+		if (!ft_strncmp(tmp->var_name, key, len))
 			return (tmp->line);
 		tmp = tmp->next;
 	}
@@ -180,7 +158,9 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	j = -1;
 	if (!value)
 		value = "";
-	new_len = ft_strlen(var.str) - (var.end - var.start + 1) + ft_strlen(value);
+	//printf("value:%s\n", value);
+	new_len = ft_strlen(var.str) - (var.end - var.start) + ft_strlen(value);
+	//printf("start:%d, end:%d, new_len:%d\n", var.start, var.end, new_len);
 	rtn_str = malloc(new_len + 1);
 	if (!rtn_str)
 		return (NULL);
@@ -188,11 +168,45 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		rtn_str[i] = var.str[i];
 	while (++j < (int)ft_strlen(value))
 		rtn_str[i++] = value[j];
-	*curser = i;
+	*curser = i - 1;
 	j = 0;
 	while (var.str[var.end + ++j])
 		rtn_str[i++] = var.str[var.end + j];
 	rtn_str[i] = '\0';
 	free(var.str);
 	return (rtn_str);
+}
+
+char	*ft_expand(char *str)
+{
+	char	**splt;
+	t_vars	var;
+
+	var.i = -1;
+	splt = upgrade_split(str, expand_mark(str));
+	while (splt[++(var.i)])
+	{
+		if (need_expand(splt[var.i]))
+		{
+			//printf("need_::%s\n", splt[var.i]);
+			var.j = -1;
+			while (splt[var.i][++(var.j)])
+			{
+				//printf("$:%c\n", splt[var.i][(var.j)]);
+				if (splt[var.i][var.j] == '$')
+				{
+					if (!ft_isalnum(splt[var.i][var.j + 1]) && splt[var.i][var.j + 1] != '?' && ++var.j)
+						continue ;
+					var.start = var.j;
+					//printf("satrt:%d\n", var.start);
+					var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
+					//printf("end:%d\n", var.end);
+					var.str = splt[var.i];
+					splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
+							[var.j + 1], var.end - var.start), &(var.j));
+				}
+			}
+		}
+	}
+	return (join_evrything(splt));
 }
