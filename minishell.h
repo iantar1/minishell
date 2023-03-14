@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/13 13:04:23 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:13:43 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ char	*join_evrything(char **splt);
 char	*exp_from_env(char *key, t_env *g_env);
 int		need_expand(char *str);
 t_env	*new_line(char *line);
+void	double_free(char **p);
 
 #endif
