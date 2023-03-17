@@ -6,13 +6,13 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/02 15:47:35 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:01:36 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_mark(char *str)
+char	*ft_mark(char *str)//use it to check the syntax.
 {
 	int		i;
 	char	*mark;

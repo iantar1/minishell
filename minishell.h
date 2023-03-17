@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/14 12:13:43 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:50:54 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,36 @@
 # include <readline/history.h>
 # include "LIBFT/libft.h"
 
-typedef struct s_command
-{
-}t_command;
-
 typedef struct s_here_doc
 {
 	struct s_here_doc	*next;
 	void				*contet;
 }t_here_doc;
 
+typedef struct s_file
+{
+	int        type;
+	int        fd;
+	char    *filename;
+}    t_files;
+
+typedef struct s_data
+{
+	char    *cmd;
+	int        type;
+	char    **args;
+}    t_data;
+
 typedef struct s_tree
 {
 	struct s_tree	*parent;
-	struct s_tree	*right_child;
-	struct s_tree	*left_child;
-	void			*content;
-}t_tree;
+	struct s_tree	*left_c;
+	struct s_tree	*right_c;
+	int				child_lev41el;
+	t_data			data;
+	t_files			infile;
+	t_files			outfile;
+}	t_tree;
 
 typedef struct s_env
 {
@@ -76,5 +89,7 @@ char	*exp_from_env(char *key, t_env *g_env);
 int		need_expand(char *str);
 t_env	*new_line(char *line);
 void	double_free(char **p);
+char	closed_parenthesis(char *str);
+
 
 #endif

@@ -17,7 +17,11 @@ I. SPLIT YOUR STRING
 	ls>file||cat file2&&
 	00200002200010000022
 
-II. REMOVE THE QUOTE.
+ II. EXPANDING:
+
+	1)""  ;  here_doc  ;  ''  ;   "''"   ;   $?   ;   here_doc with "" and ''   ; 
+
+III. REMOVE THE QUOTE.
 
 	1) "" ''
 		"hello world" -> hello world
@@ -41,6 +45,60 @@ II. REMOVE THE QUOTE.
  ------------------------
 
 
- III. EXPANDING:
 
-	1)""  ;  here_doc  ;  ''  ;   "''"   ;   $?   ;   here_doc with "" and ''   ;  
+IV. HERE_DOC:
+
+V. REDIRACTIN:
+	1) ambiguous redirect;
+
+VI. INPLEMENT THE TREE:
+	1) check for ()
+		-> who has the first priority.
+	2) '|' has high priority then  '||' and  '&&'
+	3) the cmd will execute in the child or the parent process: { (cd) in child and cd in the parent } 
+
+	--> after checking the syntax, split the "line" read from stdin into chunks to be execute 
+		.)How to split:
+			- evrything inside () musut be in one string.
+			- split with || and && outside the (). they have the sme priority.
+			- split with |
+		example:
+			  (ls || cat file) && echo "hello" && (ls | cat > outfile)
+		mark: 00000000000000001220000010000000122100000000000000000000
+		split:->{(ls || cat file), &&, echo, "hello", && (ls | cat > outfile)}
+		the tree:
+																							 &&
+													╭─────────────────────────────────────────┴────────────────────────────────────────╮
+
+									(ls || cat file) && echo "hello"															(ls | cat > outfile)
+			
+												&&																		  			     |
+							╭───────────────────┴──────────────────╮  												 ╭───────────────────┴──────────────────╮					 
+
+					(ls || cat file)						 echo "hello"    										ls 	  					    	  cat > outfile
+							||
+			╭────────────────┴───────────────╮
+			ls								cat file
+
+
+
+
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
+| Importent1:                                                                                                                                             |
+|			In Bash, double parentheses (( )) are used for arithmetic evaluation. When you enclose a command in double parentheses,                       |
+|			Bash evaluates the command as an arithmetic expression, which means that it attempts to perform mathematical calculations with the command.   |
+| In your example ((ls)), Bash will attempt to evaluate ls as an arithmetic expression. However, since ls is not a mathematical expression, it will return|
+| an error.                                                                                                                                               |
+|                                                                                                                                                         |
+| Importent2:                                                                                                                                             |
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ .)	'<' or '>' + file_name
+
+
+VII. SYNTAX ERROR:
+	1) (cmd1) <seperate> (cmd2) : <seperate> must be || or | or && otherwise syntax error.
+	2) ((cmd)) : it's an error but dosn't show any message , just the exit status = 1
+	3) () : syntax error 
+	4) create a function to check |||.. and &&&... syntax errors. 
