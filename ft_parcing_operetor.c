@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/17 19:01:16 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/17 19:07:12 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*ft_mark1(char *str)
 	mark[i] = '\0';
 	return (mark);
 }
+
+char	*mark_logic_operator()//split && and ||
 
 // void	modify_mark(char **str)
 // {
