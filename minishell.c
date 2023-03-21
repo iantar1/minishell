@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/17 16:59:48 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/21 12:19:04 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,37 +52,31 @@ void	show_result(char **buf, t_env *env_no)
 	printf(" -------------\n");
 }
 
-char	*ft_mark1(char *str)
+char	**mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
 {
+	int		check;
 	int		i;
 	char	*mark;
-	char	check;
 
-	if (!str)
-		return (NULL);
-	mark = malloc(sizeof(char) * ft_strlen(str) + 1);
+	mark = malloc(sizeof(char) * (ft_strlen(str) - 1));
+	i = 0;
 	check = 0;
-	i = -1;
-	while (str[++i])
+	while (str[i])
 	{
-		if (str[i] == 34 ||  str[i] == 39)
+		if ((str[i] <= 32 || str[i] == '(') && !check)
 		{
-			if (str[i] == check)
-				check = 0;
-			else if (!check)
-				check = str[i];
+			mark[i] = '2';
+			if (str[i] == '(')
+				check++;
 		}
-		if (!check && str[i] == '(')
-			check = str[i];
-		if (check == '(' && str[i] == ')')
-			check = 0;
-		if ((str[i] == '|' || str[i] == '&') && !check)
+		else if (str[i] == ')' && check == 1)
 			mark[i] = '2';
 		else
 			mark[i] = '0';
+		i++;
+		
 	}
 	mark[i] = '\0';
-	return (mark);
 }
 
 int	main(int ac, char *av[], char **env)
@@ -104,12 +98,12 @@ int	main(int ac, char *av[], char **env)
 		// 	printf("YES\n");
 		// else
 		// 	printf("minishell: syntax error\n");
-		mark = ft_mark1(line);
+		mark = mark_logic_operator(ft_mark1(line));
 		// if (!valid_operators(mark))
 		// 	printf("minishell: syntax error\n");
 		buf = upgrade_split(line, mark);
-		//printf("	  %s\n", mark);
-		show_result(buf, g_env);
+		printf("mark:      %s\n", mark);
+		//show_result(buf, g_env);
 		if (buf[0])
 			add_history(line);
 	}

@@ -101,4 +101,6 @@ VII. SYNTAX ERROR:
 	1) (cmd1) <seperate> (cmd2) : <seperate> must be || or | or && otherwise syntax error.
 	2) ((cmd)) : it's an error but dosn't show any message , just the exit status = 1
 	3) () : syntax error 
-	4) create a function to check |||.. and &&&... syntax errors. 
+	4) create a function to check |||.. and &&&... syntax errors.
+	5) check for single & and &&&... |||... 
+	6) a commad ling start with logic operators.

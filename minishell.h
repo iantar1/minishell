@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/17 16:50:54 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/21 09:53:03 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,65 @@ typedef struct s_here_doc
 	void				*contet;
 }t_here_doc;
 
+// typedef struct s_file
+// {
+// 	int        type;
+// 	int        fd;
+// 	char    *filename;
+// }    t_files;
+
+// typedef struct s_data
+// {
+// 	char    *cmd;
+// 	int        type;
+// 	char    **args;
+// }    t_data;
+
+// typedef struct s_tree
+// {
+// 	struct s_tree	*parent;
+// 	struct s_tree	*left_c;
+// 	struct s_tree	*right_c;
+// 	int				child_lev41el;
+// 	t_data			data;
+// 	t_files			infile;
+// 	t_files			outfile;
+// }	t_tree;
+
 typedef struct s_file
 {
-	int        type;
-	int        fd;
-	char    *filename;
+    int        type;
+    int        open;
+    int        close;
+    int        file_id;
 }    t_files;
 
 typedef struct s_data
 {
-	char    *cmd;
-	int        type;
-	char    **args;
+    char    *cmd;
+    int        type;
+    char    **args;
 }    t_data;
 
 typedef struct s_tree
 {
-	struct s_tree	*parent;
-	struct s_tree	*left_c;
-	struct s_tree	*right_c;
-	int				child_lev41el;
-	t_data			data;
-	t_files			infile;
-	t_files			outfile;
-}	t_tree;
+    struct s_tree    *parent;
+    struct s_tree    *left_c;
+    struct s_tree    *right_c;
+    int                child_level;
+    t_data            data;
+    t_files            infile;
+    t_files            outfile;
+}                    t_tree;
+
+typedef struct s_iofiles
+{
+    char    *filename;
+    int        id;
+    int        fd;
+}    t_iofiles;
+
+t_iofiles    g_files[255];
 
 typedef struct s_env
 {
