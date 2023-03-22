@@ -25,8 +25,8 @@ fclean: clean
 	rm -rf ${NAME} ${LIBFT}
 
 re:fclean all
-
+VAR="iantar"
 git:
 	git add .
-	git commit -m "iantar"
+	git commit -m ${VAR}
 	git push
