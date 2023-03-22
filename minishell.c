@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/21 12:19:04 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/22 13:31:39 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,39 @@ void	show_result(char **buf, t_env *env_no)
 	printf(" -------------\n");
 }
 
-char	**mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
+char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
 {
 	int		check;
 	int		i;
 	char	*mark;
 
-	mark = malloc(sizeof(char) * (ft_strlen(str) - 1));
+	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	i = 0;
 	check = 0;
 	while (str[i])
 	{
-		if ((str[i] <= 32 || str[i] == '(') && !check)
+		if (str[i] == '(')
 		{
-			mark[i] = '2';
-			if (str[i] == '(')
-				check++;
+			if (!check)
+				mark[i] = '1';
+			else
+				mark[i] = '0';
+			check++;
 		}
-		else if (str[i] == ')' && check == 1)
-			mark[i] = '2';
+		else if (str[i] == ')')
+		{
+			if (check == 1)
+				mark[i] = '1';
+			else
+				mark[i] = '0';
+			check--;
+		}
 		else
 			mark[i] = '0';
 		i++;
-		
 	}
 	mark[i] = '\0';
+	return (mark);
 }
 
 int	main(int ac, char *av[], char **env)
@@ -98,7 +106,7 @@ int	main(int ac, char *av[], char **env)
 		// 	printf("YES\n");
 		// else
 		// 	printf("minishell: syntax error\n");
-		mark = mark_logic_operator(ft_mark1(line));
+		mark = mark_first_parenthisis(line);
 		// if (!valid_operators(mark))
 		// 	printf("minishell: syntax error\n");
 		buf = upgrade_split(line, mark);
