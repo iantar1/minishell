@@ -28,5 +28,5 @@ re:fclean all
 VAR="iantar"
 git:
 	git add .
-	git commit -m ${VAR}
+	git commit -m "${VAR}"
 	git push
