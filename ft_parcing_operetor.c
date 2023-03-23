@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/21 15:58:55 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:17:19 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	is_here_needle(char *str, char *needle)
 {
 	int	i;
-	int	len_needle;
 
 	i = 0;
 	if (!str || !needle)
@@ -29,7 +28,7 @@ int	is_here_needle(char *str, char *needle)
 	return (0);
 }
 
-char	*ft_mark1(char *str)
+char	*ft_mark_operator(char *str)
 {
 	int		i;
 	char	*mark;
@@ -62,10 +61,9 @@ char	*ft_mark1(char *str)
 	return (mark);
 }
 //you must check the syntax error befor using this function, str must not start with | or &. or has '|&'
-char	*mark_the_mark1_operator(char *mark)//split with the last && or ||
+char	*mark_the_mark_operator(char *mark)//split with the last && or ||
 {
 	int		len;
-	char	*mark;
 	int		check;
 
 	len = ft_strlen(mark) - 1;
@@ -91,9 +89,9 @@ char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | c
 	char	*mark;
 
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	i = 0;
+	i = -1;
 	check = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == '(')
 		{
@@ -113,15 +111,13 @@ char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | c
 		}
 		else
 			mark[i] = '0';
-		i++;
-		
 	}
 	mark[i] = '\0';
 	return (mark);
 }
 
-int	main()
-{
-	char str[10] = "0220022002"
-	printf("%s")
-}
+// int	main()
+// {
+// 	char str[10] = "0220022002"
+// 	printf("%s")
+// }

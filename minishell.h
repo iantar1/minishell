@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/20 15:14:10 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/21 09:53:03 by iantar           ###   ########.fr       */
+/*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
+/*   Updated: 2023/03/23 12:47:17 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_vars
 	char	*str;
 	int		i;
 	int		j;
+	int		index;
 	int		start;
 	int		end;
 }	t_vars;
@@ -125,6 +126,10 @@ int		need_expand(char *str);
 t_env	*new_line(char *line);
 void	double_free(char **p);
 char	closed_parenthesis(char *str);
-
+int		is_here_needle(char *str, char *needle);
+char	*ft_mark_operator(char *str);
+char	*mark_the_mark_operator(char *mark);
+char	*mark_first_parenthisis(char *str);
+char	**reform_redirection(char *str);
 
 #endif

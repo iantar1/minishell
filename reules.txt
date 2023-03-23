@@ -48,13 +48,32 @@ III. REMOVE THE QUOTE.
 
 IV. HERE_DOC:
 
-V. REDIRACTIN:
-	1) ambiguous redirect;
+V. REDIRACTIN: > < >>
+	1) ambiguous redirect:
+		.) ls > $tkhrbi9 ...
+		
+		..)
+	2) reform the command 
+		cat < first -b  				==	cat -b < first
+		cat < first -b second			==	cat -b second < first
+		cat -b second < first outfile1	==	cat -b second outfile1 < first
+
+		 ------------------------------------------------------------
+		| cmd < arg1 arg2 arg3 ...  <==>	cmd arg2 arg3 ... < arg1 | 
+		| cmd > arg1 arg2 arg3 ...	<==>	cmd arg2 arg3 ... > arg1 | ---> the same with >>
+		| cmd arg1 > arg2 arg3 ...	<==>	cmd arg1 arg3 ... > arg2 |
+		 ------------------------------------------------------------
+
+
+
+
+
 
 VI. INPLEMENT THE TREE:
 	1) check for ()
 		-> who has the first priority.
 	2) '|' has high priority then  '||' and  '&&'
+	2). '>' has high priority then '|'
 	3) the cmd will execute in the child or the parent process: { (cd) in child and cd in the parent } 
 
 	--> after checking the syntax, split the "line" read from stdin into chunks to be execute 
@@ -104,3 +123,7 @@ VII. SYNTAX ERROR:
 	4) create a function to check |||.. and &&&... syntax errors.
 	5) check for single & and &&&... |||... 
 	6) a commad ling start with logic operators.
+	7) ambiguous redirect: ls > $rtfh ...
+	8) ls > (l > k > o > p): > + ( : syntax error
+
+	>>>>> open the here_doc befofore checking the syntax <<<<<

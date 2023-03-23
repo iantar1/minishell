@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/22 13:31:39 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/22 14:19:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,41 +52,6 @@ void	show_result(char **buf, t_env *env_no)
 	printf(" -------------\n");
 }
 
-char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
-{
-	int		check;
-	int		i;
-	char	*mark;
-
-	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	i = 0;
-	check = 0;
-	while (str[i])
-	{
-		if (str[i] == '(')
-		{
-			if (!check)
-				mark[i] = '1';
-			else
-				mark[i] = '0';
-			check++;
-		}
-		else if (str[i] == ')')
-		{
-			if (check == 1)
-				mark[i] = '1';
-			else
-				mark[i] = '0';
-			check--;
-		}
-		else
-			mark[i] = '0';
-		i++;
-	}
-	mark[i] = '\0';
-	return (mark);
-}
-
 int	main(int ac, char *av[], char **env)
 {
 	char	*line;
@@ -111,7 +76,7 @@ int	main(int ac, char *av[], char **env)
 		// 	printf("minishell: syntax error\n");
 		buf = upgrade_split(line, mark);
 		printf("mark:      %s\n", mark);
-		//show_result(buf, g_env);
+		show_result(buf, g_env);
 		if (buf[0])
 			add_history(line);
 	}
