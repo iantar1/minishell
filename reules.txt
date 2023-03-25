@@ -48,6 +48,11 @@ III. REMOVE THE QUOTE.
 
 IV. HERE_DOC:
 
+	1) reform the cmd line (if it needs) : cmd fil1 fil2 << lim1 file3 <<lim2 fil4 ... ->  cmd fil1 ...file4 ... << lim1 <<lim2
+	2) if the is at least one file open the here_docs and send the commad and the fils.
+	3) if there is no files, open all here_docs and send the  cmd the last and here_doc_file 
+	4) chck first for the here_doc after that check for the syntax. 
+
 V. REDIRACTIN: > < >>
 	1) ambiguous redirect:
 		.) ls > $tkhrbi9 ...
@@ -109,7 +114,9 @@ VI. INPLEMENT THE TREE:
 | In your example ((ls)), Bash will attempt to evaluate ls as an arithmetic expression. However, since ls is not a mathematical expression, it will return|
 | an error.                                                                                                                                               |
 |                                                                                                                                                         |
-| Importent2:                                                                                                                                             |
+| Importent2:   																																		  |
+|	>>>>> open the here_doc before checking the syntax 																									  |
+|	                                                                                                                                         			  |
  ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -126,4 +133,9 @@ VII. SYNTAX ERROR:
 	7) ambiguous redirect: ls > $rtfh ...
 	8) ls > (l > k > o > p): > + ( : syntax error
 
-	>>>>> open the here_doc befofore checking the syntax <<<<<
+
+
+-> here_doc
+-> amniguous redirect
+-> multiple rediractions <infile1 <infile2 <infile3 .... >outfile1 >outfile2 ....
+-> syntax error

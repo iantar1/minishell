@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/22 14:19:46 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/25 14:45:39 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	show_result(char **buf, t_env *env_no)
 			// 	expand(&buf, env_no);
 			// else if (closed_quote(buf[i]))
 			//printf("cmd:%s\n", remove_quote(buf[i]));
-			printf("%s\n", buf[i]);
+			printf("%s ", buf[i]);
 		}
 	}
-	printf(" -------------\n");
+	printf("\n -------------\n");
 }
 
 int	main(int ac, char *av[], char **env)
@@ -62,6 +62,7 @@ int	main(int ac, char *av[], char **env)
 	g_env = new_line("?=0");
 	g_env->next = create_env(env);
 	//printf("%s\n", ft_expand("hello$PATH"));
+	here_doc("lim\n", 0);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -74,8 +75,9 @@ int	main(int ac, char *av[], char **env)
 		mark = mark_first_parenthisis(line);
 		// if (!valid_operators(mark))
 		// 	printf("minishell: syntax error\n");
-		buf = upgrade_split(line, mark);
-		printf("mark:      %s\n", mark);
+		//buf = upgrade_split(line, mark);
+		buf = reform_redirection(line);
+		//printf("mark:      %p\n", buf);
 		show_result(buf, g_env);
 		if (buf[0])
 			add_history(line);

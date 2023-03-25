@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:38:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/12 15:06:53 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/25 14:31:51 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_free(char **str)
+int	ft_free_(char **str)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ t_env	*new_line(char *line)
 	else if (len_double_char(str) == 1)
 		node->line = NULL;
 	node->next = NULL;
-	return (free(trimed), ft_free(str), node);
+	return (free(trimed), ft_free_(str), node);
 }
 
 t_env	*create_env(char **env)

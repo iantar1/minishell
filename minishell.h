@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/23 12:47:17 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/25 14:29:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "LIBFT/libft.h"
@@ -131,5 +133,7 @@ char	*ft_mark_operator(char *str);
 char	*mark_the_mark_operator(char *mark);
 char	*mark_first_parenthisis(char *str);
 char	**reform_redirection(char *str);
+char	*get_next_line(int fd);
+void	here_doc(char *lim, int to_save);
 
 #endif

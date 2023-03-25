@@ -2,7 +2,8 @@ NAME = minishell
 
 LIBFT = libft.a
 
-SRC = minishell.c upgrade_split.c utils1.c utils2.c get_env.c ft_expanding.c ft_parcing_operetor.c rediraction.c
+SRC = minishell.c upgrade_split.c utils1.c utils2.c get_env.c ft_expanding.c ft_parcing_operetor.c rediraction.c \
+		GNL/get_next_line.c GNL/get_next_line_utils.c here_doc.c
 
 OBJ = ${SRC:.c=.o}
 
