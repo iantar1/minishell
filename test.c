@@ -10,12 +10,12 @@ int	main(int ac, char *av[], char **env)
 	char *arg2[] = {"cd", NULL};
 	char *arg3[] = {"/bin/pwd", NULL};
 	char *arg4[] = {"/bin/ls", NULL};
-	char *cmd[] = {"ls", "-l", "-l"};
+	char *cmd[] = {"ls", "", NULL};
 
 	if (fork() == 0)
 	{
 		printf("Child:\n");
-		execve("/bin/cat", arg1, env);
+		execve("/bin/ls", cmd, env);
 	}
 	else
 	{

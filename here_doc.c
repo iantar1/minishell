@@ -6,13 +6,13 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/25 14:42:15 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/26 18:15:36 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+static int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
@@ -30,11 +30,19 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
+static void	handle_sig(int sig)
+{
+	(void)sig;
+	exit(0);
+}
+
+//use reform cmd : >> << > < must be the last
 void	here_doc(char *lim, int to_save)
 {
 	char	*line;
 	int		fd;
 
+	signal(SIGINT, handle_sig);
 	if (to_save)
 	{
 		fd = open("her_tmp", O_TRUNC | O_RDWR | O_CREAT, 0666);
@@ -43,7 +51,7 @@ void	here_doc(char *lim, int to_save)
 	}
 	else
 		fd = -1;
-	line = get_next_line(0);
+	line = (write(1, "> ", 2), get_next_line(0));
 	while (1)
 	{
 		if (!line)
@@ -53,8 +61,7 @@ void	here_doc(char *lim, int to_save)
 			free(line);
 			return ;
 		}
-		write(fd, line, ft_strlen(line));
-		free(line);
-		line = get_next_line(0);
+		(write(1, "> ", 2), write(fd, line, ft_strlen(line)));
+		line = (free(line), get_next_line(0));
 	}
 }

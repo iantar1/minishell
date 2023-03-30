@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:24:56 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/01 10:43:37 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/29 22:18:54 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ char	**get_env(char **env)
 	}
 	save_env[i] = NULL;
 	return (save_env);
+}
+
+void	free_ptr(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (i > 0)
+		free(ptr[i]);
+	free(ptr);
 }

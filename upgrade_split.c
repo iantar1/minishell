@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 09:52:08 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/07 11:39:13 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/29 00:23:21 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "LIBFT/libft.h"
 
 int	count_ptr(char const *mark)
 {

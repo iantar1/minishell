@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/25 14:45:39 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/29 22:21:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 // 	return (ptr);
 // }
 
+// <void	handle_sig(int sig)
+// {
+// 	//(void)sig;
+// 	printf("sig:%d\n", sig);
+// 	exit(0);
+// 	return ;
+// }>
+
 void	show_result(char **buf, t_env *env_no)
 {
 	int	i;
@@ -40,17 +48,29 @@ void	show_result(char **buf, t_env *env_no)
 			printf("syntax error\n");
 		else
 		{
-			//printf("result:%s\n", remove_quote(ft_expand(buf[i])));
+			printf("result:%s\n", remove_quote(ft_expand(buf[i])));
 			//printf("%s\n", get_value(char *key, int len));
 			// if (need_expand(buf[i]))
 			// 	expand(&buf, env_no);
 			// else if (closed_quote(buf[i]))
 			//printf("cmd:%s\n", remove_quote(buf[i]));
-			printf("%s ", buf[i]);
+			//printf("%s ", buf[i]);
+			if (!ft_strncmp("<<", buf[i], 2))
+			{
+				if (fork() == 0)
+				{
+					here_doc("lim\n", 1);
+					//signal(SIGINT, handle_sig);
+				}
+				signal(SIGINT, SIG_IGN);
+				wait(NULL);
+			}
+				
 		}
 	}
 	printf("\n -------------\n");
 }
+
 
 int	main(int ac, char *av[], char **env)
 {
@@ -62,7 +82,7 @@ int	main(int ac, char *av[], char **env)
 	g_env = new_line("?=0");
 	g_env->next = create_env(env);
 	//printf("%s\n", ft_expand("hello$PATH"));
-	here_doc("lim\n", 0);
+	//signal(SIGINT, handle_sig);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -75,8 +95,8 @@ int	main(int ac, char *av[], char **env)
 		mark = mark_first_parenthisis(line);
 		// if (!valid_operators(mark))
 		// 	printf("minishell: syntax error\n");
-		//buf = upgrade_split(line, mark);
-		buf = reform_redirection(line);
+		buf = upgrade_split(line, mark);
+		//buf = reform_redirection(line);
 		//printf("mark:      %p\n", buf);
 		show_result(buf, g_env);
 		if (buf[0])

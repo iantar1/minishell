@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expanding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/14 11:51:55 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/30 00:11:41 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	need_expand(char *str)
 			check2++;
 		if ((str[i] == '$' && ((check1 % 2 && !(check2 % 2)) || (!(check1 % 2)
 						&& !(check2 % 2)))) && (str[i + 1] == '?'
-				|| ft_isalnum(str[i + 1])))
+				|| str[i + 1] == '_' || ft_isalnum(str[i + 1])))
 			return (1);
 	}
 	return (0);
 }
 
-char	*exp_from_env(char *key, t_env *g_env)
+char	*exp_from_env(char *key)
 {
 	int		i;
 	t_env	*tmp;
@@ -126,7 +126,7 @@ int	len_to_exp(char *str)
 	i = 1;
 	if (str[i] == '?')
 		return (2);
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	return (i);
 }
@@ -161,8 +161,6 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		value = "";
 	new_len = ft_strlen(var.str) - (var.end - var.start) + ft_strlen(value);
 	rtn_str = malloc(new_len + 1);
-	if (!rtn_str)
-		return (NULL);
 	while (++i < var.start)
 		rtn_str[i] = var.str[i];
 	while (++j < (int)ft_strlen(value))
@@ -174,6 +172,25 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	rtn_str[i] = '\0';
 	free(var.str);
 	return (rtn_str);
+}
+
+void	ft_expand_norm(t_vars var, char **splt)
+{
+	while (splt[var.i][++(var.j)])
+	{
+		if (splt[var.i][var.j] == '$')
+		{
+			if ((!ft_isalnum(splt[var.i][var.j + 1])
+				&& splt[var.i][var.j + 1] != '_')
+				&& splt[var.i][var.j + 1] != '?' && ++var.j)
+				continue ;
+			var.start = var.j;
+			var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
+			var.str = splt[var.i];
+			splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
+					[var.j + 1], var.end - var.start), &(var.j));
+		}
+	}
 }
 
 char	*ft_expand(char *str)
@@ -190,19 +207,7 @@ char	*ft_expand(char *str)
 		if (need_expand(splt[var.i]))
 		{
 			var.j = -1;
-			while (splt[var.i][++(var.j)])
-			{
-				if (splt[var.i][var.j] == '$')
-				{
-					if (!ft_isalnum(splt[var.i][var.j + 1]) && splt[var.i][var.j + 1] != '?' && ++var.j)
-						continue ;
-					var.start = var.j;
-					var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
-					var.str = splt[var.i];
-					splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
-							[var.j + 1], var.end - var.start), &(var.j));
-				}
-			}
+			ft_expand_norm(var, splt);
 		}
 	}
 	return (join_evrything(splt));

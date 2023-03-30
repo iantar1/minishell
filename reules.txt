@@ -139,3 +139,4 @@ VII. SYNTAX ERROR:
 -> amniguous redirect
 -> multiple rediractions <infile1 <infile2 <infile3 .... >outfile1 >outfile2 ....
 -> syntax error
+->-> parce the tree.

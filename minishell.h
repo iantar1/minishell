@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/25 14:29:46 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/29 23:29:58 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "LIBFT/libft.h"
@@ -54,38 +55,36 @@ typedef struct s_here_doc
 
 typedef struct s_file
 {
-    int        type;
-    int        open;
-    int        close;
-    int        file_id;
-}    t_files;
+	int	type;
+	int	open;
+	int	close;
+	int	file_id;
+}	t_files;
 
 typedef struct s_data
 {
-    char    *cmd;
-    int        type;
-    char    **args;
-}    t_data;
+	char	*cmd;
+	int		type;
+	char	**args;
+}	t_data;
 
 typedef struct s_tree
 {
-    struct s_tree    *parent;
-    struct s_tree    *left_c;
-    struct s_tree    *right_c;
-    int                child_level;
-    t_data            data;
-    t_files            infile;
-    t_files            outfile;
-}                    t_tree;
+	struct s_tree	*parent;
+	struct s_tree	*left_c;
+	struct s_tree	*right_c;
+	int				child_level;
+	t_data			data;
+	t_files			infile;
+	t_files			outfile;
+}	t_tree;
 
 typedef struct s_iofiles
 {
-    char    *filename;
-    int        id;
-    int        fd;
-}    t_iofiles;
-
-t_iofiles    g_files[255];
+	char	*filename;
+	int		id;
+	int		fd;
+}	t_iofiles;
 
 typedef struct s_env
 {
@@ -123,7 +122,7 @@ char	*ft_change_part(t_vars var, char *value, int *curser);
 char	*get_value(char *key, int len);
 int		len_to_exp(char *str);
 char	*join_evrything(char **splt);
-char	*exp_from_env(char *key, t_env *g_env);
+char	*exp_from_env(char *key);
 int		need_expand(char *str);
 t_env	*new_line(char *line);
 void	double_free(char **p);
@@ -135,5 +134,6 @@ char	*mark_first_parenthisis(char *str);
 char	**reform_redirection(char *str);
 char	*get_next_line(int fd);
 void	here_doc(char *lim, int to_save);
+void	free_ptr(char **ptr);
 
 #endif
