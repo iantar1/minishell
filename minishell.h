@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/29 23:29:58 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/30 01:44:06 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ char	**reform_redirection(char *str);
 char	*get_next_line(int fd);
 void	here_doc(char *lim, int to_save);
 void	free_ptr(char **ptr);
+char	**reform_redirection(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/29 23:39:24 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/30 03:05:52 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static char	*mark_redirection(char *str)
 	return (mark);
 }
 
-static int	ft_pointerlen(char **ptrs)
-{
-	int	lenptr;
+// static int	ft_pointerlen(char **ptrs)
+// {
+// 	int	lenptr;
 
-	lenptr = 0;
-	while (ptrs[lenptr])
-		lenptr++;
-	return (lenptr);
-}
+// 	lenptr = 0;
+// 	while (ptrs[lenptr])
+// 		lenptr++;
+// 	return (lenptr);
+// }
 
 
 char	**lst_to_str(t_list *lst)
@@ -61,6 +61,7 @@ char	**lst_to_str(t_list *lst)
 	i = 0;
 	tmp = lst;
 	str = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
+	printf("******************:w\n");
 	while (lst)
 	{
 		str[i++] = ft_strdup(lst->content);
@@ -79,10 +80,13 @@ t_list	*str_to_lst(char **str)
 
 	i = 0;
 	lst = ft_lstnew(str[i++]);
+	printf("contecnt:%s\n", lst->content);
 	tmp = lst;
 	while (str[i])
 	{
-		lst->content = ft_lstnew(str[i]);
+		lst->next = ft_lstnew(str[i]);
+		lst = lst->next;
+		printf("next:%p\n", lst);
 		i++;
 	}
 	free_ptr(str);
@@ -91,7 +95,16 @@ t_list	*str_to_lst(char **str)
 
 int	count_redirect(t_list *lst)
 {
-	
+	int	count;
+
+	count = 0;
+	while (lst)
+	{
+		if (!ft_strncmp(lst->content, ">", 1) || !ft_strncmp(lst->content, "<", 1))
+			count++;
+			lst = lst->next;
+	}
+	return (count);
 }
 
 static int	index_of_redir(t_list *lst)
@@ -110,22 +123,41 @@ static int	index_of_redir(t_list *lst)
 	return (-1);
 }
 
-// static void	reform_it(t_list **lst)
-// {
-// 	int		i;
-// 	int		len;
-// 	int		index;
-// 	t_list	*tmp;
+//u need to check syntax error before using this function "<< >> < >"" must be flowed by a file_name"
 
-// 	len = count_redirect(*lst);
-// 	while (i < len)
-// 	{
-// 		index = index_of_redir(*lst);
-// 		while (++i < index)
-// 			tmp = tmp->next;
-		
-// 	}
-// }
+static void	reform_it(t_list **lst)
+{
+	int		i;
+	int		len;
+	int		index;
+	t_list	*tmp1;
+	t_list	*tmp2;
+
+	len = count_redirect(*lst);
+	printf("len:%d\n", len);
+	tmp1 = *lst;
+	while (len)
+	{
+		index = index_of_redir(*lst);
+		i = 0;
+		tmp1 = *lst;
+		while (i < index - 1)
+		{
+			tmp1 = tmp1->next;
+			i++;
+		}
+		tmp2 = tmp1->next;
+		tmp1 = tmp2->next->next;
+		tmp2->next->next = NULL;
+		ft_lstadd_back(lst, tmp2);
+		len--;
+	}
+	while (*lst)
+	{
+		printf("%s\n", (*lst)->content);
+		*lst = (*lst)->next;
+	}
+}
 
 
 char	**reform_redirection(char *str)
@@ -134,9 +166,22 @@ char	**reform_redirection(char *str)
 	char	**rtn_cmd;
 	char	*mark;
 	t_list	*lst;
+	t_list	*tmp;
+	//int		i = -1;
 
 	mark = mark_redirection(str);
+	printf("mark:%s\n", mark);
 	splt_cmd = upgrade_split(str, mark);
 	lst = str_to_lst(splt_cmd);
-	//reform_it(&lst);
+	tmp = lst;
+	while (tmp)
+	{
+		printf("lst:%s\n", tmp->content);
+		tmp = tmp->next;
+	}
+	reform_it(&lst);
+	rtn_cmd = lst_to_str(lst);
+	printf("|||||||||\n");
+	free(str);
+	return (rtn_cmd);
 }

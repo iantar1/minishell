@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/29 22:21:23 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/30 01:43:33 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	show_result(char **buf, t_env *env_no)
 int	main(int ac, char *av[], char **env)
 {
 	char	*line;
-	char	*mark;
+	//char	*mark;
 	char	**buf;
 
 	((void)av, (void)ac);
@@ -92,12 +92,13 @@ int	main(int ac, char *av[], char **env)
 		// 	printf("YES\n");
 		// else
 		// 	printf("minishell: syntax error\n");
-		mark = mark_first_parenthisis(line);
+		//mark = mark_first_parenthisis(line);
 		// if (!valid_operators(mark))
 		// 	printf("minishell: syntax error\n");
-		buf = upgrade_split(line, mark);
+		//buf = upgrade_split(line, mark);
 		//buf = reform_redirection(line);
 		//printf("mark:      %p\n", buf);
+		buf = reform_redirection(line);
 		show_result(buf, g_env);
 		if (buf[0])
 			add_history(line);

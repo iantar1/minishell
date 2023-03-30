@@ -135,8 +135,8 @@ VII. SYNTAX ERROR:
 
 
 
+-> multiple rediractions <infile1 <infile2 <infile3 .... >outfile1 >outfile2 ....
 -> here_doc
 -> amniguous redirect
--> multiple rediractions <infile1 <infile2 <infile3 .... >outfile1 >outfile2 ....
 -> syntax error
 ->-> parce the tree.
