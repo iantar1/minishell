@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/17 16:01:36 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/31 00:15:37 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,6 @@ char	*remove_quote(char *str)
 		lst = lst->next;
 	}
 	rtn[i] = '\0';
-	printf("\n");
+	// printf("\n");
 	return (rtn);
 }

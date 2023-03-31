@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/30 03:05:52 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/31 01:07:34 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	**lst_to_str(t_list *lst)
 	i = 0;
 	tmp = lst;
 	str = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
-	printf("******************:w\n");
 	while (lst)
 	{
 		str[i++] = ft_strdup(lst->content);
@@ -79,14 +78,12 @@ t_list	*str_to_lst(char **str)
 	t_list	*lst;
 
 	i = 0;
-	lst = ft_lstnew(str[i++]);
-	printf("contecnt:%s\n", lst->content);
+	lst = ft_lstnew(NULL);
 	tmp = lst;
 	while (str[i])
 	{
 		lst->next = ft_lstnew(str[i]);
 		lst = lst->next;
-		printf("next:%p\n", lst);
 		i++;
 	}
 	free_ptr(str);
@@ -98,9 +95,11 @@ int	count_redirect(t_list *lst)
 	int	count;
 
 	count = 0;
+	lst = lst->next;
 	while (lst)
 	{
-		if (!ft_strncmp(lst->content, ">", 1) || !ft_strncmp(lst->content, "<", 1))
+		if (!ft_strncmp(lst->content, ">", 1)
+			|| !ft_strncmp(lst->content, "<", 1))
 			count++;
 			lst = lst->next;
 	}
@@ -112,6 +111,7 @@ static int	index_of_redir(t_list *lst)
 	int	index;
 
 	index = 0;
+	lst = lst->next;
 	while (lst)
 	{
 		if (!ft_strncmp(lst->content, ">", 1)
@@ -134,29 +134,23 @@ static void	reform_it(t_list **lst)
 	t_list	*tmp2;
 
 	len = count_redirect(*lst);
-	printf("len:%d\n", len);
 	tmp1 = *lst;
 	while (len)
 	{
 		index = index_of_redir(*lst);
-		i = 0;
+		i = -1;
 		tmp1 = *lst;
-		while (i < index - 1)
-		{
+		while (++i < index)
 			tmp1 = tmp1->next;
-			i++;
-		}
 		tmp2 = tmp1->next;
-		tmp1 = tmp2->next->next;
+		tmp1->next = tmp2->next->next;
 		tmp2->next->next = NULL;
 		ft_lstadd_back(lst, tmp2);
 		len--;
 	}
-	while (*lst)
-	{
-		printf("%s\n", (*lst)->content);
-		*lst = (*lst)->next;
-	}
+	tmp1 = *lst;
+	*lst = (*lst)->next;
+	free(tmp1);
 }
 
 
@@ -167,21 +161,15 @@ char	**reform_redirection(char *str)
 	char	*mark;
 	t_list	*lst;
 	t_list	*tmp;
-	//int		i = -1;
 
 	mark = mark_redirection(str);
-	printf("mark:%s\n", mark);
 	splt_cmd = upgrade_split(str, mark);
 	lst = str_to_lst(splt_cmd);
 	tmp = lst;
 	while (tmp)
-	{
-		printf("lst:%s\n", tmp->content);
 		tmp = tmp->next;
-	}
 	reform_it(&lst);
 	rtn_cmd = lst_to_str(lst);
-	printf("|||||||||\n");
 	free(str);
 	return (rtn_cmd);
 }

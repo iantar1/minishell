@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/30 01:43:33 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/31 00:48:56 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,23 @@ void	show_result(char **buf, t_env *env_no)
 			printf("syntax error\n");
 		else
 		{
-			printf("result:%s\n", remove_quote(ft_expand(buf[i])));
+			printf("%s ", remove_quote(ft_expand(buf[i])));
 			//printf("%s\n", get_value(char *key, int len));
 			// if (need_expand(buf[i]))
 			// 	expand(&buf, env_no);
 			// else if (closed_quote(buf[i]))
 			//printf("cmd:%s\n", remove_quote(buf[i]));
 			//printf("%s ", buf[i]);
-			if (!ft_strncmp("<<", buf[i], 2))
-			{
-				if (fork() == 0)
-				{
-					here_doc("lim\n", 1);
-					//signal(SIGINT, handle_sig);
-				}
-				signal(SIGINT, SIG_IGN);
-				wait(NULL);
-			}
-				
+			// if (!ft_strncmp("<<", buf[i], 2))
+			// {
+			// 	if (fork() == 0)
+			// 	{
+			// 		here_doc("lim\n", 1);
+			// 		//signal(SIGINT, handle_sig);
+			// 	}
+			// 	signal(SIGINT, SIG_IGN);
+			// 	wait(NULL);
+			// }
 		}
 	}
 	printf("\n -------------\n");
