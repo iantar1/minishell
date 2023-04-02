@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/31 00:48:56 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/02 03:11:05 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,40 @@ void	show_result(char **buf, t_env *env_no)
 	printf("\n -------------\n");
 }
 
+void	print_args(char **args)
+{
+	int	i;
+
+	i = -1;
+	printf(" args: {");
+	while (args[++i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(", ");
+	}
+	printf("}");
+	printf("\n");
+}
+
+void	print_tree(t_tree *tree)
+{
+	printf("cmd: %s\n", tree->data.cmd);
+	print_args(tree->data.args);
+	if (!(tree->right_c))
+		return ;
+	print_tree(tree->right_c);
+	if (!(tree->left_c))
+		return ;
+	print_tree(tree->left_c);
+}
 
 int	main(int ac, char *av[], char **env)
 {
 	char	*line;
+	t_tree	*tree;
 	//char	*mark;
-	char	**buf;
+	//char	**buf;
 
 	((void)av, (void)ac);
 	g_env = new_line("?=0");
@@ -87,6 +115,10 @@ int	main(int ac, char *av[], char **env)
 		line = readline("minishell$ ");
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
+		tree = ft_tree_new(line, NULL, 0);
+		//printf("|||||\n");
+		parse_tree(line, tree);
+		print_tree(tree);
 		// if (closed_parenthesis(line) && !emty_parenthesis(line))
 		// 	printf("YES\n");
 		// else
@@ -97,10 +129,10 @@ int	main(int ac, char *av[], char **env)
 		//buf = upgrade_split(line, mark);
 		//buf = reform_redirection(line);
 		//printf("mark:      %p\n", buf);
-		buf = reform_redirection(line);
-		show_result(buf, g_env);
-		if (buf[0])
-			add_history(line);
+		// buf = reform_redirection(line);
+		// show_result(buf, g_env);
+		//if (buf[0])
+		add_history(line);
 	}
 	return (0);
 }

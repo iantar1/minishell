@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/16 18:20:22 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/31 01:15:39 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,4 @@ int	valid_operators(char *mark)
 			len = 0;
 	}
 	return (1);
-}
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%d\n", closed_parenthesis(")(()"));
-	return (0);
 }

@@ -6,12 +6,23 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/30 01:44:06 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/02 00:35:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define SPACE 32
+# define AND 0
+# define OR 1
+# define PIPE 2
+# define COMMAND 3
+# define HERE_DOC 6
+# define APPEND 7
+# define _FILE 8
+# define OUT 4
+# define IN 5
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,43 +39,16 @@ typedef struct s_here_doc
 	void				*contet;
 }t_here_doc;
 
-// typedef struct s_file
-// {
-// 	int        type;
-// 	int        fd;
-// 	char    *filename;
-// }    t_files;
-
-// typedef struct s_data
-// {
-// 	char    *cmd;
-// 	int        type;
-// 	char    **args;
-// }    t_data;
-
-// typedef struct s_tree
-// {
-// 	struct s_tree	*parent;
-// 	struct s_tree	*left_c;
-// 	struct s_tree	*right_c;
-// 	int				child_lev41el;
-// 	t_data			data;
-// 	t_files			infile;
-// 	t_files			outfile;
-// }	t_tree;
-
 typedef struct s_file
 {
-	int	type;
-	int	open;
-	int	close;
-	int	file_id;
+	int		type;
+	char	*filename;
 }	t_files;
 
 typedef struct s_data
 {
 	char	*cmd;
-	int		type;
+	int		type;//what is type?????
 	char	**args;
 }	t_data;
 
@@ -82,7 +66,6 @@ typedef struct s_tree
 typedef struct s_iofiles
 {
 	char	*filename;
-	int		id;
 	int		fd;
 }	t_iofiles;
 
@@ -90,7 +73,6 @@ typedef struct s_env
 {
 	char			*line;
 	char			*var_name;
-	int				exit_status;
 	struct s_env	*head;
 	struct s_env	*next;
 }	t_env;
@@ -107,6 +89,7 @@ typedef struct s_vars
 	int		end;
 }	t_vars;
 
+void	parse_tree(char *line, t_tree *tree);
 char	**upgrade_split(char *str, char *mark);
 char	*ft_mark(char *str);
 char	**get_env(char **env);
@@ -136,5 +119,6 @@ char	*get_next_line(int fd);
 void	here_doc(char *lim, int to_save);
 void	free_ptr(char **ptr);
 char	**reform_redirection(char *str);
+t_tree	*ft_tree_new(char *cmd_line, t_tree *parent_add, int ch_level);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/31 01:07:34 by iantar           ###   ########.fr       */
+/*   Updated: 2023/03/31 01:13:59 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,6 @@ static char	*mark_redirection(char *str)
 	mark[i] = '\0';
 	return (mark);
 }
-
-// static int	ft_pointerlen(char **ptrs)
-// {
-// 	int	lenptr;
-
-// 	lenptr = 0;
-// 	while (ptrs[lenptr])
-// 		lenptr++;
-// 	return (lenptr);
-// }
-
 
 char	**lst_to_str(t_list *lst)
 {
