@@ -140,3 +140,6 @@ VII. SYNTAX ERROR:
 -> amniguous redirect
 -> syntax error
 ->-> parce the tree.
+-> more than 16 here-document : 
+		printf("bash: maximum here-document count exceeded\n");
+		exit(2);

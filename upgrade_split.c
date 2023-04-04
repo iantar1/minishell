@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 09:52:08 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/29 00:23:21 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/03 03:03:52 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**upgrade_split(char *str, char *mark)
 	j = 0;
 	ptr = malloc((count_ptr(mark) + 1) * (sizeof(char *)));
 	if (!ptr)
-		return (0);
+		return (free(str), NULL);
 	while (mark[i])
 	{
 		if (mark[i] != 49)

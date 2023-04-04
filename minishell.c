@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/02 03:11:05 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/03 23:14:40 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void	print_tree(t_tree *tree)
 {
 	printf("cmd: %s\n", tree->data.cmd);
 	print_args(tree->data.args);
-	if (!(tree->right_c))
-		return ;
-	print_tree(tree->right_c);
 	if (!(tree->left_c))
 		return ;
+	if (!(tree->right_c))
+		return ;
 	print_tree(tree->left_c);
+	print_tree(tree->right_c);
 }
 
 int	main(int ac, char *av[], char **env)
@@ -116,8 +116,7 @@ int	main(int ac, char *av[], char **env)
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
 		tree = ft_tree_new(line, NULL, 0);
-		//printf("|||||\n");
-		parse_tree(line, tree);
+		parse_tree(line, tree, "root");
 		print_tree(tree);
 		// if (closed_parenthesis(line) && !emty_parenthesis(line))
 		// 	printf("YES\n");

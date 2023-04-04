@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/31 01:13:59 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/03 23:37:52 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 
 
-static char	*mark_redirection(char *str)
+char	*mark_redirection(char *str)
 {
 	int		i;
 	char	*mark;
@@ -141,7 +141,6 @@ static void	reform_it(t_list **lst)
 	*lst = (*lst)->next;
 	free(tmp1);
 }
-
 
 char	**reform_redirection(char *str)
 {
