@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/04 01:11:03 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/04 02:39:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ int	need_split(char *mark)
 	return (0);
 }
 
-t_tree	*ft_tree_new(char *line, t_tree *parent_add, int ch_level)
+t_tree	*ft_tree_new(char *line, t_tree *parent_add)
 {
 	t_tree	*new_tree;
 
 	new_tree = malloc(sizeof(t_tree));
+	new_tree->child_level = remove_first_parenthisis(&line);
 	new_tree->data = ft_data_new(line);
 	new_tree->parent = parent_add;
-	new_tree->child_level = ch_level;
 	new_tree->left_c = NULL;
 	new_tree->right_c = NULL;
 	return (new_tree);
@@ -128,8 +128,8 @@ void	parse_tree(char *line, t_tree *tree, char *str)
 	//&& ||
 	if (need_split(mark))
 	{
-		tree->left_c = ft_tree_new(splt_oper[0], tree, 0);
-		tree->right_c = ft_tree_new(splt_oper[2], tree, 0);
+		tree->left_c = ft_tree_new(splt_oper[0], tree);
+		tree->right_c = ft_tree_new(splt_oper[2], tree);
 		tree->data = ft_data_new(splt_oper[1]);
 		parse_tree(splt_oper[0], tree->left_c, "left");
 		parse_tree(splt_oper[2], tree->right_c, "right");
@@ -141,8 +141,8 @@ void	parse_tree(char *line, t_tree *tree, char *str)
 		// | 
 		if (need_split(mark))
 		{
-			tree->left_c = ft_tree_new(splt_oper[0], tree, 0);
-			tree->right_c = ft_tree_new(splt_oper[2], tree, 0);
+			tree->left_c = ft_tree_new(splt_oper[0], tree);
+			tree->right_c = ft_tree_new(splt_oper[2], tree);
 			tree->data = ft_data_new(splt_oper[1]);
 			parse_tree(splt_oper[0], tree->left_c, "left");
 			parse_tree(splt_oper[2], tree->right_c, "right");
@@ -154,8 +154,8 @@ void	parse_tree(char *line, t_tree *tree, char *str)
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
 			{
-				tree->left_c = ft_tree_new(splt_oper[0], tree, 0);
-				tree->right_c = ft_tree_new(splt_oper[2], tree, 0);
+				tree->left_c = ft_tree_new(splt_oper[0], tree);
+				tree->right_c = ft_tree_new(splt_oper[2], tree);
 				tree->data = ft_data_new(splt_oper[1]);
 				parse_tree(splt_oper[0], tree->left_c, "left");
 				parse_tree(splt_oper[2], tree->right_c, "right");

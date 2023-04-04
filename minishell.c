@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/03 23:14:40 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/04 02:33:53 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int	main(int ac, char *av[], char **env)
 		line = readline("minishell$ ");
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
+		printf("child_levl:%d\n", remove_first_parenthisis(&line));
+		printf("line:%s\n", line);
 		tree = ft_tree_new(line, NULL, 0);
 		parse_tree(line, tree, "root");
 		print_tree(tree);

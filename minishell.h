@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/03 23:38:15 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/04 02:40:13 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,10 @@ char	*get_next_line(int fd);
 void	here_doc(char *lim, int to_save);
 void	free_ptr(char **ptr);
 char	**reform_redirection(char *str);
-t_tree	*ft_tree_new(char *cmd_line, t_tree *parent_add, int ch_level);
+t_tree	*ft_tree_new(char *cmd_line, t_tree *parent_add);
 void	free_ptr(char **ptr);
 char	*mark_redirection(char *str);
+int		remove_first_parenthisis(char **str);
+int		surrounded_parenthisis(char *mark);
 
 #endif

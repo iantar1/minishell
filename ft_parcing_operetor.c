@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parcing_operetor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/22 14:17:19 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/04 01:26:45 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,42 +82,5 @@ char	*mark_the_mark_operator(char *mark)//split with the last && or ||
 	return (mark);
 }
 
-char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
-{
-	int		check;
-	int		i;
-	char	*mark;
 
-	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	i = -1;
-	check = 0;
-	while (str[++i])
-	{
-		if (str[i] == '(')
-		{
-			if (!check)
-				mark[i] = '1';
-			else
-				mark[i] = '0';
-			check++;
-		}
-		else if (str[i] == ')')
-		{
-			if (check == 1)
-				mark[i] = '1';
-			else
-				mark[i] = '0';
-			check--;
-		}
-		else
-			mark[i] = '0';
-	}
-	mark[i] = '\0';
-	return (mark);
-}
 
-// int	main()
-// {
-// 	char str[10] = "0220022002"
-// 	printf("%s")
-// }
