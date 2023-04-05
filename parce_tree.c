@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 02:14:06 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 02:59:41 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ int	len_ptr(char **ptr)
 	return (len);
 }
 
-int	ft_type(char *cmd)
+int	ft_type(char *cmd)//for FILE_ ane COMMAND, check the parent > or < or >>
 {
-	if (!cmd)//you need an information to know if cmd a file.
-		return (_FILE);
-	else if (!ft_strncmp(cmd, ">", ft_strlen(cmd)))
+	if (!ft_strncmp(cmd, ">", ft_strlen(cmd)))
 		return (OUT);
 	else if (!ft_strncmp(cmd, ">>", ft_strlen(cmd)))
 		return (APPEND);
@@ -41,7 +39,7 @@ int	ft_type(char *cmd)
 	else if (!ft_strncmp(cmd, "&&", ft_strlen(cmd)))
 		return (AND);
 	else
-		return (COMMAND);
+		return (-1);
 }
 
 t_data	ft_data_new(char *cmd_line)
@@ -79,12 +77,6 @@ t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 	new_tree->right_c = NULL;
 	return (new_tree);
 }
-
-// Read a data in x.
-// Allocate memory for a new node and store the address in pointer p.
-// Store the data x in the node p.
-// Recursively create the left subtree of p and make it the left child of p.
-// Recursively create the right subtree of p and make it the right child of p.
 
 void	parse_tree(char *line, t_tree *tree, char *str)
 {

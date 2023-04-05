@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 02:13:10 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 03:01:45 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	print_tree(t_tree *tree)
 	printf("CMD: %s\n", tree->data.cmd);
 	print_args(tree->data.args);
 	printf(" ->child_level:%d\n", tree->child_level);
+	printf(" ->type:%d\n", tree->data.type);
 	if (!(tree->left_c))
 		return ;
 	if (!(tree->right_c))
