@@ -6,11 +6,35 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/04 02:41:36 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 01:52:57 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	remove_surrounded_sp(char **str)
+{
+	char	*tmp;
+	int		len;
+	int		start;
+
+	start = 0;
+	if (!**str)
+		return ;
+	while (*(*str + start) == SPACE)
+		start++;
+	len = ft_strlen(*str) - 1;
+	if (start == len + 1)
+	{
+		*str = NULL;
+		return ;
+	}
+	while ( len && *(*str + len) == SPACE)
+		len--;
+	tmp = *str;
+	*str = ft_substr(*str, start, len - start + 1);
+	free(tmp);
+}
 
 char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
 {
@@ -63,7 +87,8 @@ int	surrounded_parenthisis(char *mark)
 		return (1);
 	return (0);
 }
-
+//tomorrow remove the spaces from the border.
+//than continue
 int	remove_first_parenthisis(char **str)
 {
 	int		child_level;
@@ -71,6 +96,9 @@ int	remove_first_parenthisis(char **str)
 	char	*tmp;
 	char	**splt;
 
+	remove_surrounded_sp(str);
+	if (!*str)
+		return (0);
 	mark = mark_first_parenthisis(*str);
 	child_level = 0;
 	while (surrounded_parenthisis(mark))
@@ -79,10 +107,16 @@ int	remove_first_parenthisis(char **str)
 		splt = upgrade_split(*str, mark);
 		*str = splt[0];
 		free(tmp);
-		free(splt[1]);
+		if (*str)
+			free(splt[1]);
+		else
+			return (free(splt), child_level);
 		free(splt);
-		mark = mark_first_parenthisis(*str);
+		//printf("mark:%s", mark);
 		child_level++;
+		remove_surrounded_sp(str);
+		printf("srtr:%s\n", *str);
+		mark = mark_first_parenthisis(*str);
 	}
 	if (!child_level)
 		free(mark);

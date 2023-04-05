@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/04 01:26:45 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 00:49:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_mark_operator(char *str)
 	char	*mark;
 	char	check;
 
-	if (!str)
+	if (!str || !*str)
 		return (NULL);
 	mark = malloc(sizeof(char) * ft_strlen(str) + 1);
 	check = 0;

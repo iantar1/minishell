@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/04 02:33:53 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 02:13:10 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	print_args(char **args)
 	int	i;
 
 	i = -1;
-	printf(" args: {");
+	printf(" ->args: {");
 	while (args[++i])
 	{
 		printf("%s", args[i]);
@@ -88,8 +88,9 @@ void	print_args(char **args)
 
 void	print_tree(t_tree *tree)
 {
-	printf("cmd: %s\n", tree->data.cmd);
+	printf("CMD: %s\n", tree->data.cmd);
 	print_args(tree->data.args);
+	printf(" ->child_level:%d\n", tree->child_level);
 	if (!(tree->left_c))
 		return ;
 	if (!(tree->right_c))
@@ -115,9 +116,13 @@ int	main(int ac, char *av[], char **env)
 		line = readline("minishell$ ");
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
-		printf("child_levl:%d\n", remove_first_parenthisis(&line));
-		printf("line:%s\n", line);
-		tree = ft_tree_new(line, NULL, 0);
+		add_history(line);
+		remove_surrounded_sp(&line);
+		if (!line)
+			continue ;
+		// printf("child_levl:%d\n", remove_first_parenthisis(&line));
+		// printf("line:%s****\n", line);
+		tree = ft_tree_new(&line, NULL, 0);
 		parse_tree(line, tree, "root");
 		print_tree(tree);
 		// if (closed_parenthesis(line) && !emty_parenthesis(line))
@@ -133,7 +138,6 @@ int	main(int ac, char *av[], char **env)
 		// buf = reform_redirection(line);
 		// show_result(buf, g_env);
 		//if (buf[0])
-		add_history(line);
 	}
 	return (0);
 }
