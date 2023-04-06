@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 02:10:59 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/06 02:48:35 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@
 # include <readline/history.h>
 # include "LIBFT/libft.h"
 
-typedef struct s_here_doc
-{
-	struct s_here_doc	*next;
-	void				*contet;
-}t_here_doc;
+// typedef struct s_here_doc
+// {
+// 	struct s_here_doc	*next;
+// 	void				*contet;
+// }t_here_doc;
 
 typedef struct s_file
 {
@@ -52,6 +52,12 @@ typedef struct s_data
 	char	**args;
 }	t_data;
 
+typedef struct s_heredoc
+{
+	char	*filename;
+	int		fd;
+}	t_heredoc;
+
 typedef struct s_tree
 {
 	struct s_tree	*parent;
@@ -59,9 +65,12 @@ typedef struct s_tree
 	struct s_tree	*right_c;
 	int				child_level;
 	t_data			data;
+	t_heredoc		here_doc;
 	t_files			infile;
 	t_files			outfile;
+	int				syntax_error;//when you have a syntax error asgin a 1 to it after that continue to open all here_doc then stop. 
 }	t_tree;
+
 
 typedef struct s_iofiles
 {
@@ -126,5 +135,8 @@ int		remove_first_parenthisis(char **str);
 int		surrounded_parenthisis(char *mark);
 int		need_split(char *mark);
 void	remove_surrounded_sp(char **str);
+char	**lst_to_str(t_list *lst);
+t_list	*str_to_lst(char **str);
+int		len_ptr(char **ptr);
 
 #endif

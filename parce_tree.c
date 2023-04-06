@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 02:59:41 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/06 01:18:45 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ void	parse_tree(char *line, t_tree *tree, char *str)
 		}
 		else if (line)
 		{
+			//here you wille handle the here_doc
+			line = reform_redirection(line);
+			//check_here_doc(&line);
 			mark = mark_redirection(line);
 			splt_oper = upgrade_split(line, mark);
 			// >> << > <

@@ -6,34 +6,12 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 03:01:45 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/05 15:51:04 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "LIBFT/libft.h"
-
-// t_tree	*ft_tree_new(void *content, t_tree *parent)
-// {
-// 	t_tree	*ptr;
-
-// 	ptr = (t_tree *)malloc(sizeof(t_tree));
-// 	if (!ptr)
-// 		return (0);
-// 	ptr->content = content;
-// 	ptr->right_child = NULL;
-// 	ptr->left_child = NULL;
-// 	ptr->parent = parent;
-// 	return (ptr);
-// }
-
-// <void	handle_sig(int sig)
-// {
-// 	//(void)sig;
-// 	printf("sig:%d\n", sig);
-// 	exit(0);
-// 	return ;
-// }>
 
 void	show_result(char **buf, t_env *env_no)
 {
