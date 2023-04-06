@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/06 02:48:35 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/06 06:45:37 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define _FILE 8
 # define OUT 4
 # define IN 5
+#define RED     "\033[31m"
+#define RESET   "\033[0m"
+#define WHITE   "\033[37m"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -65,7 +68,7 @@ typedef struct s_tree
 	struct s_tree	*right_c;
 	int				child_level;
 	t_data			data;
-	t_heredoc		here_doc;
+	t_heredoc		my_here_doc;
 	t_files			infile;
 	t_files			outfile;
 	int				syntax_error;//when you have a syntax error asgin a 1 to it after that continue to open all here_doc then stop. 
@@ -108,8 +111,10 @@ t_env	*create_env(char **env);
 //char	*expand(char *key, t_env *head_env);
 int		need_expand(char *str);
 char	*expand_mark(char *str);
+char	*join_evrything(char **splt);
 char	*ft_change_part(t_vars var, char *value, int *curser);
 char	*ft_expand(char *str);
+void	ft_expand_norm(t_vars var, char **splt);
 char	*ft_change_part(t_vars var, char *value, int *curser);
 char	*get_value(char *key, int len);
 int		len_to_exp(char *str);
@@ -125,7 +130,7 @@ char	*mark_the_mark_operator(char *mark);
 char	*mark_first_parenthisis(char *str);
 char	**reform_redirection(char *str);
 char	*get_next_line(int fd);
-void	here_doc(char *lim, int to_save);
+void	her_doc(char *lim, int to_save, t_heredoc	*here);
 void	free_ptr(char **ptr);
 char	**reform_redirection(char *str);
 t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level);
@@ -138,5 +143,7 @@ void	remove_surrounded_sp(char **str);
 char	**lst_to_str(t_list *lst);
 t_list	*str_to_lst(char **str);
 int		len_ptr(char **ptr);
+char	*heredoc_expanding(char *str);
+void	check_here_doc(char **line, t_heredoc	*herdoc);
 
 #endif

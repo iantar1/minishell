@@ -143,3 +143,7 @@ VII. SYNTAX ERROR:
 -> more than 16 here-document : 
 		printf("bash: maximum here-document count exceeded\n");
 		exit(2);
+		
+IMPORTANT:
+		-> in here_doc evrything will expand '"$USER"' -> '"iantar"'....
+		-> don't expand the lim. 
