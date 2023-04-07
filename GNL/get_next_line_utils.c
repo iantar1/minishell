@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:21:20 by iantar            #+#    #+#             */
-/*   Updated: 2023/02/25 20:30:57 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 00:36:21 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-char	*ft_strjoin(char **save_buf, char *buf, int len_buf)
+char	*gnt_strjoin(char **save_buf, char *buf, int len_buf)
 {
 	int		i;
 	int		j;

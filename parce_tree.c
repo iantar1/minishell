@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/06 06:26:06 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 02:52:25 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ t_data	ft_data_new(char *cmd_line)
 
 int	need_split(char *mark)
 {
-	int	i;
+	int		i;
+	char	c;
 
-	i = -1;
+	i = 0;
+	c = mark[i];
 	while (mark[++i])
-		if (mark[i] != '0')
+		if (mark[i] != c)
 			return (1);
 	return (0);
 }
@@ -78,7 +80,7 @@ t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 	return (new_tree);
 }
 
-void	parse_tree(char *line, t_tree *tree, char *str)
+void	parse_tree(char **line, t_tree *tree, char *str)
 {
 	char	*mark;
 	char	**splt_oper;
@@ -87,49 +89,56 @@ void	parse_tree(char *line, t_tree *tree, char *str)
 	// splt_oper = upgrade_split(line, mark);
 	// line = splt_oper[0];
 	// free(splt_oper[1]);
-	if (!*line)
+	if (!line || !*line || !**line)
 		return ;
-	mark = ft_mark_operator(line);
+	mark = ft_mark_operator(*line);
 	mark_the_mark_operator(mark);
-	splt_oper = upgrade_split(line, mark);
+	splt_oper = upgrade_split(*line, mark);
 	//&& ||
 	if (need_split(mark))
 	{
 		tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 		tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 		tree->data = ft_data_new(splt_oper[1]);
-		parse_tree(splt_oper[0], tree->left_c, "left");
-		parse_tree(splt_oper[2], tree->right_c, "right");
+		parse_tree(&splt_oper[0], tree->left_c, "left");
+		parse_tree(&splt_oper[2], tree->right_c, "right");
 	}
 	else
 	{
-		mark = ft_mark_operator(line);
-		splt_oper = upgrade_split(line, mark);
+		mark = ft_mark_operator(*line);
+		splt_oper = upgrade_split(*line, mark);
 		// | 
 		if (need_split(mark))
 		{
 			tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 			tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 			tree->data = ft_data_new(splt_oper[1]);
-			parse_tree(splt_oper[0], tree->left_c, "left");
-			parse_tree(splt_oper[2], tree->right_c, "right");
+			parse_tree(&splt_oper[0], tree->left_c, "left");
+			parse_tree(&splt_oper[2], tree->right_c, "right");
 		}
-		else if (line)
+		else if (*line)
 		{
 			//here you wille handle the here_doc
-			//line = reform_redirection(line);
-			check_here_doc(&line, &(tree->my_here_doc));
-			//check_here_doc(&line);
-			mark = mark_redirection(line);
-			splt_oper = upgrade_split(line, mark);
+			//*line = reform_redirection(*line);
+			check_here_doc(line, &(tree->my_here_doc));
+			//check_here_doc(&*line);
+			mark = mark_redirection(*line);
+			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
 			{
 				tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 				tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 				tree->data = ft_data_new(splt_oper[1]);
-				parse_tree(splt_oper[0], tree->left_c, "left");
-				parse_tree(splt_oper[2], tree->right_c, "right");
+				parse_tree(&splt_oper[0], tree->left_c, "left");
+				parse_tree(&splt_oper[2], tree->right_c, "right");
+			}
+			else if (len_ptr(splt_oper) == 2)
+			{
+				tree->data = ft_data_new(splt_oper[0]);
+				tree->right_c = ft_tree_new(&splt_oper[1], tree, tree->child_level);
+				//parse_tree(NULL, NULL, "left");
+				parse_tree(&splt_oper[1], tree->right_c, "right");
 			}
 		}
 	}

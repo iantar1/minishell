@@ -6,12 +6,12 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/06 08:21:29 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 03:04:33 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+//about creating a file_heredoc_name, create a function that open a file with a name
 static int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -36,7 +36,21 @@ static void	handle_sig(int sig)
 	exit(0);
 }
 
-char	*heredoc_expanding(char *str)
+int	there_quote(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == 39 || str[i] == 34)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*heredoc_expanding(char *str, char *lim)
 {
 	char	**splt;
 	t_vars	var;
@@ -44,6 +58,8 @@ char	*heredoc_expanding(char *str)
 	var.i = -1;
 	if (!str)
 		return (NULL);
+	if (there_quote(lim))
+		return (str);
 	splt = upgrade_split(str, expand_mark(str));
 	while (splt[++(var.i)])
 	{
@@ -56,18 +72,16 @@ char	*heredoc_expanding(char *str)
 char	*heredoc_filename(void)
 {
 	static int	here;
-	//char		*name;
+	char		*name;
 	char		*num;
 
 	if (here == 16)
 		here = 0;
 	num = ft_itoa(here);
-	printf(RED "hello\n");
-	//name = ft_strjoin("her_tmp", num);
+	name = ft_strjoin("her_tmp", num);
 	here++;
-	//free(num);
-	//return (name);
-	return (num);
+	free(num);
+	return (name);
 }
 
 char	*take_of(char *line)
@@ -95,18 +109,16 @@ char	*take_of(char *line)
 void	her_doc(char *lim, int to_save, t_heredoc	*here)
 {
 	char		*line;
-	//t_heredoc	here;
 	char		*name;
 
-	//signal(SIGINT, handle_sig);
+	lim = remove_quote(lim);
 	if (to_save)
 	{
-		//printf("her\n");
 		name = heredoc_filename();
 		(*here).fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
+		if ((*here).fd == -1)
+			return ;
 		(*here).filename = name;
-		// if (fd == -1)
-		// 	return ;
 	}
 	else
 	{
@@ -118,12 +130,12 @@ void	her_doc(char *lim, int to_save, t_heredoc	*here)
 	{
 		if (!line)
 			return ;
-		if (!ft_strcmp(lim, take_of(line)))
+		if (!ft_strcmp(line, lim))
 		{
 			free(line);
 			return ;
 		}
-		(write(1, "> ", 2), write((*here).fd, heredoc_expanding(line), ft_strlen(line)));
+		(write(1, "> ", 2), write((*here).fd, heredoc_expanding(line, lim), ft_strlen(line)));
 		line = (free(line), get_next_line(0));
 	}
 }
@@ -170,34 +182,6 @@ int	count_heredoc(char **splt)
 	return (cnt);
 }
 
-char	*_strjoin(char const *s1, char const *s2)
-{
-	char	*ptr;
-	size_t	i;
-	size_t	j;	
-
-	if (!s1 || !s2)
-		return (NULL);
-	i = 0;
-	j = 0;
-	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!ptr)
-		return (NULL);
-	while (i < ft_strlen(s1))
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	while (j < ft_strlen(s2))
-	{
-		ptr[i] = s2[j];
-		i++;
-		j++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
 void	keep_last_heredoc(char **line, char *name)
 {
 	char	*mark;
@@ -235,19 +219,19 @@ void	keep_last_heredoc(char **line, char *name)
 		i++;
 	}
 	i = 0;
-	*line = splt[i++];
 	free(mark);
-	while (i < len)
+	while (!splt[i])
+		i++;
+	*line = splt[i];
+	while (++i < len)
 	{
 		if (splt[i])
 		{
-			printf("line:%s, splt[%d]=%s\n", *line, i, splt[i]);
 			mark = *line;
-			*line = _strjoin(*line, splt[i]);//what the hell is that.
-			free(splt[i]);
+			*line = ft_strjoin(*line, splt[i]);
+			//splt[i] = NULL;
 			free(mark);
 		}
-		i++;
 	}
 	free(splt);
 }
@@ -262,10 +246,14 @@ t_heredoc	open_heredocs(char *line)//this function will open all the here_docs a
 	int			i;
 
 	i = 0;
-	signal(SIGINT, handle_sig);
 	mark = mark_here_doc(line);
 	splt = upgrade_split(line, mark);
 	num_here = count_heredoc(splt);
+	if (num_here > 16)
+	{
+		printf("minishell: maximum here-document count exceeded\n");
+		exit(2);
+	}
 	while (splt[i])
 	{
 		if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i])) && num_here > 1)
@@ -277,27 +265,23 @@ t_heredoc	open_heredocs(char *line)//this function will open all the here_docs a
 			&& num_here == 1)
 		{
 			her_doc(splt[i + 1], 1, &rtn_heredoc);
-			printf("here_doc:splt[%d]:%s\n", i, splt[i + 1]);
 			num_here--;
 		}
 		i++;
 	}
-	printf("i reach here\n");
 	return (rtn_heredoc);
 }
 
-
+//handle the signal and check the expanding of the here_doc
+//
 void	check_here_doc(char **line, t_heredoc	*herdoc)
 {
-	char	*tmp;
-
 	if (!is_here_needle(*line, "<<"))
 		return ;
-	tmp = *line;
-	//*line = reform_redirection(*line);
+	signal(SIGINT, handle_sig);
 	*herdoc = open_heredocs(*line);
-	printf("line:%s, filename:%s\n", *line, (*herdoc).filename);
 	keep_last_heredoc(line, (*herdoc).filename);
-	//free(tmp);
+	//*line = reform_redirection(*line);
+	//printf("line:%s, filename:%s\n", *line, (*herdoc).filename);
 }
 

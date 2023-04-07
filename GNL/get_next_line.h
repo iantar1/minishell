@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:21:28 by iantar            #+#    #+#             */
-/*   Updated: 2023/02/25 20:30:05 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 00:36:48 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdio.h>
 
 size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char **save_buf, char *buf, int len_buf);
+char	*gnt_strjoin(char **save_buf, char *buf, int len_buf);
 char	*get_next_line(int fd);
 int		there_new_line(char *save_buf);
 char	*rtn_line(char **save_buf, int index);

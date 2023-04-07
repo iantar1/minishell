@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/06 06:45:37 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 02:17:18 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_vars
 	int		end;
 }	t_vars;
 
-void	parse_tree(char *line, t_tree *tree, char *str);
+void	parse_tree(char **line, t_tree *tree, char *str);
 char	**upgrade_split(char *str, char *mark);
 char	*ft_mark(char *str);
 char	**get_env(char **env);
@@ -143,7 +143,7 @@ void	remove_surrounded_sp(char **str);
 char	**lst_to_str(t_list *lst);
 t_list	*str_to_lst(char **str);
 int		len_ptr(char **ptr);
-char	*heredoc_expanding(char *str);
+char	*heredoc_expanding(char *str, char *lim);
 void	check_here_doc(char **line, t_heredoc	*herdoc);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 15:51:04 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 02:54:30 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void	print_args(char **args)
 void	print_tree(t_tree *tree)
 {
 	printf("CMD: %s\n", tree->data.cmd);
-	print_args(tree->data.args);
 	printf(" ->child_level:%d\n", tree->child_level);
 	printf(" ->type:%d\n", tree->data.type);
-	if (!(tree->left_c))
-		return ;
-	if (!(tree->right_c))
-		return ;
-	print_tree(tree->left_c);
-	print_tree(tree->right_c);
+	print_args(tree->data.args);
+	if ((tree->left_c))
+		print_tree(tree->left_c);
+		//return ;
+	if ((tree->right_c))
+		print_tree(tree->right_c);
+		//return ;
 }
 
 int	main(int ac, char *av[], char **env)
@@ -102,7 +102,7 @@ int	main(int ac, char *av[], char **env)
 		// printf("child_levl:%d\n", remove_first_parenthisis(&line));
 		// printf("line:%s****\n", line);
 		tree = ft_tree_new(&line, NULL, 0);
-		parse_tree(line, tree, "root");
+		parse_tree(&line, tree, "root");
 		print_tree(tree);
 		// if (closed_parenthesis(line) && !emty_parenthesis(line))
 		// 	printf("YES\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:21:04 by iantar            #+#    #+#             */
-/*   Updated: 2023/02/25 20:48:20 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 00:37:15 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_next_line(int fd)
 		if (len == -1)
 			return ((free(buf)), (ft_free(&save_buf)), NULL);
 		buf[len] = '\0';
-		save_buf = ft_strjoin(&save_buf, buf, len);
+		save_buf = gnt_strjoin(&save_buf, buf, len);
 		index = there_new_line(save_buf);
 		if (index != -1)
 			return ((free(buf)), rtn_line(&save_buf, index));
