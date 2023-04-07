@@ -6,13 +6,13 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 03:04:33 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 06:38:36 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //about creating a file_heredoc_name, create a function that open a file with a name
-static int	ft_strcmp(const char *s1, const char *s2)
+int	here_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
@@ -106,38 +106,41 @@ char	*take_of(char *line)
 }
 
 //use reform cmd : >> << > < must be the last
-void	her_doc(char *lim, int to_save, t_heredoc	*here)
+char	*her_doc(char *lim, int to_save)
 {
-	char		*line;
-	char		*name;
+	char	*line;
+	char	*name;
+	int		fd;
 
 	lim = remove_quote(lim);
 	if (to_save)
 	{
 		name = heredoc_filename();
-		(*here).fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
-		if ((*here).fd == -1)
-			return ;
-		(*here).filename = name;
+		fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
+		if (fd == -1)
+			return (NULL);
 	}
 	else
 	{
-		(*here).fd = -1;
-		(*here).filename = NULL;
+		fd = -1;
+		name = NULL;
 	}
+		
 	line = (write(1, "> ", 2), get_next_line(0));
 	while (1)
 	{
 		if (!line)
-			return ;
-		if (!ft_strcmp(line, lim))
+			return (name);
+		if (!here_strcmp(line, lim))
 		{
 			free(line);
-			return ;
+			return (name);
 		}
-		(write(1, "> ", 2), write((*here).fd, heredoc_expanding(line, lim), ft_strlen(line)));
+		(write(1, "> ", 2), write(fd, heredoc_expanding(line, lim), ft_strlen(line)));
 		line = (free(line), get_next_line(0));
 	}
+	close(fd);
+	return (name);
 }
 
 // open all here_doc and save just the last.
@@ -151,11 +154,8 @@ char	*mark_here_doc(char *str)
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (str[i] == '<' && str[i + 1] == '<' && str[i + 2] != '<')
-		{
+		if (str[i] == '<')
 			mark[i] = '2';
-			mark[++i] = '2';
-		}
 		else if (str[i] <= 32)
 			mark[i] = '1';
 		else
@@ -164,6 +164,20 @@ char	*mark_here_doc(char *str)
 	}
 	mark[i] = '\0';
 	return (mark);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+		i++;
+	}
+	return (0);
 }
 
 int	count_heredoc(char **splt)
@@ -175,7 +189,7 @@ int	count_heredoc(char **splt)
 	i = 0;
 	while (splt[i])
 	{
-		if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i])) && splt[i + 1])
+		if (!ft_strcmp(splt[i], "<<") && splt[i + 1])
 			cnt++;
 		i++;
 	}
@@ -202,14 +216,14 @@ void	keep_last_heredoc(char **line, char *name)
 	len_her = count_heredoc(splt);
 	while (splt[i])
 	{
-		if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i])) && len_her > 1)
+		if (!ft_strcmp(splt[i], "<<") && len_her > 1)
 		{
 			splt[i] = (free(splt[i]), NULL);
 			i++;
 			splt[i] = (free(splt[i]), NULL);
 			len_her--;
 		}
-		else if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i])) && len_her == 1)
+		else if (!ft_strcmp(splt[i], "<<") && len_her == 1)
 		{
 			i++;
 			free(splt[i]);
@@ -237,11 +251,11 @@ void	keep_last_heredoc(char **line, char *name)
 }
 
 
-t_heredoc	open_heredocs(char *line)//this function will open all the here_docs and will return the last filename_heredoc
+char	*open_heredocs(char *line)//this function will open all the here_docs and will return the last filename_heredoc
 {
-	t_heredoc	rtn_heredoc;
 	char		**splt;
 	char		*mark;
+	char		*heredoc_filname;
 	int			num_here;
 	int			i;
 
@@ -256,31 +270,32 @@ t_heredoc	open_heredocs(char *line)//this function will open all the here_docs a
 	}
 	while (splt[i])
 	{
-		if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i])) && num_here > 1)
+		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
 		{
-			her_doc(splt[i + 1], 0, &rtn_heredoc);
+			her_doc(splt[i + 1], 0);
 			num_here--;
 		}
-		else if (!ft_strncmp(splt[i], "<<", ft_strlen(splt[i]))
-			&& num_here == 1)
+		else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
 		{
-			her_doc(splt[i + 1], 1, &rtn_heredoc);
+			heredoc_filname = her_doc(splt[i + 1], 1);
 			num_here--;
 		}
 		i++;
 	}
-	return (rtn_heredoc);
+	return (heredoc_filname);
 }
 
 //handle the signal and check the expanding of the here_doc
 //
-void	check_here_doc(char **line, t_heredoc	*herdoc)
+void	check_here_doc(char **line)
 {
+	char	*heredoc_filname;
+
 	if (!is_here_needle(*line, "<<"))
 		return ;
 	signal(SIGINT, handle_sig);
-	*herdoc = open_heredocs(*line);
-	keep_last_heredoc(line, (*herdoc).filename);
+	heredoc_filname = open_heredocs(*line);
+	keep_last_heredoc(line, heredoc_filname);
 	//*line = reform_redirection(*line);
 	//printf("line:%s, filename:%s\n", *line, (*herdoc).filename);
 }

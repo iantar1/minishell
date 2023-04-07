@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 02:17:18 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 06:38:09 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ typedef struct s_tree
 	struct s_tree	*right_c;
 	int				child_level;
 	t_data			data;
-	t_heredoc		my_here_doc;
-	t_files			infile;
-	t_files			outfile;
+	//t_heredoc		my_here_doc;
+	//t_files			infile;
+	//t_files			outfile;
 	int				syntax_error;//when you have a syntax error asgin a 1 to it after that continue to open all here_doc then stop. 
 }	t_tree;
 
@@ -130,7 +130,7 @@ char	*mark_the_mark_operator(char *mark);
 char	*mark_first_parenthisis(char *str);
 char	**reform_redirection(char *str);
 char	*get_next_line(int fd);
-void	her_doc(char *lim, int to_save, t_heredoc	*here);
+char	*her_doc(char *lim, int to_save);
 void	free_ptr(char **ptr);
 char	**reform_redirection(char *str);
 t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level);
@@ -144,6 +144,6 @@ char	**lst_to_str(t_list *lst);
 t_list	*str_to_lst(char **str);
 int		len_ptr(char **ptr);
 char	*heredoc_expanding(char *str, char *lim);
-void	check_here_doc(char **line, t_heredoc	*herdoc);
+void	check_here_doc(char **line);
 
 #endif

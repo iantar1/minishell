@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 02:52:25 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 06:29:50 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 	new_tree->parent = parent_add;
 	new_tree->left_c = NULL;
 	new_tree->right_c = NULL;
+	//new_tree->my_here_doc.filename = NULL;
+	//new_tree->my_here_doc.fd = -1;
 	return (new_tree);
 }
 
@@ -120,7 +122,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 		{
 			//here you wille handle the here_doc
 			//*line = reform_redirection(*line);
-			check_here_doc(line, &(tree->my_here_doc));
+			check_here_doc(line);
 			//check_here_doc(&*line);
 			mark = mark_redirection(*line);
 			splt_oper = upgrade_split(*line, mark);
