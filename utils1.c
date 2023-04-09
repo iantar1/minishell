@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/08 23:55:41 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/09 06:36:20 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ char	*ft_mark(char *str)//use it to check the syntax.
 			mark[i] = '0';
 		else if (check2 % 2)
 			mark[i] = '0';
-		else if (str[i] == '&' || str[i] == '|')
+		else if (str[i] == '&')
 			mark[i] = '2';
 		else if (str[i] == '>' || str[i] == '<')
 			mark[i] = '3';
 		else if (str[i] == '*')
 			mark[i] = '4';
-		else if (str[i] > 32)
-			mark[i] = '0';
-		else
+		else if (str[i] == '|')
+			mark[i] = '5';
+		else if (str[i] <= 32)
 			mark[i] = '1';
+		else
+			mark[i] = '0';
 	}
 	mark[i] = '\0';
 	return (mark);
@@ -61,26 +63,19 @@ char	*ft_mark(char *str)//use it to check the syntax.
 char	closed_quote(char *str)
 {
 	int		i;
-	int		check1;
-	int		check2;
-	char	first;
+	char	check;
+	//char	check2;
+	//char	first;
 
 	i = -1;
-	check1 = 0;
-	check2 = 0;
-	first = 0;
-	if (!str)
-		return (0);
+	check = 0;
+	//first = 0;
 	while (str[++i])
 	{
-		if (str[i] == 34 && ++check1)
+		if (str[i] == 34 && ++check)
 		{
 			if (first == 34)
-			{
-				first = 0;
-				check1 = 0;
-				check2 = 0;
-			}
+				set_zero(&first, 1, 3);
 			else if (first == 0)
 				first = 34;
 		}

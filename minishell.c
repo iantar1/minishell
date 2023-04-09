@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/09 01:28:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/09 06:13:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	main(int ac, char *av[], char **env)
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
 		add_history(line);
-		if (amniguous_redirect(line))
+		if (!closed_quote(line))
 		{
-			printf("AMNBIGUOUS\n");
+			printf("YES\n");
 			continue ;
 		}
 		remove_surrounded_sp(&line);

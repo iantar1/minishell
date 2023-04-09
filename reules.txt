@@ -123,15 +123,6 @@ VI. INPLEMENT THE TREE:
  .)	'<' or '>' + file_name
 
 
-VII. SYNTAX ERROR:
-	1) (cmd1) <seperate> (cmd2) : <seperate> must be || or | or && otherwise syntax error.
-	2) ((cmd)) : it's an error but dosn't show any message , just the exit status = 1
-	3) () : syntax error 
-	4) create a function to check |||.. and &&&... syntax errors.
-	5) check for single & and &&&... |||... 
-	6) a commad ling start with logic operators.
-	7) ambiguous redirect: ls > $rtfh ...
-	8) ls > (l > k > o > p): > + ( : syntax error
 
 
 
@@ -156,7 +147,7 @@ IMPORTANT:
 		-> add the wirldcard function.
 				
 
-
+AMNIGUOUS REDIRECT:
 	
 ✅ var="     "
 			> $var : split with SPACE if (and remove QUOTES) to the redirect_file = ""$var) if split[0] = NULL and remove QUOTES if ther is no QUOTE near var like "'"$var -> ambiguous
@@ -176,3 +167,49 @@ NOT:
 
 ✅ var doesn't exist; > ""$var / > ''$var / > ""''""$var""'' / > " "$var
 ✅ var=""; > " "$var ; ""$var
+
+
+VII. SYNTAX ERROR:
+
+	1) (cmd1) <seperate> (cmd2) : <seperate> must be || or | or && otherwise syntax error.
+	2) ((cmd)) : it's an error but dosn't show any message , just the exit status = 1
+	3) () : syntax error 
+	4) create a function to check |||.. and &&&... syntax errors.
+	5) check for single & and &&&... |||... 
+	6) a commad ling start with logic operators.
+	7) ambiguous redirect: ls > $rtfh ...
+	8) ls > (l > k > o > p): > + ( : syntax error
+
+
+syntax error :
+1)	> |
+2)	> ||
+3)	> (file)
+4)	> &&
+5)  &&&.. or |||... or & or >>> <<<
+6) (ls) (ls): (cmd...) (cmd...) must be separate by a symbole 
+7)(cmd) cmd... 
+8) unclosed " '
+9) unclosed ()
+10) ><
+11) (ls) < file ls
+
+
+
+NOT:
+	|| >
+	| >
+	(cmd) > file or (cmd) < file
+
+IMPORTANT:
+	in syntax_error , exit with 258
+	if (fork() == 0)
+		exit(258);
+
+
+For (): parenthesis must not be empty
+Before (): Pipe or logical operator or nothing
+After (): Pipe or logical operator or redirection (No arguments)
+Pipe and logical operators must be neither the first nor the last
+Redirections must not be the last.
+redirections are allowed after logical operators, and no other two neighboring operators are valid.
