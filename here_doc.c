@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 06:38:36 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/08 01:19:28 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	there_quote(char *str)
 	int	i;
 
 	i = 0;
+	printf("{{{{str:%s}}}}\n", str);
 	while (str[i])
 	{
 		if (str[i] == 39 || str[i] == 34)
@@ -71,16 +72,29 @@ char	*heredoc_expanding(char *str, char *lim)
 
 char	*heredoc_filename(void)
 {
-	static int	here;
-	char		*name;
-	char		*num;
+	char	*name;
+	char	*buf;
+	int		fd;
+	int		i;
+	int		j;
 
-	if (here == 16)
-		here = 0;
-	num = ft_itoa(here);
-	name = ft_strjoin("her_tmp", num);
-	here++;
-	free(num);
+	buf = malloc(21);
+	fd = open("/dev/random", O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	read(fd, buf, 20);
+	close(fd);
+	buf[20] = '\0';
+	name = malloc(6);
+	i = -1;
+	j = -1;
+	while (buf[++i] && j < 5)
+	{
+		if (ft_isalnum(buf[i]))
+			name[++j] = buf[i];
+	}
+	name[5] = '\0';
+	free(buf);
 	return (name);
 }
 
@@ -111,8 +125,9 @@ char	*her_doc(char *lim, int to_save)
 	char	*line;
 	char	*name;
 	int		fd;
+	char	*new_lim;
 
-	lim = remove_quote(lim);
+	new_lim = remove_quote(lim);
 	if (to_save)
 	{
 		name = heredoc_filename();
@@ -130,11 +145,11 @@ char	*her_doc(char *lim, int to_save)
 	while (1)
 	{
 		if (!line)
-			return (name);
-		if (!here_strcmp(line, lim))
+			return (close(fd), name);
+		if (!here_strcmp(line, new_lim))
 		{
 			free(line);
-			return (name);
+			return (close(fd), name);
 		}
 		(write(1, "> ", 2), write(fd, heredoc_expanding(line, lim), ft_strlen(line)));
 		line = (free(line), get_next_line(0));
@@ -233,7 +248,7 @@ void	keep_last_heredoc(char **line, char *name)
 		i++;
 	}
 	i = 0;
-	free(mark);
+	//free(mark);
 	while (!splt[i])
 		i++;
 	*line = splt[i];
@@ -241,6 +256,9 @@ void	keep_last_heredoc(char **line, char *name)
 	{
 		if (splt[i])
 		{
+			mark = *line;
+			*line = ft_strjoin(*line, " ");
+			free(mark);
 			mark = *line;
 			*line = ft_strjoin(*line, splt[i]);
 			//splt[i] = NULL;

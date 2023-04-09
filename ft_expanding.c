@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/03/30 00:11:41 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/09 00:39:33 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,19 +151,23 @@ char	*get_value(char *key, int len)
 char	*ft_change_part(t_vars var, char *value, int *curser)
 {
 	int		new_len;
+	int		len_value;
 	int		i;
 	int		j;
 	char	*rtn_str;
 
 	i = -1;
 	j = -1;
+	rtn_str = NULL;
 	if (!value)
-		value = "";
-	new_len = ft_strlen(var.str) - (var.end - var.start) + ft_strlen(value);
+		len_value = 0;
+	else
+		len_value = ft_strlen(value);
+	new_len = ft_strlen(var.str) - (var.end - var.start) + len_value;
 	rtn_str = malloc(new_len + 1);
 	while (++i < var.start)
 		rtn_str[i] = var.str[i];
-	while (++j < (int)ft_strlen(value))
+	while (++j < len_value)
 		rtn_str[i++] = value[j];
 	*curser = i - 1;
 	j = 0;
@@ -210,5 +214,7 @@ char	*ft_expand(char *str)
 			ft_expand_norm(var, splt);
 		}
 	}
+	if (!splt || !splt[0])
+		return (NULL);
 	return (join_evrything(splt));
 }

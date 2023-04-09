@@ -137,8 +137,8 @@ VII. SYNTAX ERROR:
 
 -> multiple rediractions <infile1 <infile2 <infile3 .... >outfile1 >outfile2 ....
 -> here_doc
--> amniguous redirect
--> syntax error
+---> amniguous redirect
+---> syntax error
 ->-> parce the tree.
 -> more than 16 here-document : 
 		printf("bash: maximum here-document count exceeded\n");
@@ -147,3 +147,32 @@ VII. SYNTAX ERROR:
 IMPORTANT:
 		-> in here_doc evrything will expand '"$USER"' -> '"iantar"'....
 		-> don't expand the lim. 
+		-> don't forget to edit the expanding fun : export a="    jk" 
+			echo "$a" or "'$a'" is deffrent than $a 
+			but in the here_doc they save the space : so edit just the expanding fun becouse you 
+			use it in here doc too.
+		-> don't forget the signals in here_doc.
+		-> ls > file > fil1 > fil2 ... -> open all of them and send the last one
+		-> add the wirldcard function.
+				
+
+
+	
+✅ var="     "
+			> $var : split with SPACE if (and remove QUOTES) to the redirect_file = ""$var) if split[0] = NULL and remove QUOTES if ther is no QUOTE near var like "'"$var -> ambiguous
+			> ""$var
+			> """"$var""""''''""
+
+✅ var="a    "
+			> $var-
+
+✅ var="     a"
+			> b$var
+ 
+✅ var doesn't exist
+			> $var
+
+NOT:
+
+✅ var doesn't exist; > ""$var / > ''$var / > ""''""$var""'' / > " "$var
+✅ var=""; > " "$var ; ""$var

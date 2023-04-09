@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 06:29:00 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/09 01:28:32 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_args(char **args)
 	{
 		printf("%s", args[i]);
 		if (args[i + 1])
-			printf(", ");
+			printf(", .");
 	}
 	printf("}");
 	printf("\n");
@@ -87,7 +87,8 @@ int	main(int ac, char *av[], char **env)
 	//char	**buf;
 
 	((void)av, (void)ac);
-	g_env = new_line("?=0");
+	//g_env = new_line("?=0");
+	g_env = new_line("var=a     ");
 	g_env->next = create_env(env);
 	//printf("%s\n", ft_expand("hello$PATH"));
 	//signal(SIGINT, handle_sig);
@@ -97,28 +98,18 @@ int	main(int ac, char *av[], char **env)
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
 		add_history(line);
+		if (amniguous_redirect(line))
+		{
+			printf("AMNBIGUOUS\n");
+			continue ;
+		}
 		remove_surrounded_sp(&line);
 		if (!line)
 			continue ;
-		// printf("child_levl:%d\n", remove_first_parenthisis(&line));
-		// printf("line:%s****\n", line);
 		tree = ft_tree_new(&line, NULL, 0);
 		//set_null_lkolxi(tree);
 		parse_tree(&line, tree, "root");
 		print_tree(tree);
-		// if (closed_parenthesis(line) && !emty_parenthesis(line))
-		// 	printf("YES\n");
-		// else
-		// 	printf("minishell: syntax error\n");
-		//mark = mark_first_parenthisis(line);
-		// if (!valid_operators(mark))
-		// 	printf("minishell: syntax error\n");
-		//buf = upgrade_split(line, mark);
-		//buf = reform_redirection(line);
-		//printf("mark:      %p\n", buf);
-		// buf = reform_redirection(line);
-		// show_result(buf, g_env);
-		//if (buf[0])
 	}
 	return (0);
 }

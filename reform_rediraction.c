@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/03 23:37:52 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/07 08:32:24 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,20 @@
 // cmd > arg1 arg2 arg3 ...  -->  cmd  arg2 arg3 ... > arg1
 
 
+void	free_lst(t_list *lst)
+{
+	t_list	*tmp;
 
-char	*mark_redirection(char *str)
+	tmp = lst;
+	while (tmp)
+	{
+		free(tmp->content);
+		tmp = tmp->next;
+	}
+	free(lst);
+}
+
+char	*mark_redirection(char *str, int sp)
 {
 	int		i;
 	char	*mark;
@@ -31,7 +43,7 @@ char	*mark_redirection(char *str)
 	{
 		if (str[i] == '>' || str[i] == '<')
 			mark[i] = '2';
-		else if (str[i] <= 32)
+		else if (str[i] <= 32 && sp)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -41,7 +53,7 @@ char	*mark_redirection(char *str)
 	return (mark);
 }
 
-char	**lst_to_str(t_list *lst)
+char	**lst_to_arr(t_list *lst)
 {
 	int		i;
 	char	**str;
@@ -60,7 +72,7 @@ char	**lst_to_str(t_list *lst)
 	return (str);
 }
 
-t_list	*str_to_lst(char **str)
+t_list	*arr_to_lst(char **str)
 {
 	int		i;
 	t_list	*tmp;
@@ -142,22 +154,40 @@ static void	reform_it(t_list **lst)
 	free(tmp1);
 }
 
-char	**reform_redirection(char *str)
+char	*lst_to_str(t_list *lst)
+{
+	t_list	*tmp;
+	char	*str;
+	int		i;
+
+	i = 0;
+	tmp = lst;
+	str = lst->content;
+	tmp = tmp->next;
+	while (tmp)
+	{
+		str = ft_strjoin(str, " ");
+		str = ft_strjoin(str, tmp->content);
+		tmp = tmp->next;
+	}
+	return (str);
+}
+
+char	*reform_redirection(char *str)
 {
 	char	**splt_cmd;
-	char	**rtn_cmd;
+	char	*rtn_str;
 	char	*mark;
 	t_list	*lst;
-	t_list	*tmp;
 
-	mark = mark_redirection(str);
+	mark = mark_redirection(str, SPACE);
+	if (!need_split(mark))
+		return (str);
 	splt_cmd = upgrade_split(str, mark);
-	lst = str_to_lst(splt_cmd);
-	tmp = lst;
-	while (tmp)
-		tmp = tmp->next;
+	lst = arr_to_lst(splt_cmd);
 	reform_it(&lst);
-	rtn_cmd = lst_to_str(lst);
+	rtn_str = lst_to_str(lst);
+	free_lst(lst);
 	free(str);
-	return (rtn_cmd);
+	return (rtn_str);
 }
