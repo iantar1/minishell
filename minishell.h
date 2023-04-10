@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/08 18:37:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:27:47 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
+# include <sys/stat.h>
+# include <termios.h>
+# include <sys/errno.h>
 # include "LIBFT/libft.h"
 
 // typedef struct s_here_doc
@@ -108,7 +112,7 @@ void	parse_tree(char **line, t_tree *tree, char *str);
 char	**upgrade_split(char *str, char *mark);
 char	*ft_mark(char *str);
 char	**get_env(char **env);
-char	closed_quote(char *str);
+char	unclosed_quote(char *str);
 char	*remove_quote(char *str);
 t_env	*create_env(char **env);
 //char	*expand(char *key, t_env *head_env);
@@ -150,5 +154,7 @@ void	check_here_doc(char **line);
 void	free_lst(t_list *lst);
 int		ft_strcmp(const char *s1, const char *s2);
 int		amniguous_redirect(char	*str);
+t_list	*expand_wildcard(char *to_change, char *mask);
+int		syntax_error(char *str);
 
 #endif

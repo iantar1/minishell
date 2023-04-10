@@ -6,47 +6,12 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/09 06:13:27 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/10 10:50:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "LIBFT/libft.h"
-
-void	show_result(char **buf, t_env *env_no)
-{
-	int	i;
-
-	i = -1;
-	printf(" -------------\n");
-	(void)env_no;
-	while (buf[++i])
-	{
-		if (!closed_quote(buf[i]))
-			printf("syntax error\n");
-		else
-		{
-			printf("%s ", remove_quote(ft_expand(buf[i])));
-			//printf("%s\n", get_value(char *key, int len));
-			// if (need_expand(buf[i]))
-			// 	expand(&buf, env_no);
-			// else if (closed_quote(buf[i]))
-			//printf("cmd:%s\n", remove_quote(buf[i]));
-			//printf("%s ", buf[i]);
-			// if (!ft_strncmp("<<", buf[i], 2))
-			// {
-			// 	if (fork() == 0)
-			// 	{
-			// 		here_doc("lim\n", 1);
-			// 		//signal(SIGINT, handle_sig);
-			// 	}
-			// 	signal(SIGINT, SIG_IGN);
-			// 	wait(NULL);
-			// }
-		}
-	}
-	printf("\n -------------\n");
-}
 
 void	print_args(char **args)
 {
@@ -83,6 +48,7 @@ int	main(int ac, char *av[], char **env)
 {
 	char	*line;
 	t_tree	*tree;
+	char	*tmp;
 	//char	*mark;
 	//char	**buf;
 
@@ -98,11 +64,13 @@ int	main(int ac, char *av[], char **env)
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
 		add_history(line);
-		if (!closed_quote(line))
+		tmp = ft_strdup(line);
+		if (syntax_error(tmp))
 		{
-			printf("YES\n");
+			ft_putstr_fd("minishell: syntax error\n", 2);
 			continue ;
 		}
+		printf("line:%s\n", line);
 		remove_surrounded_sp(&line);
 		if (!line)
 			continue ;

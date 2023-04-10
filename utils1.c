@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/09 06:36:20 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:27:32 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,31 @@ char	*ft_mark(char *str)//use it to check the syntax.
 	return (mark);
 }
 
-char	closed_quote(char *str)
+char	unclosed_quote(char *str)
 {
 	int		i;
 	char	check;
-	//char	check2;
-	//char	first;
 
 	i = -1;
 	check = 0;
-	//first = 0;
 	while (str[++i])
 	{
-		if (str[i] == 34 && ++check)
+		if (str[i] == 34 && check != 39)
 		{
-			if (first == 34)
-				set_zero(&first, 1, 3);
-			else if (first == 0)
-				first = 34;
+			if (check == 34)
+				check = 0;
+			else
+				check = 34;
 		}
-		if (str[i] == 39 && ++check2)
+		if (str[i] == 39 && check != 34)
 		{
-			if (first == 39)
-			{
-				first = 0;
-				check1 = 0;
-				check2 = 0;
-			}
-			else if (first == 0)
-				first = 39;
+			if (check == 39)
+				check = 0;
+			else
+				check = 39;
 		}
 	}
-	if (!(check1 % 2) && first == 34)
-		return (34);
-	if ((!(check2 % 2) && first == 39) || (!check1 && !check2))
-		return (39);
-	return (0);
+	return (check);
 }
 
 char	*remove_quote(char *str)

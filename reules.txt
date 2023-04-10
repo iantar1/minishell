@@ -1,3 +1,16 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    reules.txt                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
+#    Updated: 2023/04/10 10:30:44 by iantar           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
 I. SPLIT YOUR STRING
 
 	1)   >  <  | : 11111
@@ -167,17 +180,17 @@ NOT:
 
 ✅ var doesn't exist; > ""$var / > ''$var / > ""''""$var""'' / > " "$var
 ✅ var=""; > " "$var ; ""$var
+⬜ -->>> wirldcard if (lst_size() > 1) --> ambiguous
 
 
 VII. SYNTAX ERROR:
 
 	1) (cmd1) <seperate> (cmd2) : <seperate> must be || or | or && otherwise syntax error.
-	2) ((cmd)) : it's an error but dosn't show any message , just the exit status = 1
-	3) () : syntax error 
+	2) ((..((cmd))..)) : it's an error but dosn't show any message , just the exit status = 1
+	✅ () : syntax error 
 	4) create a function to check |||.. and &&&... syntax errors.
 	5) check for single & and &&&... |||... 
 	6) a commad ling start with logic operators.
-	7) ambiguous redirect: ls > $rtfh ...
 	8) ls > (l > k > o > p): > + ( : syntax error
 
 
@@ -186,13 +199,14 @@ syntax error :
 2)	> ||
 3)	> (file)
 4)	> &&
-5)  &&&.. or |||... or & or >>> <<<
+✅  &&&.. or |||... or & or >>> <<<
 6) (ls) (ls): (cmd...) (cmd...) must be separate by a symbole 
 7)(cmd) cmd... 
-8) unclosed " '
-9) unclosed ()
-10) ><
-11) (ls) < file ls
+✅ unclosed " '
+✅ unclosed ()
+✅ >< <>
+11) (ls) < file ls arg1 arg2 .... : use the reforme function.
+✅ ;
 
 
 
@@ -207,9 +221,23 @@ IMPORTANT:
 		exit(258);
 
 
-For (): parenthesis must not be empty
-Before (): Pipe or logical operator or nothing
-After (): Pipe or logical operator or redirection (No arguments)
+✅For (): parenthesis must not be empty
+Before (): Pipe or logical operator or or spaces nothing 
+->After (): Pipe or logical operator or redirection or spaces(No arguments)
 Pipe and logical operators must be neither the first nor the last
 Redirections must not be the last.
 redirections are allowed after logical operators, and no other two neighboring operators are valid.
+
+
+
+SOLUTION : 
+		-> splti with | || && (after checking that they are valid)
+			 * eliminate all the space 111111...
+			 * check for ")(" and 
+			 * ")" + 'char' or 'char' + "(": char can be anything exepte | & > < 
+			 ----->>> if you find it -> STOP.
+		-> split with > or < or >> or << (after checking that they are valid)
+			 * if you find in the next NULL or | or || or && : STOP
+
+💡 IDEA: 
+	for() to check syntax error and exit(1) if there is a syntax_error or exit(0) if not.

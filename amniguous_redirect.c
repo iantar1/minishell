@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/09 03:17:21 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/10 03:00:35 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	check_ambiguous(char *str)
 	if (!str)
 		return (0);
 	str = ft_expand(str);//free()
-	printf("str=%s\n", str);
 	if (just_quote(str))
 		check++;
 	str = remove_quote(str);
