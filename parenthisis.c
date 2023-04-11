@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/05 01:52:57 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/10 23:08:02 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	remove_first_parenthisis(char **str)
 	char	*tmp;
 	char	**splt;
 
-	remove_surrounded_sp(str);
 	if (!*str)
 		return (0);
 	mark = mark_first_parenthisis(*str);
@@ -112,10 +111,8 @@ int	remove_first_parenthisis(char **str)
 		else
 			return (free(splt), child_level);
 		free(splt);
-		//printf("mark:%s", mark);
 		child_level++;
 		remove_surrounded_sp(str);
-		printf("srtr:%s\n", *str);
 		mark = mark_first_parenthisis(*str);
 	}
 	if (!child_level)

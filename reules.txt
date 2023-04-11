@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/10 10:30:44 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/11 10:11:06 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -195,17 +195,17 @@ VII. SYNTAX ERROR:
 
 
 syntax error :
-1)	> |
-2)	> ||
-3)	> (file)
-4)	> &&
+✅	> |
+✅	> ||
+✅	> (file)
+✅	> &&
 ✅  &&&.. or |||... or & or >>> <<<
-6) (ls) (ls): (cmd...) (cmd...) must be separate by a symbole 
-7)(cmd) cmd... 
+✅ (ls) (ls): (cmd...) (cmd...) must be separate by a symbole 
+✅(cmd) cmd... 
 ✅ unclosed " '
 ✅ unclosed ()
 ✅ >< <>
-11) (ls) < file ls arg1 arg2 .... : use the reforme function.
+⛔ (ls) < file ls arg1 arg2 .... : use the reforme function.
 ✅ ;
 
 
@@ -222,11 +222,11 @@ IMPORTANT:
 
 
 ✅For (): parenthesis must not be empty
-Before (): Pipe or logical operator or or spaces nothing 
-->After (): Pipe or logical operator or redirection or spaces(No arguments)
-Pipe and logical operators must be neither the first nor the last
-Redirections must not be the last.
-redirections are allowed after logical operators, and no other two neighboring operators are valid.
+✅Before (): Pipe or logical operator or or spaces nothing 
+✅After (): Pipe or logical operator or redirection or spaces(No arguments)
+✅Pipe and logical operators must be neither the first nor the last
+✅Redirections must not be the last.
+✅redirections are allowed after logical operators, and no other two neighboring operators are valid.
 
 
 
@@ -239,5 +239,4 @@ SOLUTION :
 		-> split with > or < or >> or << (after checking that they are valid)
 			 * if you find in the next NULL or | or || or && : STOP
 
-💡 IDEA: 
-	for() to check syntax error and exit(1) if there is a syntax_error or exit(0) if not.
+⛔ check : char	*mark_redirection(char *str, int sp); diff between  > and '>'
