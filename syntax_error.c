@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 02:48:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 03:16:24 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,10 +412,6 @@ char	unvalid_next_parenthesis(char *str)
 	return (0);
 }
 
-// char	*mark_more_arg(char *str)
-// {
-// }
-
 char	*mark_more_arg(char *str)
 {
 		int		i;
@@ -464,7 +460,6 @@ char	red_more_arg(char *str)
 
 	i = -1;
 	mark = mark_more_arg(str);
-	//printf("mark:%s\n", mark);
 	splt = upgrade_split(str, mark);
 	while (splt && splt[++i])
 	{
@@ -514,6 +509,5 @@ int	syntax_error(char *str)
 		return (free(mark), 1);
 	if (red_more_arg(str))
 		return (1);
-	printf("HERE\n");
 	return (0);
 }

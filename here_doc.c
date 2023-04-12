@@ -6,12 +6,12 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 00:40:20 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 06:25:01 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//about creating a file_heredoc_name, create a function that open a file with a name
+
 int	here_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -41,7 +41,6 @@ int	there_quote(char *str)
 	int	i;
 
 	i = 0;
-	//printf("{{{{str:%s}}}}\n", str);
 	while (str[i])
 	{
 		if (str[i] == 39 || str[i] == 34)
@@ -98,26 +97,26 @@ char	*heredoc_filename(void)
 	return (name);
 }
 
-char	*take_of(char *line)
-{
-	int	len;
-	int	i;
+// char	*take_of(char *line)
+// {
+// 	int	len;
+// 	int	i;
 
-	i = 0;
-	if (!line)
-		return (NULL);
-	len = ft_strlen(line);
-	while (i < len)
-	{
-		if (line[i] == '\n')
-		{
-			line[i] = '\0';
-			return (line);
-		}
-		i++;
-	}
-	return (line);
-}
+// 	i = 0;
+// 	if (!line)
+// 		return (NULL);
+// 	len = ft_strlen(line);
+// 	while (i < len)
+// 	{
+// 		if (line[i] == '\n')
+// 		{
+// 			line[i] = '\0';
+// 			return (line);
+// 		}
+// 		i++;
+// 	}
+// 	return (line);
+// }
 
 //use reform cmd : >> << > < must be the last
 char	*her_doc(char *lim, int to_save)
@@ -126,6 +125,7 @@ char	*her_doc(char *lim, int to_save)
 	char	*name;
 	int		fd;
 	char	*new_lim;
+	char	*here_exp;
 
 	new_lim = remove_quote(lim);
 	if (to_save)
@@ -151,27 +151,46 @@ char	*her_doc(char *lim, int to_save)
 			free(line);
 			return (close(fd), name);
 		}
-		(write(1, "> ", 2), write(fd, heredoc_expanding(line, lim), ft_strlen(line)));
+		//printf("HOO");
+		//printf("%s", line);
+		//printf("HERE:%s", heredoc_expanding(line, lim));
+		//printf("ft_strlen(line):%zu\n", ft_strlen(line));
+		here_exp = heredoc_expanding(line, lim);
+		(write(1, "> ", 2), write(fd, here_exp, ft_strlen(here_exp)));
 		line = (free(line), get_next_line(0));
 	}
 	close(fd);
 	return (name);
 }
 
-// open all here_doc and save just the last.
-
 char	*mark_here_doc(char *str)
 {
 	int		i;
+	int		check;
 	char	*mark;
 
 	i = 0;
+	check = 0;
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (str[i] == '<')
+		if (str[i] == 34 && check != 39)
+		{
+			if (check)
+				check = 0;
+			else
+				check = 34;
+		}
+		if (str[i] == 39 && check != 34)
+		{
+			if (check)
+				check = 0;
+			else
+				check = 39;
+		}
+		if (str[i] == '<' && !check)
 			mark[i] = '2';
-		else if (str[i] <= 32)
+		else if (str[i] == 32)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -273,7 +292,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 {
 	// char		**splt;
 	// char		*mark;
-	char		*heredoc_filname;
+	char		*heredoc_filname = NULL;
 	//int			num_here;
 	int			i;
 
@@ -286,27 +305,30 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 	// 	printf("minishell: maximum here-document count exceeded\n");
 	// 	exit(2);
 	// }
-	signal(SIGINT, handle_sig);
-	while (splt[i])
+	if (fork() == 0)
 	{
-		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
+		signal(SIGINT, handle_sig);
+		while (splt[i])
 		{
-			her_doc(splt[i + 1], 0);
-			num_here--;
+			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
+			{
+				her_doc(splt[i + 1], 0);
+				num_here--;
+			}
+			else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
+			{
+				heredoc_filname = her_doc(splt[i + 1], 1);
+				num_here--;
+			}
+			i++;
 		}
-		else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
-		{
-			heredoc_filname = her_doc(splt[i + 1], 1);
-			num_here--;
-		}
-		i++;
 	}
-	//signal(SIGINT, );
+	///signal(SIGINT, SIG_IGN);
+	wait(NULL);
 	return (heredoc_filname);
 }
 
 //handle the signal and check the expanding of the here_doc
-//
 void	check_here_doc(char **line)
 {
 	char	*heredoc_filname;
