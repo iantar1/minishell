@@ -6,16 +6,11 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/10 03:00:35 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:55:30 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//ls > "empty" or "more than one after expanding"
-//if ther is quotes it's not an ambiguous redire
-//export a=""hell 
-//export a="x        y"
-//ls > "" no such file or directory
 
 int	just_quote(char *str)
 {

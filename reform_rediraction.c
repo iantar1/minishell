@@ -6,18 +6,11 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:26:03 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:50:25 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//you need to modify the cmd before spliting "ls > out -l" becames "ls -l > out"
-// cat > outfile file1 file2... -> cat file1 file2 ... > outfile
-// creat a functin take the args after the arg after > or < to the front of the cmd
-// cmd < arg1 arg2 arg3 ...  -->  cmd  arg2 arg3 ... < arg1
-// cmd > arg1 arg2 arg3 ...  -->  cmd  arg2 arg3 ... > arg1
-
 
 void	free_lst(t_list *lst)
 {
