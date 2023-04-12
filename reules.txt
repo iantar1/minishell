@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/12 03:10:44 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/12 07:17:41 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -246,8 +246,10 @@ SOLUTION :
 IMPORTANT:
 	to do list:
 		✅ (ls) > ouc -al : syntax_error
-		-> check expanding and make it run
+		✅ check expanding and make it run
 		-> signal in here_doc and check its expanding too.
 		-> nominette
 		-> wirldcard in ambiguous functin.
 		⛔ remove_quotes
+		⛔ '('(ls || cat)')'
+		⛔ ('('ls)

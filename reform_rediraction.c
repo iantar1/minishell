@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 00:11:49 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:26:03 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ void	free_lst(t_list *lst)
 	free(lst);
 }
 
+void	ft_flag(char c, int *flag)
+{
+	if (c == 34 && *flag != 39)
+	{
+		if (!*flag)
+			*flag = 34;
+		else
+			*flag = 0;
+	}
+	if (c == 39 && *flag != 34)
+	{
+		if (!*flag)
+			*flag = 39;
+		else
+			*flag = 0;
+	}
+}
+
 char	*mark_redirection(char *str, int sp)
 {
 	int		i;
@@ -43,20 +61,7 @@ char	*mark_redirection(char *str, int sp)
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (str[i] == 34 && flag != 39)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
-		if (str[i] == 39 && flag != 34)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
+		ft_flag(str[i], &flag);
 		if (!flag && (str[i] == '>' || str[i] == '<'))
 			mark[i] = '2';
 		else if (str[i] <= 32 && sp)

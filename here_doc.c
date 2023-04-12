@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 06:25:01 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:08:53 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,28 +97,6 @@ char	*heredoc_filename(void)
 	return (name);
 }
 
-// char	*take_of(char *line)
-// {
-// 	int	len;
-// 	int	i;
-
-// 	i = 0;
-// 	if (!line)
-// 		return (NULL);
-// 	len = ft_strlen(line);
-// 	while (i < len)
-// 	{
-// 		if (line[i] == '\n')
-// 		{
-// 			line[i] = '\0';
-// 			return (line);
-// 		}
-// 		i++;
-// 	}
-// 	return (line);
-// }
-
-//use reform cmd : >> << > < must be the last
 char	*her_doc(char *lim, int to_save)
 {
 	char	*line;
@@ -151,10 +129,6 @@ char	*her_doc(char *lim, int to_save)
 			free(line);
 			return (close(fd), name);
 		}
-		//printf("HOO");
-		//printf("%s", line);
-		//printf("HERE:%s", heredoc_expanding(line, lim));
-		//printf("ft_strlen(line):%zu\n", ft_strlen(line));
 		here_exp = heredoc_expanding(line, lim);
 		(write(1, "> ", 2), write(fd, here_exp, ft_strlen(here_exp)));
 		line = (free(line), get_next_line(0));
@@ -166,29 +140,16 @@ char	*her_doc(char *lim, int to_save)
 char	*mark_here_doc(char *str)
 {
 	int		i;
-	int		check;
+	int		flag;
 	char	*mark;
 
 	i = 0;
-	check = 0;
+	flag = 0;
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (str[i] == 34 && check != 39)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 34;
-		}
-		if (str[i] == 39 && check != 34)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 39;
-		}
-		if (str[i] == '<' && !check)
+		ft_flag(str[i], &flag);
+		if (str[i] == '<' && !flag)
 			mark[i] = '2';
 		else if (str[i] == 32)
 			mark[i] = '1';

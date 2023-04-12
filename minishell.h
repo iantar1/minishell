@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/10 01:27:47 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:04:15 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 # define _FILE 8
 # define OUT 4
 # define IN 5
-#define RED     "\033[31m"
-#define RESET   "\033[0m"
-#define WHITE   "\033[37m"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -115,7 +112,6 @@ char	**get_env(char **env);
 char	unclosed_quote(char *str);
 char	*remove_quote(char *str);
 t_env	*create_env(char **env);
-//char	*expand(char *key, t_env *head_env);
 int		need_expand(char *str);
 char	*expand_mark(char *str);
 char	*join_evrything(char **splt);
@@ -156,5 +152,9 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		amniguous_redirect(char	*str);
 t_list	*expand_wildcard(char *to_change, char *mask);
 int		syntax_error(char *str);
+void	ft_flag(char c, int *flag);
+//execution
+int		complet_filter(char *str, char *elem, char *mask, int check);
+int		is_in_filter(char *str, char *elem, char *mask, int check);
 
 #endif

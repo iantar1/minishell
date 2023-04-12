@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 03:16:24 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:33:26 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,29 +226,14 @@ char	unclosed_parenthesis(char *str)
 {
 	int		i;
 	int		check;
-	char	first;
-	char	flag;
+	int		flag;
 
 	i = -1;
 	check = 0;
-	first = 0;
 	flag = 0;
 	while (str[++i])
 	{
-		if (str[i] == 34 && flag != 39)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
-		if (str[i] == 39 && flag != 34)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
+		ft_flag(str[i], &flag);
 		if (str[i] == '(' && check >= 0 && !flag)
 			check++;
 		if (str[i] == ')' && !flag)
@@ -380,31 +365,19 @@ char	unvalid_oper_red(char *mark)
 char	unvalid_next_parenthesis(char *str)
 {
 	int		i;
-	char	flag;
+	int		flag;
 
 	i = -1;
 	flag = 0;
 	while (str[++i])
 	{
-		if (str[i] == 34 && flag != 39)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
-		if (str[i] == 39 && flag != 34)
-		{
-			if (!flag)
-				flag = 34;
-			else
-				flag = 0;
-		}
+		ft_flag(str[i], &flag);
+		//printf("flag:%d, is_operetor:%d, str[%d]:%c, str[%d]:%c\n", flag, is_operator(str[i]), i, str[i], i+1, str[i + 1]);
 		if (!flag && !is_operator(str[i]) && str[i] != '(' && str[i + 1] == '(')
 			return (1);
 		if (!flag && str[i] == '(')
 			if (is_operator(str[i + 1]))
-				return (1);
+				return (printf("HERE\n"), 1);
 		if (!flag && str[i] == ')')
 			if (str[i + 1] && !is_operator(str[i + 1]) && !is_redi(str[i + 1]) && str[i + 1] != ')')
 				return (1);
@@ -473,24 +446,6 @@ char	red_more_arg(char *str)
 	}
 	return (0);
 }
-
-// char	unvalid_operators(char *str)
-// {
-// 	int		i;
-// 	char	*mark;
-
-// 	i = -1;
-// 	mark = mark_syn_err(str);
-// 	if (unvalid_oper_red(mark))
-// 		return (free(mark), 1);
-// 	free(mark);
-// 	mark = remove_spaces(str);
-// 	if (unvalid_next_parenthesis(mark))
-// 		return (free(mark), 1);
-// 	if (red_more_arg(str))
-// 		return (1);
-// 	return (0);
-// }
 
 int	syntax_error(char *str)
 {

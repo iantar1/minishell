@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/02 03:20:28 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/04/12 06:50:52 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,24 @@ t_list	*new_node(char *data)
 	node = malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->data = data;
+	node->content = data;
 	node->next = NULL;
 	return (node);
+}
+
+char	*free_it_(char **s1, char **s2)
+{
+	if (s1 && *s1)
+	{
+		free(*s1);
+		*s1 = 0;
+	}
+	if (s2 && *s2)
+	{
+		free(*s2);
+		*s2 = 0;
+	}
+	return (0);
 }
 
 t_list	*expand_wildcard(char *to_change, char *mask)
@@ -76,16 +91,16 @@ t_list	*expand_wildcard(char *to_change, char *mask)
 	{
 		if (is_in_filter(to_change, dir_ent->d_name, mask, 0))
 		{
-			head->next = new_node(strdup(dir_ent->d_name));
+			head->next = new_node(ft_strdup(dir_ent->d_name));
 			head = head->next;
 		}
 		dir_ent = readdir(dir);
 	}
 	head = tmp;
-	(free_it(&head->data, 0), free(head));
+	(free_it_(((char **)(&head->content)), 0), free(head));
 	head = tmp->next;
 	closedir(dir);
 	if (!head)
-		head = new_node(strdup(to_change));
+		head = new_node(ft_strdup(to_change));
 	return (head);
 }

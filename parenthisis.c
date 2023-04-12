@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/10 23:08:02 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:35:44 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | c
 	int		check;
 	int		i;
 	char	*mark;
+	int		flag;
 
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	i = -1;
 	check = 0;
+	flag = 0;
 	while (str[++i])
 	{
-		if (str[i] == '(')
+		ft_flag(str[i], &flag);
+		if (str[i] == '(' && !flag)
 		{
 			if (!check)
 				mark[i] = '1';
@@ -55,7 +58,7 @@ char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | c
 				mark[i] = '0';
 			check++;
 		}
-		else if (str[i] == ')')
+		else if (str[i] == ')' && !flag)
 		{
 			if (check == 1)
 				mark[i] = '1';

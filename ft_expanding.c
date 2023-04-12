@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 06:17:51 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 06:58:36 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,7 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	j = 0;
 	while (var.str[var.end + ++j])
 		rtn_str[i++] = var.str[var.end + j];
-	rtn_str[i] = '\0';
-	free(var.str);
+	rtn_str[i] = (free(var.str), '\0');
 	return (rtn_str);
 }
 
