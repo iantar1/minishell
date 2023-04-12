@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:35:44 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 07:46:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ int	surrounded_parenthisis(char *mark)
 		return (1);
 	return (0);
 }
-//tomorrow remove the spaces from the border.
-//than continue
+
 int	remove_first_parenthisis(char **str)
 {
 	int		child_level;
@@ -107,14 +106,12 @@ int	remove_first_parenthisis(char **str)
 	{
 		tmp = *str;
 		splt = upgrade_split(*str, mark);
-		*str = splt[0];
-		free(tmp);
+		*str = (free(tmp), splt[0]);
 		if (*str)
 			free(splt[1]);
 		else
 			return (free(splt), child_level);
-		free(splt);
-		child_level++;
+		child_level = (free(splt), child_level + 1);
 		remove_surrounded_sp(str);
 		mark = mark_first_parenthisis(*str);
 	}
