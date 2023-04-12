@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/07 08:32:24 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 00:06:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,29 @@ void	free_lst(t_list *lst)
 char	*mark_redirection(char *str, int sp)
 {
 	int		i;
+	int		flag;
 	char	*mark;
 
 	i = 0;
+	flag = 0;
 	mark = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (str[i] == '>' || str[i] == '<')
+		if (str[i] == 34 && flag != 39)
+		{
+			if (!flag)
+				flag = 34;
+			else
+				flag = 0;
+		}
+		if (str[i] == 39 && flag != 34)
+		{
+			if (!flag)
+				flag = 34;
+			else
+				flag = 0;
+		}
+		if (!flag && (str[i] == '>' || str[i] == '<'))
 			mark[i] = '2';
 		else if (str[i] <= 32 && sp)
 			mark[i] = '1';
@@ -173,6 +189,19 @@ char	*lst_to_str(t_list *lst)
 	return (str);
 }
 
+char	there_is_red(char *mark)
+{
+	int		i;
+
+	i = -1;
+	while (mark && mark[++i])
+	{
+		printf("mark[%d]:%c\n", i, mark[i]);
+		if (mark[i] == '2')
+			return (1);
+	}
+	return (0);
+}
 char	*reform_redirection(char *str)
 {
 	char	**splt_cmd;
@@ -181,8 +210,9 @@ char	*reform_redirection(char *str)
 	t_list	*lst;
 
 	mark = mark_redirection(str, SPACE);
-	if (!need_split(mark))
+	if (there_is_red(mark))
 		return (str);
+	printf("mark_red::%s\n", mark);
 	splt_cmd = upgrade_split(str, mark);
 	lst = arr_to_lst(splt_cmd);
 	reform_it(&lst);

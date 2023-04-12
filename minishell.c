@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/11 10:01:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/11 23:47:43 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_tree(t_tree *tree)
 int	main(int ac, char *av[], char **env)
 {
 	char	*line;
-	//t_tree	*tree;
+	t_tree	*tree;
 	//char	*tmp;
 	//char	*mark;
 	//char	**buf;
@@ -74,9 +74,9 @@ int	main(int ac, char *av[], char **env)
 		//remove_surrounded_sp(&line);
 		if (!line)
 			continue ;
-		//tree = ft_tree_new(&line, NULL, 0);
-		//parse_tree(&line, tree, "root");
-		//print_tree(tree);
+		tree = ft_tree_new(&line, NULL, 0);
+		parse_tree(&line, tree, "root");
+		print_tree(tree);
 	}
 	return (0);
 }

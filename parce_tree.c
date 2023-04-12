@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/10 23:07:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/11 23:51:48 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 			check_here_doc(line);
 			printf("line aftre here_doc:%s\n", *line);
 			mark = mark_redirection(*line, 0);
-			printf("mark:%s\n", mark);
+			//printf("mark:%s\n", mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
