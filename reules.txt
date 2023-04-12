@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/12 00:45:59 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/12 00:53:37 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -249,3 +249,4 @@ IMPORTANT:
 		-> check expanding and make it run
 		-> signal in here_doc
 		-> nominette
+		-> wirldcard

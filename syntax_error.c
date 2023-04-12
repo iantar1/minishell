@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/11 23:47:56 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 02:48:32 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,11 +346,11 @@ char	*remove_spaces(char *str)
 
 char	unvalid_oper_red(char *mark)
 {
-	int	i;
-	char	check[2];
+	int		i;
+	char	check[3];
 
 	i = -1;
-	ft_bzero(check, 2);
+	ft_bzero(check, 3);
 	while (mark[++i])
 	{
 		if (mark[i] == '4')
@@ -359,14 +359,20 @@ char	unvalid_oper_red(char *mark)
 			return (1);
 		if (mark[i] == '2')
 		{
-			if (check[0])
+			if (check[0] || (check[1] && check[2]))
 				return (1);
 			check[1]++;
-		}
+			check[2] = 0;
+ 		}
 		if (mark[i] == '3')
+		{
 			check[0]++;
+			check[2] = 0;
+		}
 		if (mark[i] == '0')
-			ft_bzero(check, 2);
+			ft_bzero(check, 3);
+		if (mark[i] == '1')
+			check[2]++;
 	}
 	return (check[1] || check[0]);
 }
@@ -397,7 +403,7 @@ char	unvalid_next_parenthesis(char *str)
 		if (!flag && !is_operator(str[i]) && str[i] != '(' && str[i + 1] == '(')
 			return (1);
 		if (!flag && str[i] == '(')
-			if (is_operator(str[i + 1]) || is_redi(str[i + 1]))
+			if (is_operator(str[i + 1]))
 				return (1);
 		if (!flag && str[i] == ')')
 			if (str[i + 1] && !is_operator(str[i + 1]) && !is_redi(str[i + 1]) && str[i + 1] != ')')
@@ -410,6 +416,46 @@ char	unvalid_next_parenthesis(char *str)
 // {
 // }
 
+char	*mark_more_arg(char *str)
+{
+		int		i;
+	int		check;
+	char 	*mark;
+
+	mark = malloc(ft_strlen(str) * sizeof(char) + 1);
+	check = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == 34 && check != 39)
+		{
+			if (check)
+				check = 0;
+			else
+				check = 34;
+		}
+		if (str[i] == 39 && check != 34)
+		{
+			if (check)
+				check = 0;
+			else
+				check = 39;
+		}
+		if ((str[i] == '|' || str[i] == '&') && !check)
+			mark[i] = '2';
+		else if ((str[i] == '<' || str[i] == '>') && !check)
+			mark[i] = '3';
+		else if (str[i] == ')' && !check)
+			mark[i] = '4';
+		else if (str[i] > 32)
+			mark[i] = '0';
+		else
+			mark[i] = '1';
+	}
+	mark[i] = '\0';
+	return (mark);
+}
+
 char	red_more_arg(char *str)
 {
 	char	*mark;
@@ -417,13 +463,14 @@ char	red_more_arg(char *str)
 	char	**splt;
 
 	i = -1;
-	mark = mark_syn_err(str);
+	mark = mark_more_arg(str);
 	//printf("mark:%s\n", mark);
 	splt = upgrade_split(str, mark);
 	while (splt && splt[++i])
 	{
-		if (is_redi(splt[i][0]))
+		if (splt[i][0] == ')' && splt[i + 1] && is_redi(splt[i + 1][0]))
 		{
+			i++;
 			if (splt[i + 1] && !is_operator(splt[i + 1][0]))
 				if (splt[i + 2] && !is_operator(splt[i + 2][0]) && !is_redi(splt[i + 2][0]))
 					return (1);
@@ -461,9 +508,12 @@ int	syntax_error(char *str)
 		return (free(mark), 1);
 	free(mark);
 	mark = remove_spaces(str);
+	if (is_operator(mark[0]))
+		return (1);
 	if (unvalid_next_parenthesis(mark))
 		return (free(mark), 1);
 	if (red_more_arg(str))
 		return (1);
+	printf("HERE\n");
 	return (0);
 }

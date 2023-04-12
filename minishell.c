@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/11 23:47:43 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 01:41:01 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_args(char **args)
 	{
 		printf("%s", args[i]);
 		if (args[i + 1])
-			printf(", .");
+			printf(", ");
 	}
 	printf("}");
 	printf("\n");
@@ -34,6 +34,7 @@ void	print_tree(t_tree *tree)
 	printf("CMD: %s\n", tree->data.cmd);
 	printf(" ->child_level:%d\n", tree->child_level);
 	printf(" ->type:%d\n", tree->data.type);
+	printf(" ->ambiguous :%d\n", tree->amniguous);
 	//printf(" ->heredoc_filename:%s\n", tree->my_here_doc.filename);
 	print_args(tree->data.args);
 	if ((tree->left_c))
@@ -71,7 +72,7 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		}
 		//printf("line:%s\n", line);
-		//remove_surrounded_sp(&line);
+		remove_surrounded_sp(&line);
 		if (!line)
 			continue ;
 		tree = ft_tree_new(&line, NULL, 0);

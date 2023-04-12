@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 00:27:41 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 01:42:10 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,27 @@ int	ft_type(char *cmd)//for FILE_ ane COMMAND, check the parent > or < or >>
 		return (-1);
 }
 
+char	**expand_args(char **splt)
+{
+	int		i;
+
+	i = 0;
+	while (splt && splt[i])
+	{
+		splt[i] = ft_expand(splt[i]);
+		i++;
+	}
+	return (splt);
+}
+
 t_data	ft_data_new(char *cmd_line)
 {
 	t_data	data;
 	char	**splt;
 
 	splt = ft_split(cmd_line, SPACE);
-	data.cmd = splt[0];
-	data.args = splt;
+	data.cmd = ft_expand(splt[0]);
+	data.args = expand_args(splt);
 	data.type = ft_type(splt[0]);
 	return (data);
 }
@@ -77,6 +90,7 @@ t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 	new_tree->parent = parent_add;
 	new_tree->left_c = NULL;
 	new_tree->right_c = NULL;
+	new_tree->amniguous = 0;
 	//new_tree->my_here_doc.filename = NULL;
 	//new_tree->my_here_doc.fd = -1;
 	return (new_tree);
@@ -126,8 +140,12 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 			//printf("line_after reforme:%s\n", *line);
 			check_here_doc(line);
 			//printf("line aftre here_doc:%s\n", *line);
+			tree->amniguous = amniguous_redirect(*line);
+			if (tree->amniguous)
+				return ;
+			//*line = ft_expand(*line);
+			//printf("line:%s\n", *line);
 			mark = mark_redirection(*line, 0);
-			//printf("mark:%s\n", mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
