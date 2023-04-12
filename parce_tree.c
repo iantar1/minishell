@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/11 23:51:48 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 00:27:41 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,11 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 		else if (*line)
 		{
 			//here you wille handle the here_doc
-			printf("line_before refore:%s\n", *line);
+			//printf("line_before refore:%s\n", *line);
 			*line = reform_redirection(*line);
-			printf("line_after reforme:%s\n", *line);
+			//printf("line_after reforme:%s\n", *line);
 			check_here_doc(line);
-			printf("line aftre here_doc:%s\n", *line);
+			//printf("line aftre here_doc:%s\n", *line);
 			mark = mark_redirection(*line, 0);
 			//printf("mark:%s\n", mark);
 			splt_oper = upgrade_split(*line, mark);

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/11 23:52:59 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/12 00:40:20 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	there_quote(char *str)
 	int	i;
 
 	i = 0;
-	printf("{{{{str:%s}}}}\n", str);
+	//printf("{{{{str:%s}}}}\n", str);
 	while (str[i])
 	{
 		if (str[i] == 39 || str[i] == 34)
@@ -93,7 +93,7 @@ char	*heredoc_filename(void)
 		if (ft_isalnum(buf[i]))
 			name[++j] = buf[i];
 	}
-	name[5] = '\0';
+	name[++j] = '\0';
 	free(buf);
 	return (name);
 }
@@ -269,23 +269,24 @@ void	keep_last_heredoc(char **line, char *name)
 }
 
 
-char	*open_heredocs(char *line)//this function will open all the here_docs and will return the last filename_heredoc
+char	*open_heredocs(char	**splt, int num_here)//this function will open all the here_docs and will return the last filename_heredoc
 {
-	char		**splt;
-	char		*mark;
+	// char		**splt;
+	// char		*mark;
 	char		*heredoc_filname;
-	int			num_here;
+	//int			num_here;
 	int			i;
 
 	i = 0;
-	mark = mark_here_doc(line);
-	splt = upgrade_split(line, mark);
-	num_here = count_heredoc(splt);
-	if (num_here > 16)
-	{
-		printf("minishell: maximum here-document count exceeded\n");
-		exit(2);
-	}
+	// mark = mark_here_doc(line);
+	// splt = upgrade_split(line, mark);
+	//num_here = count_heredoc(splt);
+	// if (num_here > 16)
+	// {
+	// 	printf("minishell: maximum here-document count exceeded\n");
+	// 	exit(2);
+	// }
+	signal(SIGINT, handle_sig);
 	while (splt[i])
 	{
 		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
@@ -300,6 +301,7 @@ char	*open_heredocs(char *line)//this function will open all the here_docs and w
 		}
 		i++;
 	}
+	//signal(SIGINT, );
 	return (heredoc_filname);
 }
 
@@ -308,11 +310,21 @@ char	*open_heredocs(char *line)//this function will open all the here_docs and w
 void	check_here_doc(char **line)
 {
 	char	*heredoc_filname;
+	char	**splt;
+	char	*mark;
+	int		num_here;
 
 	if (!is_here_needle(*line, "<<"))
 		return ;
-	signal(SIGINT, handle_sig);
-	heredoc_filname = open_heredocs(*line);
+	mark = mark_here_doc(*line);
+	splt = upgrade_split(*line, mark);
+	num_here = count_heredoc(splt);
+	if (num_here > 16)
+	{
+		printf("minishell: maximum here-document count exceeded\n");
+		exit(2);
+	}
+	heredoc_filname = open_heredocs(splt, num_here);
 	keep_last_heredoc(line, heredoc_filname);
 	//*line = reform_redirection(*line);
 	//printf("line:%s, filename:%s\n", *line, (*herdoc).filename);
