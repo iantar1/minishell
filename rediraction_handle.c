@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:55:57 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 06:49:55 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 07:20:20 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*red_mark(char *str, int sp)
 			mark[i] = '2';
 		else if (!flag && str[i] == '<')
 			mark[i] = '3';
-		else if (str[i] <= 32 && sp)
+		else if (str[i] == 32 && sp)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -67,7 +67,7 @@ void	keep_last_redir(char **line)
 	i = -1;
 	if (!*line)
 		return ;
-	printf("LINE:%s\n", *line);
+	//printf("LINE:%s\n", *line);
 	mark = red_mark(*line, SPACE);
 	splt = upgrade_split(*line, mark);
 	mark = *line;
@@ -76,7 +76,7 @@ void	keep_last_redir(char **line)
 	len_in = count_red(splt, '<');
 	while (splt[++i])
 	{
-		if (!ft_strcmp(splt[i], ">>"))
+		if (!ft_strcmp(splt[i], ">>") && splt[i + 1])
 		{
 			fd = open(splt[i + 1], O_RDWR | O_APPEND | O_CREAT, 0644);
 			if (fd < 0)
@@ -94,7 +94,7 @@ void	keep_last_redir(char **line)
 			}
 			len_out--;
 		}
-		else if (!ft_strcmp(splt[i], ">"))
+		else if (!ft_strcmp(splt[i], ">") && splt[i + 1])
 		{
 			fd = open(splt[i + 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
 			if (fd < 0)

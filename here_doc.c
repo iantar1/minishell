@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 06:49:03 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 07:19:21 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*heredoc_filename(void)
 	int		i;
 	int		j;
 
-	buf = malloc(21);
+	buf = malloc(51);
 	fd = open("/dev/random", O_RDONLY);
 	if (fd < 0)
 	{
@@ -85,9 +85,9 @@ char	*heredoc_filename(void)
 		// modify_var("?", "1");
 		return (NULL);
 	}
-	read(fd, buf, 20);
+	read(fd, buf, 50);
 	close(fd);
-	buf[20] = '\0';
+	buf[50] = '\0';
 	name = malloc(6);
 	i = -1;
 	j = -1;
