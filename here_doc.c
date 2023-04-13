@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:08:53 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 02:58:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*her_doc(char *lim, int to_save)
 	char	*here_exp;
 
 	new_lim = remove_quote(lim);
+	printf("new_lim:%s\n", new_lim);
 	if (to_save)
 	{
 		name = heredoc_filename();
@@ -118,7 +119,6 @@ char	*her_doc(char *lim, int to_save)
 		fd = -1;
 		name = NULL;
 	}
-		
 	line = (write(1, "> ", 2), get_next_line(0));
 	while (1)
 	{
@@ -220,6 +220,7 @@ void	keep_last_heredoc(char **line, char *name)
 		}
 		else if (!ft_strcmp(splt[i], "<<") && len_her == 1)
 		{
+			splt[i][1] = '\0';
 			i++;
 			free(splt[i]);
 			splt[i] = name;
@@ -271,6 +272,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 		signal(SIGINT, handle_sig);
 		while (splt[i])
 		{
+			printf("splt[%d]:%s, len_here:%d\n", i, splt[i], num_here);
 			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
 			{
 				her_doc(splt[i + 1], 0);
@@ -279,6 +281,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 			else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
 			{
 				heredoc_filname = her_doc(splt[i + 1], 1);
+				//splt[i][1] = '\0';
 				num_here--;
 			}
 			i++;

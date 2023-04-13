@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 01:42:10 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 01:26:32 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,42 @@ int	need_split(char *mark)
 	return (0);
 }
 
+void	mark_the_pipe_mark(char *mark)
+{
+	int	len;
+	int	check;
+
+	len = ft_strlen(mark);
+	check = 1;
+	while (--len >= 0)
+	{
+		if (mark[len] == '2' && check)
+			check = 0;
+		else if (mark[len] == '2')
+			mark[len] = '0';
+	}
+}
+
+void	mark_the_red_mark(char *mark)
+{
+	int	len;
+	int	check;
+
+	len = ft_strlen(mark);
+	check = 1;
+	while (--len >= 0)
+	{
+		if (mark[len] == '2' && check)
+		{
+			check = 0;
+			if (len && mark[len - 1] == '2')
+				len--;
+		}
+		else if (mark[len] == '2')
+			mark[len] = '0';
+	}
+}
+
 t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 {
 	t_tree	*new_tree;
@@ -122,6 +158,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 	else
 	{
 		mark = ft_mark_operator(*line);
+		mark_the_pipe_mark(mark);
 		splt_oper = upgrade_split(*line, mark);
 		// | 
 		if (need_split(mark))
@@ -137,15 +174,17 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 			//here you wille handle the here_doc
 			//printf("line_before refore:%s\n", *line);
 			*line = reform_redirection(*line);
-			//printf("line_after reforme:%s\n", *line);
 			check_here_doc(line);
+			//printf("line_after reforme:%s\n", *line);
 			//printf("line aftre here_doc:%s\n", *line);
+			//printf("line:%s\n", *line);
 			tree->amniguous = amniguous_redirect(*line);
 			if (tree->amniguous)
 				return ;
 			//*line = ft_expand(*line);
 			//printf("line:%s\n", *line);
 			mark = mark_redirection(*line, 0);
+			mark_the_red_mark(mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
@@ -164,6 +203,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 				parse_tree(&splt_oper[1], tree->right_c, "right");
 			}
 		}
+		//printf("line_after reforme:%s\n", *line);
 	}
 	return ;
 	(void)str;

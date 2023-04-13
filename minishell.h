@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:04:15 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 02:02:08 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,9 @@ typedef struct s_tree
 	struct s_tree	*right_c;
 	int				child_level;
 	t_data			data;
-	//t_heredoc		my_here_doc;
-	//t_files			infile;
-	//t_files			outfile;
 	int				amniguous;//exit status = 1
-	int				syntax_error;//when you have a syntax error asgin a 1 to it after that continue to open all here_doc then stop. 
+	int				valid_fd;
+	//int				syntax_error;//when you have a syntax error asgin a 1 to it after that continue to open all here_doc then stop. 
 }	t_tree;
 
 

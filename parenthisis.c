@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:46:27 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 02:35:57 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	remove_surrounded_sp(char **str)
 	start = 0;
 	if (!**str)
 		return ;
-	while (*(*str + start) == SPACE)
+	while (*(*str + start) <= SPACE)
 		start++;
 	len = ft_strlen(*str) - 1;
 	if (start == len + 1)
@@ -29,7 +29,7 @@ void	remove_surrounded_sp(char **str)
 		*str = NULL;
 		return ;
 	}
-	while ( len && *(*str + len) == SPACE)
+	while (len && (*(*str + len) <= SPACE))
 		len--;
 	tmp = *str;
 	*str = ft_substr(*str, start, len - start + 1);
