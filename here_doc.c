@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 02:58:27 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 06:49:03 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ char	*heredoc_filename(void)
 	buf = malloc(21);
 	fd = open("/dev/random", O_RDONLY);
 	if (fd < 0)
+	{
+		write(2, "minishell:file can't open\n", 26);
+		// modify_var("?", "1");
 		return (NULL);
+	}
 	read(fd, buf, 20);
 	close(fd);
 	buf[20] = '\0';
@@ -106,13 +110,17 @@ char	*her_doc(char *lim, int to_save)
 	char	*here_exp;
 
 	new_lim = remove_quote(lim);
-	printf("new_lim:%s\n", new_lim);
+	//printf("new_lim:%s\n", new_lim);
 	if (to_save)
 	{
 		name = heredoc_filename();
 		fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
 		if (fd == -1)
+		{
+			write(2, "minishell:file can't open\n", 26);
+			// modify_var("?", "1");
 			return (NULL);
+		}
 	}
 	else
 	{
@@ -252,27 +260,15 @@ void	keep_last_heredoc(char **line, char *name)
 
 char	*open_heredocs(char	**splt, int num_here)//this function will open all the here_docs and will return the last filename_heredoc
 {
-	// char		**splt;
-	// char		*mark;
 	char		*heredoc_filname = NULL;
-	//int			num_here;
 	int			i;
 
 	i = 0;
-	// mark = mark_here_doc(line);
-	// splt = upgrade_split(line, mark);
-	//num_here = count_heredoc(splt);
-	// if (num_here > 16)
-	// {
-	// 	printf("minishell: maximum here-document count exceeded\n");
-	// 	exit(2);
-	// }
 	if (fork() == 0)
 	{
 		signal(SIGINT, handle_sig);
 		while (splt[i])
 		{
-			printf("splt[%d]:%s, len_here:%d\n", i, splt[i], num_here);
 			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
 			{
 				her_doc(splt[i + 1], 0);
@@ -281,7 +277,6 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 			else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
 			{
 				heredoc_filname = her_doc(splt[i + 1], 1);
-				//splt[i][1] = '\0';
 				num_here--;
 			}
 			i++;
@@ -312,7 +307,4 @@ void	check_here_doc(char **line)
 	}
 	heredoc_filname = open_heredocs(splt, num_here);
 	keep_last_heredoc(line, heredoc_filname);
-	//*line = reform_redirection(*line);
-	//printf("line:%s, filename:%s\n", *line, (*herdoc).filename);
 }
-

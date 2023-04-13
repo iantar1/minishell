@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 01:26:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 06:10:51 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 			tree->amniguous = amniguous_redirect(*line);
 			if (tree->amniguous)
 				return ;
+			keep_last_redir(line);
 			//*line = ft_expand(*line);
 			//printf("line:%s\n", *line);
 			mark = mark_redirection(*line, 0);
