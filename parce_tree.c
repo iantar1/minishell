@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 06:10:51 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 00:42:44 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**expand_args(char **splt)
 	i = 0;
 	while (splt && splt[i])
 	{
-		splt[i] = ft_expand(splt[i]);
+		splt[i] = remove_quote(ft_expand(splt[i]));
 		i++;
 	}
 	return (splt);
@@ -60,8 +60,9 @@ t_data	ft_data_new(char *cmd_line)
 	t_data	data;
 	char	**splt;
 
+	wirldcard_expanding(&cmd_line);
 	splt = ft_split(cmd_line, SPACE);
-	data.cmd = ft_expand(splt[0]);
+	data.cmd = remove_quote(ft_expand(splt[0]));
 	data.args = expand_args(splt);
 	data.type = ft_type(splt[0]);
 	return (data);

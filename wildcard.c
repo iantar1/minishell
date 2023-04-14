@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/14 00:27:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 00:39:19 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	wirldcard_expanding(char **line)
 	char	**splt;
 	char	*mark;
 
-	if (!*line)
+	if (!*line || !**line)
 		return ;
 	splt = ft_split(*line, ' ');
 	i = -1;
