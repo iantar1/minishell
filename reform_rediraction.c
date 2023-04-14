@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 17:59:06 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 01:46:12 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,24 +168,24 @@ static void	reform_it(t_list **lst)
 	free(tmp1);
 }
 
-// char	*lst_to_str(t_list *lst)
-// {
-// 	t_list	*tmp;
-// 	char	*str;
-// 	int		i;
+char	*lst_to_str(t_list *lst)
+{
+	t_list	*tmp;
+	char	*str;
+	int		i;
 
-// 	i = 0;
-// 	tmp = lst;
-// 	str = lst->content;
-// 	tmp = tmp->next;
-// 	while (tmp)
-// 	{
-// 		str = ft_strjoin(str, " ");
-// 		str = ft_strjoin(str, tmp->content);
-// 		tmp = tmp->next;
-// 	}
-// 	return (str);
-// }
+	i = 0;
+	tmp = lst;
+	str = lst->content;
+	tmp = tmp->next;
+	while (tmp)
+	{
+		str = ft_strjoin(str, " ");
+		str = ft_strjoin(str, tmp->content);
+		tmp = tmp->next;
+	}
+	return (str);
+}
 
 char	there_is_red(char *mark)
 {

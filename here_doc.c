@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 07:19:21 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 07:49:41 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	here_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-static void	handle_sig(int sig)
-{
-	(void)sig;
-	exit(0);
-}
+// static void	handle_sig(int sig)
+// {
+// 	(void)sig;
+// 	exit(0);
+// }
 
 int	there_quote(char *str)
 {
@@ -266,7 +266,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 	i = 0;
 	if (fork() == 0)
 	{
-		signal(SIGINT, handle_sig);
+		//signal(SIGINT, handle_sig);
 		while (splt[i])
 		{
 			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
@@ -281,8 +281,9 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 			}
 			i++;
 		}
+		//exit(0);
 	}
-	///signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	wait(NULL);
 	return (heredoc_filname);
 }
@@ -297,6 +298,7 @@ void	check_here_doc(char **line)
 
 	if (!is_here_needle(*line, "<<"))
 		return ;
+	printf("HERE\n");
 	mark = mark_here_doc(*line);
 	splt = upgrade_split(*line, mark);
 	num_here = count_heredoc(splt);

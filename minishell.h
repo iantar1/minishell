@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 18:00:29 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 17:29:02 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_env	*new_line(char *line);
 void	double_free(char **p);
 char	closed_parenthesis(char *str);
 int		is_here_needle(char *str, char *needle);
-char	*ft_mark_operator(char *str);
+char	*ft_mark_operator(char *str, int sp);
 char	*mark_the_mark_operator(char *mark);
 char	*mark_first_parenthisis(char *str);
 char	*get_next_line(int fd);
@@ -154,6 +154,10 @@ void	ft_flag(char c, int *flag);
 void	keep_last_redir(char **line);
 void	wirldcard_expanding(char **line);
 char	*lst_to_str(t_list *lst);
+int		is_wildcard(char *mark);
+char	*mark_wildcard(char *str);
+int		inside_quotes(char *str);
+
 //execution
 int		complet_filter(char *str, char *elem, char *mask, int check);
 int		is_in_filter(char *str, char *elem, char *mask, int check);

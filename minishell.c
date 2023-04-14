@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 00:29:39 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 06:21:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int ac, char *av[], char **env)
 	//char	**buf;
 
 	((void)av, (void)ac);
-	g_env = new_line("?=0");
+	g_env = new_line("var=a     b");
 	g_env->next = create_env(env);
 	while (1)
 	{
@@ -66,8 +66,6 @@ int	main(int ac, char *av[], char **env)
 		if (syntax_error(line))
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
-			if (fork() == 0)
-				exit(258);
 			wait(NULL);
 			continue ;
 		}
@@ -76,7 +74,7 @@ int	main(int ac, char *av[], char **env)
 		//printf("BEFORE_LINE:%s\n", line);
 		//expand_wildcard("*", "9");
 		//wirldcard_expanding(&line);
-		printf("LINE:%s\n", line);
+		//printf("LINE:%s\n", line);
 		if (!line)
 			continue ;
 		tree = ft_tree_new(&line, NULL, 0);

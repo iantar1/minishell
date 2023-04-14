@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 06:58:36 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 17:34:05 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,42 @@ char	*get_value(char *key, int len)
 	return (NULL);
 }
 
+char	*join_with_sp(char *str)
+{
+	char	**splt;
+	char	*rtn_str;
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	if (!str)
+		return(NULL);
+	splt = ft_split(str, ' ');
+	if (!splt || !*splt)
+		return (NULL);
+	if (splt[i + 1])
+		rtn_str = ft_strjoin(splt[i], " ");
+	else
+		rtn_str = ft_strjoin(splt[i], "");
+	printf("HERE\n");
+	int x = -1;
+	while (splt[++x])
+		printf("rtn_str[%d]:%s\n",x,  splt[x]);
+	tmp = rtn_str;
+	while (splt && splt[++i])
+	{
+		rtn_str = ft_strjoin(rtn_str, splt[i]);
+		if (splt[i + 1])
+			rtn_str = ft_strjoin(rtn_str, " ");
+		//free(tmp);
+		tmp = rtn_str;
+		i++;
+	}
+	printf("****rtn_str%d:%s\n", i, rtn_str);
+	return (rtn_str);
+}
+//HERE AM3ALLAM
+
 char	*ft_change_part(t_vars var, char *value, int *curser)
 {
 	int		new_len;
@@ -173,7 +209,15 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	j = 0;
 	while (var.str[var.end + ++j])
 		rtn_str[i++] = var.str[var.end + j];
-	rtn_str[i] = (free(var.str), '\0');
+	rtn_str[i] = '\0';
+	if (!inside_quotes(var.str))
+	{
+		printf("RTN_STR______:%s\n", rtn_str);
+		rtn_str = join_with_sp(rtn_str);//free
+		printf("RTN_STR______:%s\n", rtn_str);
+	}
+	printf(">>>>var.str:%s\n", var.str);
+	free(var.str);
 	return (rtn_str);
 }
 
@@ -193,6 +237,7 @@ void	ft_expand_norm(t_vars var, char **splt)
 			splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
 					[var.j + 1], var.end - var.start), &(var.j));
 		}
+		//printf("splt[var.i]=%s\n", splt[var.i]);
 	}
 }
 

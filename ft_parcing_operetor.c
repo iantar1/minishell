@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/12 07:06:06 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/14 17:21:28 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	is_here_needle(char *str, char *needle)
 		return (0);
 	while (str[i])
 	{
-		if (ft_strncmp(str + i, needle, ft_strlen(needle)))
+		if (!ft_strncmp(str + i, needle, ft_strlen(needle)))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char	*ft_mark_operator(char *str)
+char	*ft_mark_operator(char *str, int sp)
 {
 	int		i;
 	char	*mark;
@@ -54,7 +54,7 @@ char	*ft_mark_operator(char *str)
 			check = 0;
 		if ((str[i] == '|' || str[i] == '&') && !check)
 			mark[i] = '2';
-		else if (!check && mark[i] <= 32)//nw
+		else if (!check && mark[i] <= 32 && sp)//nw
 			mark[i] = '1';
 		else
 			mark[i] = '0';
