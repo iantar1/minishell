@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 06:10:59 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 18:00:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ t_list	*expand_wildcard(char *to_change, char *mask);
 int		syntax_error(char *str);
 void	ft_flag(char c, int *flag);
 void	keep_last_redir(char **line);
+void	wirldcard_expanding(char **line);
+char	*lst_to_str(t_list *lst);
 //execution
 int		complet_filter(char *str, char *elem, char *mask, int check);
 int		is_in_filter(char *str, char *elem, char *mask, int check);

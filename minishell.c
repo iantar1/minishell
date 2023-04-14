@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 02:33:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/13 23:53:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,12 @@ int	main(int ac, char *av[], char **env)
 			wait(NULL);
 			continue ;
 		}
-		printf("line:%s\n", line);
+		//printf("line:%s\n", line);
 		remove_surrounded_sp(&line);
-		printf("line:%s\n", line);
+		//printf("BEFORE_LINE:%s\n", line);
+		//expand_wildcard("*", "9");
+		wirldcard_expanding(&line);
+		printf("LINE:%s\n", line);
 		if (!line)
 			continue ;
 		tree = ft_tree_new(&line, NULL, 0);
