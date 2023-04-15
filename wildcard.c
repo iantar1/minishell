@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/14 01:45:43 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 01:10:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,18 @@ char	*free_it_(char **s1, char **s2)
 	return (0);
 }
 
-void print_lst(t_list *head)
-{
-	t_list	*tmp;
+// void print_lst(t_list *head)
+// {
+// 	t_list	*tmp;
 
-	tmp = head;
-	while (head)
-	{
-		printf("otman:%s\n", head->content);
-		head = head->next;
-	}
-	printf("DONE\n\n");
-	head = tmp;
-}
+// 	tmp = head;
+// 	while (head)
+// 	{
+// 		head = head->next;
+// 	}
+// 	printf("DONE\n\n");
+// 	head = tmp;
+// }
 
 t_list	*expand_wildcard(char *to_change, char *mask)
 {
@@ -120,8 +119,6 @@ t_list	*expand_wildcard(char *to_change, char *mask)
 	closedir(dir);
 	if (!head)
 		head = new_node(ft_strdup(to_change));
-	//printf("SIZE:%d\n", ft_lstsize(head));
-	//print_lst(head);
 	return (head);
 }
 
@@ -231,8 +228,8 @@ void	wirldcard_expanding(char **line)
 		mark = mark_wildcard(splt[i]);
 		if (mark && is_wildcard(mark))
 			splt[i] = lst_to_str_wirld(expand_wildcard(splt[i], mark));
-		if (mark)
-			free(mark);
+		// if (mark)
+		// 	free(mark);
 	}
 	*line = arr_to_str(splt);
 }

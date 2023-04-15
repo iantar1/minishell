@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 17:36:38 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 03:21:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	len_ptr(char **ptr)
 	int	len;
 
 	len = 0;
-	while (ptr[len])
+	while (ptr && ptr[len])
 		len++;
 	return (len);
 }
@@ -64,9 +64,7 @@ t_data	ft_data_new(char *cmd_line)
 	splt = ft_split(cmd_line, SPACE);
 	data.cmd = remove_quote(ft_expand(splt[0]));
 	data.args = expand_args(splt);
-	printf("cmd_awa_before:%s\n", data.cmd);
 	data.type = ft_type(splt[0]);
-	printf("line_awa_after:%s\n", cmd_line);
 	return (data);
 }
 
@@ -130,8 +128,6 @@ t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level)
 	new_tree->left_c = NULL;
 	new_tree->right_c = NULL;
 	new_tree->amniguous = 0;
-	//new_tree->my_here_doc.filename = NULL;
-	//new_tree->my_here_doc.fd = -1;
 	return (new_tree);
 }
 
@@ -142,6 +138,7 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 
 	if (!line || !*line || !**line)
 		return ;
+	//tree->child_level = remove_first_parenthisis(line);
 	mark = ft_mark_operator(*line, 0);
 	splt_oper = upgrade_split(*line, mark);
 	//&& ||
@@ -171,18 +168,14 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 		else if (*line)
 		{
 			*line = reform_redirection(*line);
-			//printf("mark:%s\n", mark);
-			check_here_doc(line);
 			tree->amniguous = amniguous_redirect(*line);
-			// if (tree->amniguous)
-			// 	return ;
 			keep_last_redir(line);
 			mark = mark_redirection(*line, 0);
-			mark_the_red_mark(mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
 			{
+				mark_the_red_mark(mark);
 				tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 				tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 				tree->data = ft_data_new(splt_oper[1]);

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 17:29:02 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 03:15:28 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_env
 }	t_env;
 
 t_env	*g_env;
+t_list	*_free_;
 
 typedef struct s_vars
 {
@@ -146,7 +147,7 @@ int		len_ptr(char **ptr);
 char	*heredoc_expanding(char *str, char *lim);
 void	check_here_doc(char **line);
 void	free_lst(t_list *lst);
-int		ft_strcmp(const char *s1, const char *s2);
+unsigned char	ft_strcmp(const char *s1, const char *s2);
 int		amniguous_redirect(char	*str);
 t_list	*expand_wildcard(char *to_change, char *mask);
 int		syntax_error(char *str);
@@ -157,6 +158,7 @@ char	*lst_to_str(t_list *lst);
 int		is_wildcard(char *mark);
 char	*mark_wildcard(char *str);
 int		inside_quotes(char *str);
+
 
 //execution
 int		complet_filter(char *str, char *elem, char *mask, int check);

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:55:57 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 07:20:20 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 03:23:02 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	keep_last_redir(char **line)
 	i = -1;
 	if (!*line)
 		return ;
-	//printf("LINE:%s\n", *line);
 	mark = red_mark(*line, SPACE);
 	splt = upgrade_split(*line, mark);
 	mark = *line;

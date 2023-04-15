@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 07:49:41 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 02:55:42 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*heredoc_filename(void)
 		if (ft_isalnum(buf[i]))
 			name[++j] = buf[i];
 	}
+	if (j == 0)
+		return (heredoc_filename());
 	name[++j] = '\0';
 	free(buf);
 	return (name);
@@ -110,7 +112,6 @@ char	*her_doc(char *lim, int to_save)
 	char	*here_exp;
 
 	new_lim = remove_quote(lim);
-	//printf("new_lim:%s\n", new_lim);
 	if (to_save)
 	{
 		name = heredoc_filename();
@@ -169,7 +170,7 @@ char	*mark_here_doc(char *str)
 	return (mark);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+unsigned char	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
@@ -228,7 +229,7 @@ void	keep_last_heredoc(char **line, char *name)
 		}
 		else if (!ft_strcmp(splt[i], "<<") && len_her == 1)
 		{
-			splt[i][1] = '\0';
+			//splt[i][1] = '\0';//here you change << to <
 			i++;
 			free(splt[i]);
 			splt[i] = name;
@@ -298,7 +299,6 @@ void	check_here_doc(char **line)
 
 	if (!is_here_needle(*line, "<<"))
 		return ;
-	printf("HERE\n");
 	mark = mark_here_doc(*line);
 	splt = upgrade_split(*line, mark);
 	num_here = count_heredoc(splt);

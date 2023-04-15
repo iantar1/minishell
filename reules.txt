@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/14 07:49:22 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/15 03:21:57 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -260,8 +260,20 @@ IMPORTANT:
 		⛔ modify_var("?", "1")
 		⛔ check all strcmp() fun, you might miss that it return 0 when they are the same.
 		⛔ HERE_DOC: there is a problem, and 
-		⛔⛔⛔⛔
 		⛔ check if all $ inside "" ''  
-		⛔⛔⛔⛔
+		⛔check when the file is creating (before expanding awlidi)
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
+		⛔
 
-		
+ parcing/reform_rediraction.c  |   6 ++--

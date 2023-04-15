@@ -6,24 +6,24 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 17:41:31 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 02:33:50 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	just_quote(char *str)
-{
-	int	i;
+// int	just_quote(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i] == 34 || str[i] == 39)
-	{
-		if (!str[++i])
-			return (1);
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (str[i] == 34 || str[i] == 39)
+// 	{
+// 		if (!str[++i])
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 int	inside_quotes(char *str)
 {
@@ -51,15 +51,9 @@ int	check_ambiguous(char *str)
 		return (0);
 	if (inside_quotes(str))
 		return (0);
-	printf("AMBIGUOUS:%s\n", str);
 	str = ft_expand(str);//free()
-	// if (just_quote(str))
-	// 	check++;
 	str = remove_quote(str);
-	// if (!*str && check)
-	// 	return (0);
 	splt = ft_split(str, ' ');
-	///printf("len_ptr:%d\n", len_ptr(splt));
 	if (!splt[0] || len_ptr(splt) > 1)
 		return (free_ptr(splt), 1);
 	return (free_ptr(splt), 0);

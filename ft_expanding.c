@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 17:34:05 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 01:14:30 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,21 +165,16 @@ char	*join_with_sp(char *str)
 		rtn_str = ft_strjoin(splt[i], " ");
 	else
 		rtn_str = ft_strjoin(splt[i], "");
-	printf("HERE\n");
-	int x = -1;
-	while (splt[++x])
-		printf("rtn_str[%d]:%s\n",x,  splt[x]);
 	tmp = rtn_str;
 	while (splt && splt[++i])
 	{
 		rtn_str = ft_strjoin(rtn_str, splt[i]);
 		if (splt[i + 1])
 			rtn_str = ft_strjoin(rtn_str, " ");
-		//free(tmp);
 		tmp = rtn_str;
 		i++;
 	}
-	printf("****rtn_str%d:%s\n", i, rtn_str);
+	//printf("****rtn_str%d:%s\n", i, rtn_str);
 	return (rtn_str);
 }
 //HERE AM3ALLAM
@@ -211,13 +206,8 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		rtn_str[i++] = var.str[var.end + j];
 	rtn_str[i] = '\0';
 	if (!inside_quotes(var.str))
-	{
-		printf("RTN_STR______:%s\n", rtn_str);
 		rtn_str = join_with_sp(rtn_str);//free
-		printf("RTN_STR______:%s\n", rtn_str);
-	}
-	printf(">>>>var.str:%s\n", var.str);
-	free(var.str);
+	//free(var.str);
 	return (rtn_str);
 }
 

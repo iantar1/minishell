@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 17:21:28 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 02:36:56 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,3 @@ char	*mark_the_mark_operator(char *mark)//split with the last && or ||
 	}
 	return (mark);
 }
-
-
-
