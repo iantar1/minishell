@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/15 01:10:46 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:13:17 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,10 @@ t_list	*expand_wildcard(char *to_change, char *mask)
 	dir = opendir(".");
 	dir_ent = readdir(dir);
 	strdup_ = ft_strdup(".");
-	//printf("strdup_:%p\n", strdup_);
 	head = new_node(strdup_);
 	tmp = head;
 	while (dir_ent)
 	{
-		//printf("lline : %s to_change : %s\n", dir_ent->d_name, to_change);
 		if (is_in_filter(to_change, dir_ent->d_name, mask, 0))
 		{
 			head->next = new_node(ft_strdup(dir_ent->d_name));
@@ -132,7 +130,7 @@ char	*mark_wildcard(char *str)
 	flag = 0;
 	if (!str)
 		return (NULL);
-	mark = malloc(ft_strlen(str) * sizeof(char));
+	mark = malloc(ft_strlen(str) * sizeof(char) + 1);
 	while (str[i])
 	{
 		ft_flag(str[i], &flag);
@@ -228,8 +226,8 @@ void	wirldcard_expanding(char **line)
 		mark = mark_wildcard(splt[i]);
 		if (mark && is_wildcard(mark))
 			splt[i] = lst_to_str_wirld(expand_wildcard(splt[i], mark));
-		// if (mark)
-		// 	free(mark);
+		if (mark)
+			free(mark);
 	}
 	*line = arr_to_str(splt);
 }

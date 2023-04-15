@@ -7,7 +7,7 @@ SRC = minishell.c upgrade_split.c utils1.c utils2.c get_env.c ft_expanding.c ft_
 
 OBJ = ${SRC:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 ${NAME}: ${LIBFT} ${OBJ}
 	cc ${CFLAGS} ${OBJ} ${LIBFT} -lreadline -o ${NAME}

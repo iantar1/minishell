@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 01:14:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 09:37:26 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,6 @@ char	*join_with_sp(char *str)
 		tmp = rtn_str;
 		i++;
 	}
-	//printf("****rtn_str%d:%s\n", i, rtn_str);
 	return (rtn_str);
 }
 //HERE AM3ALLAM
@@ -227,7 +226,6 @@ void	ft_expand_norm(t_vars var, char **splt)
 			splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
 					[var.j + 1], var.end - var.start), &(var.j));
 		}
-		//printf("splt[var.i]=%s\n", splt[var.i]);
 	}
 }
 

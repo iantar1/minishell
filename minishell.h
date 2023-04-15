@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 03:15:28 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:53:05 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # define _FILE 8
 # define OUT 4
 # define IN 5
+
+#define BRED "\e[1;31m"
+#define REST "\e[0m"
+#define BGRN "\e[1;32m"
+#define BBLU "\e[1;34m"
+#define YEL "\e[0;33m"
 
 # include <stdio.h>
 # include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 02:43:03 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:50:48 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,13 @@ char	unvalid_next_parenthesis(char *str)
 	while (str[++i])
 	{
 		ft_flag(str[i], &flag);
-		//printf("flag:%d, is_operetor:%d, str[%d]:%c, str[%d]:%c\n", flag, is_operator(str[i]), i, str[i], i+1, str[i + 1]);
 		if (!flag && !is_operator(str[i]) && str[i] != '(' && str[i + 1] == '(')
 			return (1);
 		if (!flag && str[i] == '(')
 			if (is_operator(str[i + 1]))
-				return (printf("HERE\n"), 1);
+				return (1);
+		if (!flag && is_operator(str[i]) && str[i + 1] == ')')
+			return (1);
 		if (!flag && str[i] == ')')
 			if (str[i + 1] && !is_operator(str[i + 1]) && !is_redi(str[i + 1]) && str[i + 1] != ')')
 				return (1);
@@ -241,10 +242,10 @@ char	red_more_arg(char *str)
 			i++;
 			if (splt[i + 1] && !is_operator(splt[i + 1][0]))
 				if (splt[i + 2] && !is_operator(splt[i + 2][0]) && !is_redi(splt[i + 2][0]))
-					return (1);
+					return (free(mark), 1);
 		}
 	}
-	return (0);
+	return (free(mark), 0);
 }
 
 int	syntax_error(char *str)
@@ -264,5 +265,6 @@ int	syntax_error(char *str)
 		return (free(mark), 1);
 	if (red_more_arg(str))
 		return (1);
+	//printf("I MUST NOT BE HERE\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 03:14:13 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:53:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,11 @@ void	print_args(char **args)
 
 void	print_tree(t_tree *tree)
 {
-	printf("CMD: %s\n", tree->data.cmd);
+	printf(BBLU"CMD: "REST);
+	printf(BGRN"%s\n"REST, tree->data.cmd);
 	printf(" ->child_level:%d\n", tree->child_level);
 	printf(" ->type:%d\n", tree->data.type);
-	printf(" ->ambiguous :%d\n", tree->amniguous);
+	printf(YEL" ->ambiguous :%d\n"REST, tree->amniguous);
 	//printf(" ->heredoc_filename:%s\n", tree->my_here_doc.filename);
 	print_args(tree->data.args);
 	if ((tree->left_c))
@@ -143,7 +144,7 @@ int	main(int ac, char *av[], char **env)
 	_free_ = ft_lstnew("START");
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline("minishell$ "BRED);
 		if (!line)
 			return ((write(1, "\n", 1)), 0);
 		add_history(line);

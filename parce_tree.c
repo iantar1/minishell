@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 03:21:38 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:56:34 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,11 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 		return ;
 	//tree->child_level = remove_first_parenthisis(line);
 	mark = ft_mark_operator(*line, 0);
+	mark_the_mark_operator(mark);
 	splt_oper = upgrade_split(*line, mark);
 	//&& ||
 	if (need_split(mark))
 	{
-		mark_the_mark_operator(mark);
 		tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 		tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 		tree->data = ft_data_new(splt_oper[1]);
@@ -154,11 +154,11 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 	else
 	{
 		mark = ft_mark_operator(*line, 0);
+		mark_the_pipe_mark(mark);
 		splt_oper = upgrade_split(*line, mark);
 		// | 
 		if (need_split(mark))
 		{
-			mark_the_pipe_mark(mark);
 			tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 			tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 			tree->data = ft_data_new(splt_oper[1]);
@@ -171,11 +171,11 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 			tree->amniguous = amniguous_redirect(*line);
 			keep_last_redir(line);
 			mark = mark_redirection(*line, 0);
+			mark_the_red_mark(mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
 			{
-				mark_the_red_mark(mark);
 				tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 				tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 				tree->data = ft_data_new(splt_oper[1]);

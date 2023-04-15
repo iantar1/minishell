@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 23:41:21 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 09:35:44 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | c
 			mark[i] = '0';
 	}
 	mark[i] = '\0';
-	printf("______________________STR:%s, MARK:%s\n", str, mark);
 	return (mark);
 }
 

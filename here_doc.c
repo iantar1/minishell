@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 02:55:42 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 09:45:10 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,27 +265,27 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 	int			i;
 
 	i = 0;
-	if (fork() == 0)
-	{
+	// if (fork() == 0)
+	// {
 		//signal(SIGINT, handle_sig);
-		while (splt[i])
+	while (splt[i])
+	{
+		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
 		{
-			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
-			{
-				her_doc(splt[i + 1], 0);
-				num_here--;
-			}
-			else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
-			{
-				heredoc_filname = her_doc(splt[i + 1], 1);
-				num_here--;
-			}
-			i++;
+			her_doc(splt[i + 1], 0);
+			num_here--;
 		}
-		//exit(0);
+		else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
+		{
+			heredoc_filname = her_doc(splt[i + 1], 1);
+			num_here--;
+		}
+		i++;
 	}
+		//exit(0);
+	//}
 	//signal(SIGINT, SIG_IGN);
-	wait(NULL);
+	// wait(NULL);
 	return (heredoc_filname);
 }
 

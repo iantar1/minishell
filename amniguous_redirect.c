@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 02:33:50 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 10:02:55 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	check_ambiguous_wirldcar(char *str)
 	if (is_wildcard(mark))
 	{
 		if (ft_lstsize(expand_wildcard(str, mark)))
-			return (1);
+			return (free(mark), 1);
 	}
-	return (0);
+	return (free(mark), 0);
 }
 
 int	amniguous_redirect(char	*str)
