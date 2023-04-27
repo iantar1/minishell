@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 09:37:26 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:59:42 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,10 @@ char	*join_with_sp(char *str)
 	int		i;
 
 	i = 0;
+	printf("HIIIIII\n");
 	if (!str)
 		return(NULL);
-	splt = ft_split(str, ' ');
+	splt = ft_split(str, SPACE);
 	if (!splt || !*splt)
 		return (NULL);
 	if (splt[i + 1])
@@ -169,11 +170,17 @@ char	*join_with_sp(char *str)
 	while (splt && splt[++i])
 	{
 		rtn_str = ft_strjoin(rtn_str, splt[i]);
+		free(tmp);
 		if (splt[i + 1])
+		{
+			free(tmp);
 			rtn_str = ft_strjoin(rtn_str, " ");
+			tmp = rtn_str;
+		}
 		tmp = rtn_str;
-		i++;
 	}
+	printf("I AM HERE\n");
+	free_ptr(splt);
 	return (rtn_str);
 }
 //HERE AM3ALLAM
@@ -194,6 +201,7 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	else
 		len_value = ft_strlen(value);
 	new_len = ft_strlen(var.str) - (var.end - var.start) + len_value;
+	printf("new_len:%d\n", new_len);
 	rtn_str = malloc(new_len + 1);
 	while (++i < var.start)
 		rtn_str[i] = var.str[i];
@@ -210,9 +218,9 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	return (rtn_str);
 }
 
-void	ft_expand_norm(t_vars var, char **splt)
+void	ft_expand_norm(t_vars var, char **splt)//herehere
 {
-	while (splt[var.i][++(var.j)])
+	while (splt[var.i] && splt[var.i][++(var.j)])
 	{
 		if (splt[var.i][var.j] == '$')
 		{
@@ -222,9 +230,11 @@ void	ft_expand_norm(t_vars var, char **splt)
 				continue ;
 			var.start = var.j;
 			var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
+			printf("len_to_exp:%d\n", var.end);
 			var.str = splt[var.i];
 			splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
 					[var.j + 1], var.end - var.start), &(var.j));
+			printf("splt[%d]:%s\n", var.i ,splt[var.i]);
 		}
 	}
 }
@@ -232,12 +242,14 @@ void	ft_expand_norm(t_vars var, char **splt)
 char	*ft_expand(char *str)
 {
 	char	**splt;
+	char	*mark;
 	t_vars	var;
 
 	var.i = -1;
 	if (!str)
 		return (NULL);
-	splt = upgrade_split(str, expand_mark(str));
+	mark = expand_mark(str);
+	splt = upgrade_split(str, mark);
 	while (splt[++(var.i)])
 	{
 		if (need_expand(splt[var.i]))
@@ -246,6 +258,7 @@ char	*ft_expand(char *str)
 			ft_expand_norm(var, splt);
 		}
 	}
+	free(mark);
 	if (!splt || !splt[0])
 		return (NULL);
 	return (join_evrything(splt));

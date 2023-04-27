@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:28:28 by iantar            #+#    #+#             */
-/*   Updated: 2022/10/23 08:58:20 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 12:28:17 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	ptr = malloc((count_p(s, c) + 1) * (sizeof(char *)));
 	if (!ptr)
-		return (0);
+		return (NULL);
 	while (s[i])
 	{
 		if (s[i] != c)
@@ -71,6 +71,6 @@ char	**ft_split(char const *s, char c)
 		}
 		i++;
 	}
-	ptr[j] = 0;
+	ptr[j] = NULL;
 	return (ptr);
 }

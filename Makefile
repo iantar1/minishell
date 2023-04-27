@@ -26,6 +26,7 @@ fclean: clean
 	rm -rf ${NAME} ${LIBFT}
 
 re:fclean all
+
 COM="iantar"
 git:
 	git add .

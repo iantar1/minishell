@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 10:53:29 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:15:09 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	main(int ac, char *av[], char **env)
 	//char	**buf;
 
 	((void)av, (void)ac);
-	g_env = new_line("var=a     b");
+	g_env = new_line("var=a           b");
 	g_env->next = create_env(env);
 	_free_ = ft_lstnew("START");
 	while (1)
