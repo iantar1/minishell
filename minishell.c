@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 15:15:09 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/27 07:40:02 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	print_args(char **args)
 	printf("\n");
 }
 
-void	print_tree(t_tree *tree)
+void	print_tree(t_tree *tree)//here
 {
 	printf(BBLU"CMD: "REST);
 	printf(BGRN"%s\n"REST, tree->data.cmd);
@@ -139,9 +139,9 @@ int	main(int ac, char *av[], char **env)
 	//char	**buf;
 
 	((void)av, (void)ac);
-	g_env = new_line("var=a           b");
+	g_env = new_line("var=a     n");
 	g_env->next = create_env(env);
-	_free_ = ft_lstnew("START");
+	//_free_ = ft_lstnew("START");
 	while (1)
 	{
 		line = readline("minishell$ "BRED);
@@ -149,18 +149,22 @@ int	main(int ac, char *av[], char **env)
 			return ((write(1, "\n", 1)), 0);
 		add_history(line);
 		//tmp = ft_strdup(line);
+		//remove_surrounded_sp(&line);
+		line = ft_strtrim(line, "	 ");
+		if (!line || !*line)
+			continue ;
 		if (syntax_error(line))
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			continue ;
 		}
-		remove_surrounded_sp(&line);
 		check_here_doc(&line);
 		if (!line)
 			continue ;
 		tree = ft_tree_new(&line, NULL, 0);
 		parse_tree(&line, tree, "root");
 		print_tree(tree);
+		//printf("line____ino:%s\n", line);
 
 		// int	in;
 		// int	out;

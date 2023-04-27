@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 10:02:55 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/26 17:36:08 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,17 @@ int	check_ambiguous(char *str)
 		return (0);
 	if (inside_quotes(str))
 		return (0);
+	//printf("str:::::::::%s\n", str);
 	str = ft_expand(str);//free()
+	if (!str)
+		return (1);
 	str = remove_quote(str);
 	splt = ft_split(str, ' ');
 	if (!splt[0] || len_ptr(splt) > 1)
+	{
+		//printf(BGRN"*----------------------*\n"REST);
 		return (free_ptr(splt), 1);
+	}
 	return (free_ptr(splt), 0);
 }
 
@@ -80,6 +86,7 @@ int	amniguous_redirect(char	*str)
 
 	i = 0;
 	mark = mark_redirection(str, 1);
+	//printf("mark:%s\n", mark);
 	if (!need_split(mark))
 		return (0);
 	splt = upgrade_split(str, mark);

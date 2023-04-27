@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 09:35:44 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 18:28:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	remove_surrounded_sp(char **str)
 {
-	char	*tmp;
 	int		len;
 	int		start;
 
 	start = 0;
 	if (!**str)
 		return ;
-	while (*(*str + start) <= SPACE)
+	while (*(*str + start) <= SPACE && *(*str + start) >= 0)
 		start++;
 	len = ft_strlen(*str) - 1;
 	if (start == len + 1)
@@ -29,11 +28,9 @@ void	remove_surrounded_sp(char **str)
 		*str = NULL;
 		return ;
 	}
-	while (len && (*(*str + len) <= SPACE))
+	while (len && (*(*str + len) <= SPACE) && *(*str + start) >= 0)
 		len--;
-	tmp = *str;
 	*str = ft_substr(*str, start, len - start + 1);
-	free(tmp);
 }
 
 char	*mark_first_parenthisis(char *str)//to remove the first parenthesis.(ls | cat > out (cat out | wc)) -> ls | cat > out (cat out | wc)
@@ -100,7 +97,8 @@ int	remove_first_parenthisis(char **str)
 
 	if (!*str)
 		return (0);
-	remove_surrounded_sp(str);
+	//remove_surrounded_sp(str);
+	*str = ft_strtrim(*str, "	 ");
 	mark = mark_first_parenthisis(*str);
 	child_level = 0;
 	while (surrounded_parenthisis(mark))

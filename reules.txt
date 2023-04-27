@@ -6,31 +6,12 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/15 12:27:49 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/26 20:33:01 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-I. SPLIT YOUR STRING
-
-	1)   >  <  | : 11111
-
-	2)   >> <<   : 22222
-
-	3)   ||   && : 22222
-
-	4)   <> and >< : ask first how they work, and test them.
-
-	5)   " " and ' ' 
-
-	6)    $
-
-	7)    |||... &&&... : 3333 : syntax error
-
-	ls>file||cat file2&&
-	00200002200010000022
-
- II. EXPANDING:
+II. EXPANDING:
 
 	1)""  ;  here_doc  ;  ''  ;   "''"   ;   $?   ;   here_doc with "" and ''   ; 
 
@@ -49,16 +30,6 @@ III. REMOVE THE QUOTE.
 
 
 
-
-
- ------------------------
-| input: fd_infile or 0  |
-|                        | -> it must be in your struct.
-| outpud:fd_outfile or 1 |
- ------------------------
-
-
-
 IV. HERE_DOC:
 
 	1) reform the cmd line (if it needs) : cmd fil1 fil2 << lim1 file3 <<lim2 fil4 ... ->  cmd fil1 ...file4 ... << lim1 <<lim2
@@ -70,7 +41,7 @@ V. REDIRACTIN: > < >>
 	1) ambiguous redirect:
 		.) ls > $tkhrbi9 ...
 		
-		..)
+		..)ls > $var (var = "a  b")
 	2) reform the command 
 		cat < first -b  				==	cat -b < first
 		cat < first -b second			==	cat -b second < first
@@ -160,7 +131,7 @@ IMPORTANT:
 		-> add the wirldcard function.
 				
 
-AMNIGUOUS REDIRECT:
+AMBIGUOUS REDIRECT:
 	
 ✅ var="     "
 			> $var : split with SPACE if (and remove QUOTES) to the redirect_file = ""$var) if split[0] = NULL and remove QUOTES if ther is no QUOTE near var like "'"$var -> ambiguous
@@ -195,7 +166,7 @@ VII. SYNTAX ERROR:
 	8) ls > (l > k > o > p): > + ( : syntax error
 
 
-syntax error :
+
 ✅	> |
 ✅	> ||
 ✅	> (file)
@@ -263,12 +234,12 @@ IMPORTANT:
 		⛔ check if all $ inside "" ''  
 		⛔check when the file is creating (before expanding awlidi)
 		⛔((cat -n | wc -n) > out || (cat || ls -l || pp))
-		⛔ls > $var (it create then ot expand : PROBLEM)
-		⛔
-		⛔
-		⛔
-		⛔
-		⛔
+		⛔ls > $var (it create then it expand : PROBLEM)
+		⛔$PATH$
+		⛔ > "$var" and > $var : don't remove the QUOTES untile you check for "a  b" 
+		⛔ft_expanding , line 217
+		⛔ WORNING: reform_redirection ls > " " : "   " is one arg not two
+		⛔the problem of tomorrow : ls > "a     b"
 		⛔
 		⛔
 		⛔

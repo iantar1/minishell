@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/15 10:13:17 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/27 10:22:28 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,15 +219,16 @@ void	wirldcard_expanding(char **line)
 
 	if (!*line || !**line)
 		return ;
-	splt = ft_split(*line, ' ');
+	mark = ft_mark(*line);
+	//splt = ft_split(*line, ' ');
+	splt = upgrade_split(*line, mark);
 	i = -1;
 	while (splt[++i])
 	{
+		free(mark);
 		mark = mark_wildcard(splt[i]);
 		if (mark && is_wildcard(mark))
 			splt[i] = lst_to_str_wirld(expand_wildcard(splt[i], mark));
-		if (mark)
-			free(mark);
 	}
 	*line = arr_to_str(splt);
 }

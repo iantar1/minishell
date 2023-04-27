@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:43:19 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/13 22:02:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/16 23:04:50 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 int	ft_lstsize(t_list *lst)
 {
 	int		i;
-	t_list	*tmp;
 
 	i = 0;
-	tmp = lst;
-	while (tmp)
+	while (lst)
 	{
-		tmp = tmp->next;
+		lst = lst->next;
 		i++;
 	}
 	return (i);

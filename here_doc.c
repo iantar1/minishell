@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 09:45:10 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/27 10:28:40 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ char	*heredoc_filename(void)
 	name = malloc(6);
 	i = -1;
 	j = -1;
-	while (buf[++i] && j < 5)
+	while (buf[++i] && j < 4)
 	{
 		if (ft_isalnum(buf[i]))
 			name[++j] = buf[i];
 	}
-	if (j == 0)
-		return (heredoc_filename());
-	name[++j] = '\0';
 	free(buf);
+	if (j == -1)
+	{
+		//printf(YEL"NOOOOOOOO\n"REST);
+		return (heredoc_filename());
+	}
+	//printf("WORNING, j=%d\n", j);
+	name[++j] = '\0';
 	return (name);
 }
 
@@ -111,17 +115,21 @@ char	*her_doc(char *lim, int to_save)
 	char	*new_lim;
 	char	*here_exp;
 
+	//printf("lim:%s\n", lim);
 	new_lim = remove_quote(lim);
+	//printf("new_lim:%s\n", new_lim);
+	
 	if (to_save)
 	{
 		name = heredoc_filename();
-		fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
-		if (fd == -1)
-		{
-			write(2, "minishell:file can't open\n", 26);
-			// modify_var("?", "1");
-			return (NULL);
-		}
+		fd = -1;//just for not creating any files
+		//fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
+		// if (fd == -1)
+		// {
+		// 	write(2, "minishell:file can't open\n", 26);
+		// 	// modify_var("?", "1");
+		// 	return (NULL);
+		// }
 	}
 	else
 	{
@@ -160,7 +168,9 @@ char	*mark_here_doc(char *str)
 		ft_flag(str[i], &flag);
 		if (str[i] == '<' && !flag)
 			mark[i] = '2';
-		else if (str[i] == 32)
+		else if (str[i] == '>' && !flag)
+			mark[i] = '3';
+		else if (str[i] == SPACE || str[i] == TAB)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -229,7 +239,6 @@ void	keep_last_heredoc(char **line, char *name)
 		}
 		else if (!ft_strcmp(splt[i], "<<") && len_her == 1)
 		{
-			//splt[i][1] = '\0';//here you change << to <
 			i++;
 			free(splt[i]);
 			splt[i] = name;
@@ -251,7 +260,6 @@ void	keep_last_heredoc(char **line, char *name)
 			free(mark);
 			mark = *line;
 			*line = ft_strjoin(*line, splt[i]);
-			//splt[i] = NULL;
 			free(mark);
 		}
 	}
@@ -268,7 +276,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 	// if (fork() == 0)
 	// {
 		//signal(SIGINT, handle_sig);
-	while (splt[i])
+	while (splt && splt[i])
 	{
 		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
 		{
@@ -279,6 +287,7 @@ char	*open_heredocs(char	**splt, int num_here)//this function will open all the 
 		{
 			heredoc_filname = her_doc(splt[i + 1], 1);
 			num_here--;
+			//printf("HERE\n");
 		}
 		i++;
 	}
@@ -308,5 +317,6 @@ void	check_here_doc(char **line)
 		exit(2);
 	}
 	heredoc_filname = open_heredocs(splt, num_here);
+	//printf("i must not be here\n");
 	keep_last_heredoc(line, heredoc_filname);
 }

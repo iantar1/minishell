@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 02:36:56 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/15 18:32:45 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_mark_operator(char *str, int sp)
 			check = 0;
 		if ((str[i] == '|' || str[i] == '&') && !check)
 			mark[i] = '2';
-		else if (!check && mark[i] <= 32 && sp)//nw
+		else if (!check && mark[i] <= 32 && mark[i] >= 0 && sp)//nw
 			mark[i] = '1';
 		else
 			mark[i] = '0';

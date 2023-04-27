@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 15:59:42 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/26 17:33:26 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,12 @@ char	*join_evrything(char **splt)
 	return (rtn_str);
 }
 
-int	len_to_exp(char *str)
+int	len_to_exp(char *str)//why 1???
 {
 	int	i;
 
 	i = 1;
+	//printf("STR_LEN_TO_EXP:%s\n", str);
 	if (str[i] == '?')
 		return (2);
 	while (ft_isalnum(str[i]) || str[i] == '_')
@@ -156,7 +157,7 @@ char	*join_with_sp(char *str)
 	int		i;
 
 	i = 0;
-	printf("HIIIIII\n");
+	//printf("HIIIIII\n");
 	if (!str)
 		return(NULL);
 	splt = ft_split(str, SPACE);
@@ -179,7 +180,7 @@ char	*join_with_sp(char *str)
 		}
 		tmp = rtn_str;
 	}
-	printf("I AM HERE\n");
+	//printf("I AM HERE\n");
 	free_ptr(splt);
 	return (rtn_str);
 }
@@ -192,7 +193,7 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	int		i;
 	int		j;
 	char	*rtn_str;
-
+//if it's ambiguis you don't need to expand
 	i = -1;
 	j = -1;
 	rtn_str = NULL;
@@ -200,8 +201,10 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		len_value = 0;
 	else
 		len_value = ft_strlen(value);
+	//printf("var.str:%s\n", var.str);
 	new_len = ft_strlen(var.str) - (var.end - var.start) + len_value;
-	printf("new_len:%d\n", new_len);
+	//printf("$$$$$$$$:  value:%s, len_value:%d, new_len:%d\n", value, len_value, new_len);
+	//printf("new_len:%d\n", new_len);
 	rtn_str = malloc(new_len + 1);
 	while (++i < var.start)
 		rtn_str[i] = var.str[i];
@@ -213,8 +216,14 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		rtn_str[i++] = var.str[var.end + j];
 	rtn_str[i] = '\0';
 	if (!inside_quotes(var.str))
-		rtn_str = join_with_sp(rtn_str);//free
+	{
+		new_len = ft_strlen(rtn_str);
+		rtn_str = join_with_sp(rtn_str);//free 
+		*curser = *curser - (new_len - ft_strlen(rtn_str));
+		//printf("curser:%d\n", *curser);
+	}
 	//free(var.str);
+	//printf("curser:%d\n", *curser);
 	return (rtn_str);
 }
 
@@ -230,11 +239,15 @@ void	ft_expand_norm(t_vars var, char **splt)//herehere
 				continue ;
 			var.start = var.j;
 			var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
-			printf("len_to_exp:%d\n", var.end);
+			//printf("len_to_exp:%d\n", var.end);
 			var.str = splt[var.i];
+			//printf("***VAR:var.i:%d, var.j:%d, var.start:%d, var.end:%d, var.str:%s\n", var.i, var.j, var.start, var.end, var.str);
 			splt[var.i] = ft_change_part(var, get_value(&splt[var.i]
 					[var.j + 1], var.end - var.start), &(var.j));
-			printf("splt[%d]:%s\n", var.i ,splt[var.i]);
+			//printf("len_splt[%d]:%zu , splt:%s\n", var.i, ft_strlen(splt[var.i]), splt[var.i]);
+			//printf("AFTER:***VAR:var.i:%d, var.j:%d, var.start:%d, var.end:%d, var.str:%s\n", var.i, var.j, var.start, var.end, var.str);
+			//printf("splt[%d]:%s\n", var.i ,splt[var.i]);
+			//printf("#####################################\n");
 		}
 	}
 }
@@ -256,6 +269,7 @@ char	*ft_expand(char *str)
 		{
 			var.j = -1;
 			ft_expand_norm(var, splt);
+			//printf("mark:%s\n", mark);
 		}
 	}
 	free(mark);

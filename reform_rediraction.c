@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/14 01:46:12 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/26 19:01:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*mark_redirection(char *str, int sp)
 		ft_flag(str[i], &flag);
 		if (!flag && (str[i] == '>' || str[i] == '<'))
 			mark[i] = '2';
-		else if (str[i] <= 32 && sp)
+		else if (str[i] <= 32 && str[i] >= 0 && sp && !flag)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -121,7 +121,7 @@ int	count_redirect(t_list *lst)
 	return (count);
 }
 
-static int	index_of_redir(t_list *lst)
+int	index_of_1st_redir(t_list *lst)
 {
 	int	index;
 
@@ -140,7 +140,7 @@ static int	index_of_redir(t_list *lst)
 
 //u need to check syntax error before using this function "<< >> < >"" must be flowed by a file_name"
 
-static void	reform_it(t_list **lst)
+void	reform_it(t_list **lst)
 {
 	int		i;
 	int		len;
@@ -149,17 +149,27 @@ static void	reform_it(t_list **lst)
 	t_list	*tmp2;
 
 	len = count_redirect(*lst);
+	//printf("len:%d\n", len);
 	tmp1 = *lst;
 	while (len)
 	{
-		index = index_of_redir(*lst);
+		index = index_of_1st_redir(*lst);
+		//printf("index:%d\n", index);
 		i = -1;
 		tmp1 = *lst;
 		while (++i < index)
 			tmp1 = tmp1->next;
 		tmp2 = tmp1->next;
-		tmp1->next = tmp2->next->next;
-		tmp2->next->next = NULL;
+		if (tmp2->next)
+		{
+			tmp1->next = tmp2->next->next;//here the problem
+			tmp2->next->next = NULL;//and here too
+		}
+		else
+		{
+			tmp1->next = tmp2->next;//here the problem
+			tmp2->next->next = NULL;//and here too
+		}
 		ft_lstadd_back(lst, tmp2);
 		len--;
 	}
@@ -167,6 +177,13 @@ static void	reform_it(t_list **lst)
 	*lst = (*lst)->next;
 	free(tmp1);
 }
+
+// void	reform_it_again(t_list **lst)
+// {
+// 	t_list	*tmp1;
+
+
+// }
 
 char	*lst_to_str(t_list *lst)
 {
@@ -197,6 +214,7 @@ char	there_is_red(char *mark)
 			return (1);
 	return (0);
 }
+
 char	*reform_redirection(char *str)
 {
 	char	**splt_cmd;
@@ -212,6 +230,6 @@ char	*reform_redirection(char *str)
 	reform_it(&lst);
 	rtn_str = lst_to_str(lst);
 	free_lst(lst);
-	free(str);
+	//free(str);
 	return (rtn_str);
 }
