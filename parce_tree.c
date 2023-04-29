@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/27 10:29:08 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/29 13:45:03 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_data	ft_data_new(char *cmd_line)
 	char	*mark;
 
 	wirldcard_expanding(&cmd_line);
-	//printf("cmd_line:%s\n", cmd_line);
+	printf("**********cmd_line:%s\n", cmd_line);
 	mark = ft_mark(cmd_line);
 	//printf("ft_mark:%s\n", mark);
 	//splt = ft_split(cmd_line, SPACE);
@@ -200,7 +200,6 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 				parse_tree(&splt_oper[1], tree->right_c, "right");
 			}
 		}
-		//printf("line_ino:%s\n", *line);
 	}
 	return ;
 	(void)str;

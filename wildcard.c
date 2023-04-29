@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/27 10:22:28 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/27 17:55:02 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,17 +211,40 @@ char	*arr_to_str(char **splt)
 	return (str);
 }
 
+char	*edit_mark(char *mark)
+{
+	int		i;
+	char	*new_mark;
+
+	if (!mark)
+		return (mark);
+	i = -1;
+	new_mark = malloc(ft_strlen(mark) + 1);
+	while (mark && mark[++i])
+	{
+		if (mark[i] == '4')
+			new_mark[i] = '0';
+		else
+			new_mark[i] = mark[i];
+	}
+	new_mark[i] = '\0';
+	return (new_mark);
+}
+
 void	wirldcard_expanding(char **line)
 {
 	int		i;
 	char	**splt;
 	char	*mark;
+	char	*new_mark;
 
 	if (!*line || !**line)
 		return ;
 	mark = ft_mark(*line);
 	//splt = ft_split(*line, ' ');
-	splt = upgrade_split(*line, mark);
+	new_mark = edit_mark(mark);
+	splt = upgrade_split(*line, new_mark);
+	free(new_mark);
 	i = -1;
 	while (splt[++i])
 	{

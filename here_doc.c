@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:37 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/27 10:28:40 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/29 17:53:09 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int	here_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-// static void	handle_sig(int sig)
-// {
-// 	(void)sig;
-// 	exit(0);
-// }
 
 int	there_quote(char *str)
 {
@@ -107,7 +102,8 @@ char	*heredoc_filename(void)
 	return (name);
 }
 
-char	*her_doc(char *lim, int to_save)
+
+char	*her_doc(char *lim, int to_save, int fds)
 {
 	char	*line;
 	char	*name;
@@ -115,34 +111,36 @@ char	*her_doc(char *lim, int to_save)
 	char	*new_lim;
 	char	*here_exp;
 
-	//printf("lim:%s\n", lim);
 	new_lim = remove_quote(lim);
-	//printf("new_lim:%s\n", new_lim);
-	
 	if (to_save)
 	{
 		name = heredoc_filename();
+		write(fds, name, ft_strlen(name));
+		close(fds);
 		fd = -1;//just for not creating any files
-		//fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
-		// if (fd == -1)
-		// {
-		// 	write(2, "minishell:file can't open\n", 26);
-		// 	// modify_var("?", "1");
-		// 	return (NULL);
-		// }
+		fd = open(name, O_TRUNC | O_RDWR | O_CREAT, 0666);
+		if (fd == -1)
+		{
+			//printf("I MUST NOT APPEARE\n");
+			free(name);
+			write(2, "minishell:file can't open\n", 26);
+			// modify_var("?", "1");//you must add 1 to the exit_status
+			return (NULL);
+		}
 	}
 	else
 	{
 		fd = -1;
-		name = NULL;
+		name = lim;//becouse NULL is reserved when we can't open a file.
 	}
 	line = (write(1, "> ", 2), get_next_line(0));
 	while (1)
 	{
 		if (!line)
-			return (close(fd), name);
+			return (printf("- - - - - - - -\n"), close(fd), name);
 		if (!here_strcmp(line, new_lim))
 		{
+			printf("* * * * * * * * * * *\n");
 			free(line);
 			return (close(fd), name);
 		}
@@ -168,9 +166,9 @@ char	*mark_here_doc(char *str)
 		ft_flag(str[i], &flag);
 		if (str[i] == '<' && !flag)
 			mark[i] = '2';
-		else if (str[i] == '>' && !flag)
+		else if ((str[i] == '>' || str[i] == ')') && !flag)
 			mark[i] = '3';
-		else if (str[i] == SPACE || str[i] == TAB)
+		else if (str[i] <= SPACE && str[i] >= 0)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
@@ -267,39 +265,86 @@ void	keep_last_heredoc(char **line, char *name)
 }
 
 
+void	handle_sig(int sig)
+{
+	(void)sig;
+	exit(1);
+}
+
 char	*open_heredocs(char	**splt, int num_here)//this function will open all the here_docs and will return the last filename_heredoc
 {
-	char		*heredoc_filname = NULL;
-	int			i;
+	char	*heredoc_filname;
+	int		i;
+	int		pid;
+	int		fds[2];
+	int		state;
 
 	i = 0;
-	// if (fork() == 0)
-	// {
-		//signal(SIGINT, handle_sig);
-	while (splt && splt[i])
+	if (pipe(fds) == -1)
+		return (NULL);
+	signal(SIGINT, handle_sig);
+	pid = fork();
+	if (pid == -1)
+		return (NULL);
+	if (pid == 0)
 	{
-		if (!ft_strcmp(splt[i], "<<") && num_here > 1)
+		while (splt && splt[i])
 		{
-			her_doc(splt[i + 1], 0);
-			num_here--;
+			if (!ft_strcmp(splt[i], "<<") && num_here > 1)
+			{
+				// if (!her_doc(splt[i + 1], 0))
+				// 	return (NULL);
+				if (!her_doc(splt[i + 1], 0, -1))
+					(printf("+ + + + + + + +"), exit(1));
+				num_here--;
+			}
+			else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
+			{
+				heredoc_filname = her_doc(splt[i + 1], 1, fds[1]);
+				if (!heredoc_filname)
+					(printf("; ; ; ; ; ; ; ;"), exit(1));
+				//write(fds[1], heredoc_filname, ft_strlen(heredoc_filname));
+				// if (!heredoc_filname)
+				// 	return (NULL);
+				printf("*******heredoc_name:%s\n", heredoc_filname);
+				num_here--;
+			}
+			i++;
 		}
-		else if (!ft_strcmp(splt[i], "<<") && num_here == 1)
-		{
-			heredoc_filname = her_doc(splt[i + 1], 1);
-			num_here--;
-			//printf("HERE\n");
-		}
-		i++;
+		//write(fds[1], heredoc_filname, ft_strlen(heredoc_filname));
+		close(fds[0]);
+		close(fds[1]);
+		exit(0);
 	}
-		//exit(0);
-	//}
-	//signal(SIGINT, SIG_IGN);
-	// wait(NULL);
+	//close(fds[0]);
+	signal(SIGINT, SIG_IGN);
+	close(fds[1]);
+	heredoc_filname = malloc(6);
+	pid = waitpid(pid, &state, 0);
+	i = read(fds[0], heredoc_filname, 6);
+	heredoc_filname[5] = '\0';
+	close(fds[0]);
+	if (i == -1 || !i)
+	{
+		printf("I AM HERA*************************\n");
+		return (NULL);
+	}
+	if (state)
+	{
+		printf("PPPP:%s\n", heredoc_filname);
+		unlink(heredoc_filname);
+		//free(heredoc_filname);
+		return (NULL);
+	}
+	//printf("state:%d\n", state);
+	printf("WHY:%s\n", heredoc_filname);
+	//printf("herdoc_name:%s\n", heredoc_filname);
+	close(fds[0]);
 	return (heredoc_filname);
 }
 
 //handle the signal and check the expanding of the here_doc
-void	check_here_doc(char **line)
+int	check_here_doc(char **line)
 {
 	char	*heredoc_filname;
 	char	**splt;
@@ -307,8 +352,9 @@ void	check_here_doc(char **line)
 	int		num_here;
 
 	if (!is_here_needle(*line, "<<"))
-		return ;
+		return (0);
 	mark = mark_here_doc(*line);
+	//printf("mark:%s\n", mark);
 	splt = upgrade_split(*line, mark);
 	num_here = count_heredoc(splt);
 	if (num_here > 16)
@@ -316,7 +362,19 @@ void	check_here_doc(char **line)
 		printf("minishell: maximum here-document count exceeded\n");
 		exit(2);
 	}
+	//signal(SIGINT, handle_sig);
 	heredoc_filname = open_heredocs(splt, num_here);
+	if (!heredoc_filname)
+		return (1);
+	//printf("heredoc_filname:%s\n", heredoc_filname);
+	//signal(SIGINT, SIG_IGN);
+	if (!heredoc_filname)
+		return (1);
 	//printf("i must not be here\n");
 	keep_last_heredoc(line, heredoc_filname);
+	return (0);
 }
+//ctrl + c : you delete the file that you create, and 
+
+// solution :split with || and &&  and send chuncks to open_herd and save_last_herdoc
+// store all herdoc filename in linked list , when you press crl+c unlink them.

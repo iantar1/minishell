@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/26 20:33:01 by iantar           ###   ########.fr        #
+#    Updated: 2023/04/28 22:00:30 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -240,11 +240,14 @@ IMPORTANT:
 		⛔ft_expanding , line 217
 		⛔ WORNING: reform_redirection ls > " " : "   " is one arg not two
 		⛔the problem of tomorrow : ls > "a     b"
-		⛔
-		⛔
+		⛔what will happend if we have error || > file1 > file2: you must not create them
+		⛔ while openning a her_doc and you press ctrl+c , what will happend to the file that you create.
 		⛔
 		⛔
 		⛔
 		⛔
 
  parcing/reform_rediraction.c  |   6 ++--
+
+
+TOMORROW : <<L || <<L || ....:   it must send one here_doc between two && || 

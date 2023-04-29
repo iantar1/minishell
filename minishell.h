@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 18:36:13 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/29 16:06:44 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ char	*ft_mark_operator(char *str, int sp);
 char	*mark_the_mark_operator(char *mark);
 char	*mark_first_parenthisis(char *str);
 char	*get_next_line(int fd);
-char	*her_doc(char *lim, int to_save);
+char	*her_doc(char *lim, int to_save, int fd);
 void	free_ptr(char **ptr);
 char	*reform_redirection(char *str);
 t_tree	*ft_tree_new(char **line, t_tree *parent_add, int child_level);
@@ -153,7 +153,7 @@ t_list	*arr_to_lst(char **str);
 char	**lst_to_arr(t_list *lst);
 int		len_ptr(char **ptr);
 char	*heredoc_expanding(char *str, char *lim);
-void	check_here_doc(char **line);
+int		check_here_doc(char **line);
 void	free_lst(t_list *lst);
 unsigned char	ft_strcmp(const char *s1, const char *s2);
 int		amniguous_redirect(char	*str);

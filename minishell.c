@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:14:21 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/27 07:40:02 by iantar           ###   ########.fr       */
+/*   Updated: 2023/04/28 21:56:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,8 @@ int	main(int ac, char *av[], char **env)
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			continue ;
 		}
-		check_here_doc(&line);
+		if (check_here_doc(&line))//free
+			continue;
 		if (!line)
 			continue ;
 		tree = ft_tree_new(&line, NULL, 0);
