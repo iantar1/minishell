@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:55:57 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/27 07:28:49 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:27:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ void	keep_last_redir(char **line)
 	char	**splt;
 	int		len;
 	int		i;
-	// int		fd;
+	int		fd;
 	int		len_in;
 	int		len_out;
+	char	*expand;
 
 	i = -1;
 	if (!*line)
@@ -77,14 +78,16 @@ void	keep_last_redir(char **line)
 	{
 		if (!ft_strcmp(splt[i], ">>") && splt[i + 1])
 		{
-			// fd = open(splt[i + 1], O_RDWR | O_APPEND | O_CREAT, 0644);
-			// if (fd < 0)
-			// {
-			// 	write(2, "minishell:file can't open\n", 26);
-			// 	// modify_var("?", "1");
-			// 	return ;
-			// }
-			// close(fd);
+			expand = ft_expand(splt[i + 1]);//free expand
+			expand = remove_quote(expand);//declare anouther varible and free agine
+			fd = open(expand, O_RDWR | O_APPEND | O_CREAT, 0644);
+			if (fd < 0)
+			{
+				write(2, "minishell:file can't open\n", 26);
+				// modify_var("?", "1");
+				return ;
+			}
+			close(fd);
 			if (len_out > 1)
 			{
 				splt[i] = (free(splt[i]), NULL);
@@ -95,14 +98,16 @@ void	keep_last_redir(char **line)
 		}
 		else if (!ft_strcmp(splt[i], ">") && splt[i + 1])
 		{
-			//fd = open(splt[i + 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
-			// if (fd < 0)
-			// {
-			// 	write(2, "minishell:file can't open\n", 26);
-			// 	// modify_var("?", "1");
-			// 	return ;
-			// }
-			// close(fd);
+			expand = ft_expand(splt[i + 1]);//free expand
+			expand = remove_quote(expand);//declare anouther varible and free agine
+			fd = open(expand, O_RDWR | O_TRUNC | O_CREAT, 0644);
+			if (fd < 0)
+			{
+				write(2, "minishell:file can't open\n", 26);
+				// modify_var("?", "1");
+				return ;
+			}
+			close(fd);
 			if (len_out > 1)
 			{
 				splt[i] = (free(splt[i]), NULL);

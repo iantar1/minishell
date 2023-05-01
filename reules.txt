@@ -6,7 +6,7 @@
 #    By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 02:58:53 by iantar            #+#    #+#              #
-#    Updated: 2023/04/28 22:00:30 by iantar           ###   ########.fr        #
+#    Updated: 2023/05/01 14:31:37 by iantar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -232,7 +232,7 @@ IMPORTANT:
 		⛔ check all strcmp() fun, you might miss that it return 0 when they are the same.
 		⛔ HERE_DOC: there is a problem, and 
 		⛔ check if all $ inside "" ''  
-		⛔check when the file is creating (before expanding awlidi)
+		⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔check when the file is creating (before expanding awlidi)⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔⛔
 		⛔((cat -n | wc -n) > out || (cat || ls -l || pp))
 		⛔ls > $var (it create then it expand : PROBLEM)
 		⛔$PATH$
@@ -242,12 +242,16 @@ IMPORTANT:
 		⛔the problem of tomorrow : ls > "a     b"
 		⛔what will happend if we have error || > file1 > file2: you must not create them
 		⛔ while openning a her_doc and you press ctrl+c , what will happend to the file that you create.
-		⛔
-		⛔
-		⛔
+		⛔⛔⛔⛔⛔⛔⛔⛔⛔ what the hell is that: ls>1>2 , ls > 1 > 2, ls >o>o
+		⛔⛔⛔⛔⛔⛔⛔⛔  cat < mjhgh < file: open it first if open = -1, send it, becouse it dosn't existe.
+		⛔print errors in 2
 		⛔
 
  parcing/reform_rediraction.c  |   6 ++--
 
 
 TOMORROW : <<L || <<L || ....:   it must send one here_doc between two && || 
+
+
+cat <<l | > o cat <<l
+> cat | > o <<l

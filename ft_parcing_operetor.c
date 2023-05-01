@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 18:32:45 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:00:07 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*mark_the_mark_operator(char *mark)//split with the last && or ||
 	check = 1;
 	while (len >= 0)
 	{
-		if ((mark[len] == '2' && mark[len - 1] == '2') && check)
+		if (len && (mark[len] == '2' && mark[len - 1] == '2') && check)
 		{
 			mark[len--] = '2';
 			mark[len--] = '2';

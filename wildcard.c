@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:01:01 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/04/27 17:55:02 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:53:51 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,6 @@ char	*free_it_(char **s1, char **s2)
 	return (0);
 }
 
-// void print_lst(t_list *head)
-// {
-// 	t_list	*tmp;
-
-// 	tmp = head;
-// 	while (head)
-// 	{
-// 		head = head->next;
-// 	}
-// 	printf("DONE\n\n");
-// 	head = tmp;
-// }
-
 t_list	*expand_wildcard(char *to_change, char *mask)
 {
 	t_list			*head;
@@ -116,7 +103,7 @@ t_list	*expand_wildcard(char *to_change, char *mask)
 	free(tmp);
 	closedir(dir);
 	if (!head)
-		head = new_node(ft_strdup(to_change));
+		head = new_node(to_change);//it was : head = new_node(ft_strdup(to_chande))
 	return (head);
 }
 
@@ -236,15 +223,15 @@ void	wirldcard_expanding(char **line)
 	int		i;
 	char	**splt;
 	char	*mark;
-	char	*new_mark;
+	//char	*new_mark;
 
 	if (!*line || !**line)
 		return ;
 	mark = ft_mark(*line);
 	//splt = ft_split(*line, ' ');
-	new_mark = edit_mark(mark);
-	splt = upgrade_split(*line, new_mark);
-	free(new_mark);
+	//new_mark = edit_mark(mark);
+	splt = upgrade_split(*line, mark);
+	//free(mark);
 	i = -1;
 	while (splt[++i])
 	{

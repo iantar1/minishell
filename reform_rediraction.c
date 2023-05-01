@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/26 19:01:23 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:34:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,10 @@ void	reform_it(t_list **lst)
 	t_list	*tmp2;
 
 	len = count_redirect(*lst);
-	//printf("len:%d\n", len);
 	tmp1 = *lst;
 	while (len)
 	{
 		index = index_of_1st_redir(*lst);
-		//printf("index:%d\n", index);
 		i = -1;
 		tmp1 = *lst;
 		while (++i < index)
@@ -177,13 +175,6 @@ void	reform_it(t_list **lst)
 	*lst = (*lst)->next;
 	free(tmp1);
 }
-
-// void	reform_it_again(t_list **lst)
-// {
-// 	t_list	*tmp1;
-
-
-// }
 
 char	*lst_to_str(t_list *lst)
 {

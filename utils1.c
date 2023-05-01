@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/10 01:27:32 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:47:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	*ft_mark(char *str)//use it to check the syntax.
 			mark[i] = '2';
 		else if (str[i] == '>' || str[i] == '<')
 			mark[i] = '3';
-		else if (str[i] == '*')
-			mark[i] = '4';
+		// else if (str[i] == '*')
+		// 	mark[i] = '4';
 		else if (str[i] == '|')
 			mark[i] = '5';
 		else if (str[i] <= 32)

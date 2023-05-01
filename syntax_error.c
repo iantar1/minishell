@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/15 10:50:48 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:55:48 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,14 @@ char	*mark_syn_err(char *str)
 {
 	int		i;
 	int		check;
-	char 	*mark;
+	char	*mark;
 
 	mark = malloc(ft_strlen(str) * sizeof(char) + 1);
 	check = 0;
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == 34 && check != 39)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 34;
-		}
-		if (str[i] == 39 && check != 34)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 39;
-		}
+		ft_flag(str[i], &check);
 		if ((str[i] == '|' || str[i] == '&') && !check)
 			mark[i] = '2';
 		else if ((str[i] == '<' || str[i] == '>') && !check)
@@ -117,8 +104,8 @@ char	*remove_spaces(char *str)
 	i = -1;
 	j = 0;
 	while (str[++i])
-	if (str[i] > 32)
-		j++;
+		if (str[i] > 32)
+			j++;
 	rtn = malloc(j + 1);
 	i = -1;
 	j = -1;
@@ -148,7 +135,7 @@ char	unvalid_oper_red(char *mark)
 				return (1);
 			check[1]++;
 			check[2] = 0;
- 		}
+		}
 		if (mark[i] == '3')
 		{
 			check[0]++;
@@ -180,7 +167,8 @@ char	unvalid_next_parenthesis(char *str)
 		if (!flag && is_operator(str[i]) && str[i + 1] == ')')
 			return (1);
 		if (!flag && str[i] == ')')
-			if (str[i + 1] && !is_operator(str[i + 1]) && !is_redi(str[i + 1]) && str[i + 1] != ')')
+			if (str[i + 1] && !is_operator(str[i + 1])
+				&& !is_redi(str[i + 1]) && str[i + 1] != ')')
 				return (1);
 	}
 	return (0);
@@ -188,29 +176,16 @@ char	unvalid_next_parenthesis(char *str)
 
 char	*mark_more_arg(char *str)
 {
-		int		i;
+	int		i;
 	int		check;
-	char 	*mark;
+	char	*mark;
 
 	mark = malloc(ft_strlen(str) * sizeof(char) + 1);
 	check = 0;
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == 34 && check != 39)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 34;
-		}
-		if (str[i] == 39 && check != 34)
-		{
-			if (check)
-				check = 0;
-			else
-				check = 39;
-		}
+		ft_flag(str[i], &check);
 		if ((str[i] == '|' || str[i] == '&') && !check)
 			mark[i] = '2';
 		else if ((str[i] == '<' || str[i] == '>') && !check)
@@ -241,7 +216,8 @@ char	red_more_arg(char *str)
 		{
 			i++;
 			if (splt[i + 1] && !is_operator(splt[i + 1][0]))
-				if (splt[i + 2] && !is_operator(splt[i + 2][0]) && !is_redi(splt[i + 2][0]))
+				if (splt[i + 2] && !is_operator(splt[i + 2][0])
+				&& !is_redi(splt[i + 2][0]))
 					return (free(mark), 1);
 		}
 	}
@@ -252,7 +228,8 @@ int	syntax_error(char *str)
 {
 	char	*mark;
 
-	if (emty_parenthesis(str) || unclosed_parenthesis(str) || unclosed_quote(str))
+	if (emty_parenthesis(str)
+		|| unclosed_parenthesis(str) || unclosed_quote(str))
 		return (1);
 	mark = mark_syn_err(str);
 	if (unvalid_oper_red(mark))
@@ -265,6 +242,5 @@ int	syntax_error(char *str)
 		return (free(mark), 1);
 	if (red_more_arg(str))
 		return (1);
-	//printf("I MUST NOT BE HERE\n");
 	return (0);
 }

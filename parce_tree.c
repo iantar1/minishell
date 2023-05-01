@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/04/29 13:45:03 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:48:47 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ t_data	ft_data_new(char *cmd_line)
 	char	*mark;
 
 	wirldcard_expanding(&cmd_line);
-	printf("**********cmd_line:%s\n", cmd_line);
 	mark = ft_mark(cmd_line);
-	//printf("ft_mark:%s\n", mark);
+	//printf("mark:%s\n", mark);
 	//splt = ft_split(cmd_line, SPACE);
 	splt = upgrade_split(cmd_line, mark);
-	//printf("@@@:line: %s, aplt[0]:%s\n", cmd_line, splt[0]);
 	data.cmd = remove_quote(ft_expand(splt[0]));
 	data.args = expand_args(splt);
 	data.type = ft_type(splt[0]);
@@ -175,17 +173,13 @@ void	parse_tree(char **line, t_tree *tree, char *str)
 		{
 			*line = reform_redirection(*line);
 			tree->amniguous = amniguous_redirect(*line);
-			keep_last_redir(line);
+			//keep_last_redir(line);
 			mark = mark_redirection(*line, 0);
-			//printf("befor_mark:%s\n", *line);
-			//printf("afetr_mark:%s\n", mark);
 			mark_the_red_mark(mark);
 			splt_oper = upgrade_split(*line, mark);
 			// >> << > <
-			//printf(BGRN"##########\n"REST);
 			if (need_split(mark) && len_ptr(splt_oper) > 2)
 			{
-				//printf("my_line:%s\n", *line);
 				tree->left_c = ft_tree_new(&splt_oper[0], tree, tree->child_level);
 				tree->right_c = ft_tree_new(&splt_oper[2], tree, tree->child_level);
 				tree->data = ft_data_new(splt_oper[1]);
