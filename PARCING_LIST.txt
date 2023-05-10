@@ -1,0 +1,19 @@
+I.CHECK LEAKS:
+	✅ ambiguous_redirect.c
+	2)
+	3)
+	4)
+
+
+	WORNING:
+		there is some pointer that you must not free, 
+
+
+1) cmd    |     |     cmd
+2) cmd    &     &     cmd
+3) > (cmd)
+4) cdjn (eece)  
+5) > + (
+6) char + (
+7) >>>...   <<<...
+8)echo "'"$USE""R"'"  
