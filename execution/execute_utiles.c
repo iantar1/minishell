@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 00:33:55 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:51:09 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:18:31 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ void	from_list_char_complete(char **strs, int *k)
 	g_env = g_env->next;
 }
 
+void	free_now(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		strs[i++] = NULL;
+	}
+	if (strs)
+	{
+		free(strs);
+		strs = NULL;
+	}
+}
+
 char	**from_list_to_char(int check)
 {
 	static char	**strs;
@@ -37,6 +54,8 @@ char	**from_list_to_char(int check)
 
 	if (strs && !check)
 		return (strs);
+	if (strs)
+		free_now(strs);
 	k = 0;
 	tmp = g_env;
 	strs = malloc((list_size() + 1) * sizeof(char *));

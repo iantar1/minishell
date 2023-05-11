@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:45:38 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 10:25:30 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/10 22:26:37 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	pipes(t_tree *tree, int in, int out)
 		return (perror("FORK FAILED"), 1);
 	if (!pid)
 	{
-		//get_normale_attr();
 		close(fds[0]);
 		st = subshell(tree->left_c, in, fds[1], tree->child_level);
 		close(fds[1]);
@@ -83,7 +82,6 @@ int	pipes(t_tree *tree, int in, int out)
 	st = subshell(tree->right_c, fds[0], out, tree->child_level);
 	close(fds[0]);
 	waitpid(pid, NULL, 0);
-	//modify_attr();
 	sv_exit(st);
 	return (st);
 }

@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:09 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:54:52 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:23:55 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@
 
 // t_env	*g_env;
 // int		exec_tree(t_tree *tree, int fds[2], int io[2], int level);
+void	free_now(char **strs);
 void	free_tree(t_tree *tree);
 void	get_normale_attr(void);
 void	modify_attr(void);
@@ -117,7 +118,6 @@ char	**get_key_value(char	*str);
 char	symbole(char *str);
 char	*oi_substr(char const *s, unsigned int start, size_t len);
 char	*oi_mark(char *str);
-char	**upgrade_split(char *str, char *mark);
 char	*oi_strtrim(char const *s1, char const *set);
 int		modify_var(char **var);
 char	*classic_ft_strjoin(char const *s1, char const *s2);

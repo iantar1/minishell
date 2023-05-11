@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:54:22 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:52:00 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:48:10 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ valid identifier\n", str), sv_exit(1), -1);
 			&& splited[0][oi_strlen(splited[0]) - 1] != '+') || !splited[0])
 		{
 			ft_dprintf(2, "bash: export: `%s': not a valid identifier\n", str);
-			return (ft_free(splited), sv_exit(1), -1);
+			return (ft_free(splited), sv_exit(1));
 		}
 		i++;
 	}

@@ -6,23 +6,11 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:24:56 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:04:09 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 15:54:14 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	free_tree(t_tree *tree)
-{
-	if (!tree)
-		return ;
-	free_tree(tree->left_c);
-	free_tree(tree->right_c);
-	if (tree->data.cmd)
-		free(tree->data.cmd);
-	free_ptr(tree->data.args);
-	free(tree);
-}
 
 char	**get_env(char **env)
 {
@@ -53,4 +41,45 @@ void	free_ptr(char **ptr)
 	while (i > 0)
 		free(ptr[i]);
 	free(ptr);
+}
+
+unsigned char	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+		i++;
+	}
+	return (0);
+}
+
+void	handle_sig(int sig)
+{
+	(void)sig;
+	exit(1);
+}
+
+char	*arr_to_str(char **splt)
+{
+	int		i;
+	char	*str;
+	char	*tmp_str;
+
+	if (!splt || !*splt)
+		return (NULL);
+	i = 0;
+	str = splt[i];
+	while (splt[++i])
+	{
+		tmp_str = str;
+		str = strjoin_upgrade(str, " ");
+		tmp_str = str;
+		str = strjoin_upgrade(str, splt[i]);
+	}
+	str = strtrim_upgrade(str, "	 ");
+	return (str);
 }

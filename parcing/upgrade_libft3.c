@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 20:12:42 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:25:43 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 10:59:11 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,22 @@ int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-int	ft_isalpha(int c)
-{
-	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
-}
+// int	ft_isalpha(int c)
+// {
+// 	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+// }
 
 void	ft_putstr_fd(char *s, int fd)
 {
 	write(fd, s, ft_strlen(s));
 }
+
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }

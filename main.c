@@ -6,11 +6,12 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 10:04:28 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 17:59:08 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:24:10 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell_oi.h"
+#include "include/minishell.h"
 
 t_env	*new_line_oi(char	*line)
 {
@@ -32,12 +33,7 @@ t_env	*new_line_oi(char	*line)
 	else if (len_double_char(str) == 1)
 		node->line = NULL;
 	node->next = NULL;
-	if (str[0])
-		free(str[0]);
-	if (str[1])
-		free(str[1]);
-	if (str)
-		free(str);
+	free_now(str);
 	return (free(trimed), node);
 }
 
@@ -76,11 +72,8 @@ int	main_exec(char *str)
 	signal(2, sig_handler);
 	tree = ft_tree_new(&str, NULL, 0);
 	parse_tree(&str, tree, 1);
-	system("leaks minishell");
 	st = subshell(tree, 0, 1, 0);
-	system("leaks minishell");
 	rm_here_files(tree);
-	free_tree(tree);
 	(signal(2, sig_handler), signal(3, SIG_IGN));
 	return (1);
 }
@@ -92,7 +85,7 @@ int	main(int ac, char *av[], char **env)
 	struct termios	attr;
 
 	((void)ac, signal(SIGQUIT, SIG_IGN), signal(SIGINT, &sig_handler));
-	g_env = (get_normale_attr(), new_line_oi("?=0"));
+	g_env = new_line_oi("?=0");
 	g_env->next = ((void)av, create_env_oi(env));
 	while (1)
 	{
@@ -100,11 +93,10 @@ int	main(int ac, char *av[], char **env)
 		if (!str)
 			break ;
 		trimed = (((str[0]) && add_history(str)), oi_strtrim(str, " \r\t	"));
-		if (!trimed || !*trimed)
-			;
-		else if (syntax_error(trimed))
-			(oi_putstr_fd("minishell: syntax error\n", 2), sv_exit(258));
-		else
+		if (trimed && *trimed && syntax_error(trimed, 1))
+			(upgrade_malloc(0, 1), ft_dprintf(2
+					, "\033[31mminishell: syntax error\n"), sv_exit(258));
+		else if (trimed && *trimed)
 			main_exec(trimed);
 		(tcsetattr(STDIN_FILENO, TCSANOW, &attr), (str && (free(str), 0)));
 		str = NULL;

@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:31:06 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:51:20 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:27:44 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,17 @@ int	add_to_env(char	**key_value)
 		if (var && var[1])
 			modify_var(var);
 	}
-	return (free(line), ft_free(var), free(trim), 1);
+	return (free(line), free_now(var), free(trim), 1);
 }
 
 int	export_var(t_tree *tree)
 {
 	int		i;
 	t_env	*tmp;
+	int		st;
+	int		sv;
 
+	sv = 0;
 	if (!oi_strcmp(tree->data.cmd, "export")
 		&& len_double_char(tree->data.args) == 1)
 		show_env_in_order();
@@ -88,12 +91,14 @@ int	export_var(t_tree *tree)
 		tmp = g_env;
 		while (tree->data.args[++i])
 		{
-			if (handle_export(tree->data.args[i]))
-				return (g_env = tmp, sv_exit(1));
-			add_to_env(&tree->data.args[i]);
-			g_env = tmp;
+			st = handle_export(tree->data.args[i]);
+			if (st)
+				sv = st;
+			if (st)
+				continue ;
+			g_env = (add_to_env(&tree->data.args[i]), tmp);
 		}
 		from_list_to_char(1);
 	}
-	return (0);
+	return (sv);
 }

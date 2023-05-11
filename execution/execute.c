@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:53:43 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:51:14 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 10:50:18 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,20 @@ int	print_exec_errors(char *full_path, char *cmd, int print)
 		return (ft_dprintf(2, "%s :%s\n", cmd, "command not found"), 127);
 	if (!is_builtin(cmd) && (((free(full_path), 1) && print) || print == 3))
 	{
-		if (access(cmd, X_OK) && !access(cmd, F_OK) && cmd[0] == '.')
+		if (access(full_path, X_OK)
+			&& !access(full_path, F_OK) && cmd[0] == '.')
 			return (ft_dprintf(2, "%s :%s\n", cmd, "Permission denied"), 126);
-		else if (((access(cmd, X_OK) && !oi_strchr(cmd, '/'))
-				|| !oi_strcmp(cmd, "..")) && print != 3)
+		else if (((access(full_path, X_OK) && !oi_strchr(cmd, '/'))
+				|| !oi_strcmp(cmd, "..") || !oi_strcmp(cmd, ".")) && print != 3)
 			return (ft_dprintf(2, "%s :%s\n", cmd, "command not found"), 127);
 		else if (oi_strchr(cmd, '/') || print == 3)
 		{
 			if (!is_directory(cmd))
 				return (ft_dprintf(2, "%s :No such file or directory\n"
-						, cmd), 1);
+						, cmd), sv_exit(1));
 			else
-				return (ft_dprintf(2, "%s :%s\n", cmd, " is a directory"), 126);
+				return (ft_dprintf(2, "%s :%s\n", cmd, " is a directory")
+					, sv_exit(126));
 		}
 		else
 			return (perror(cmd), errno);

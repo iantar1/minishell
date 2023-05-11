@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:58 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:50:56 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:11:03 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	cd(t_tree *tree, int out)
 	}
 	st = complete_cd(tree, &home);
 	if (!st)
-		(modify_env_var("OLDPWD", cwd), ((cwd) && (free(cwd), 0)));
-	cwd = pwd();
+		(modify_env_var("OLDPWD", cwd));
+	cwd = (((cwd) && (free(cwd), 0)), pwd());
 	(modify_env_var("PWD", cwd), ((cwd) && (free(cwd), 0)));
 	return (st);
 }

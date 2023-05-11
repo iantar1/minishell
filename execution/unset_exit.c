@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:39:20 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:53:40 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:17:12 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	unset_var(t_tree *tree)
 	while (tree->data.args[++i])
 	{
 		if (handle_unset(tree->data.args[i]))
-			return (1);
+			continue ;
 		rm_var(tree->data.args[i]);
 	}
 	if (g_env)
@@ -72,6 +72,8 @@ int	ft_exit(t_data cmd)
 	if (len_double_char(cmd.args) > 2)
 	{
 		ft_dprintf(2, "exit\n");
+		if (is_num(cmd.args[0]))
+			return (ft_dprintf(2, "Numirecal arg required"), sv_exit(1));
 		ft_dprintf(2, "exit : too many argiments\n");
 		return (sv_exit(1));
 	}

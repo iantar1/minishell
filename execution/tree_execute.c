@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:51:29 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:52:41 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/10 23:15:02 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	exec_tree(t_tree *tree, int in, int out)
 int	complete_exec(t_tree *tree, int in, int out, char *paths)
 {	
 	char	*full_path;
+	int		st;
 
 	(signal(SIGQUIT, SIG_DFL), signal(SIGINT, SIG_DFL));
 	(dup2(in, 0), (in != 0) && close (in));
@@ -83,8 +84,10 @@ int	complete_exec(t_tree *tree, int in, int out, char *paths)
 		return (free(paths),
 			free(full_path), sv_exit(127), exit(127), 127);
 	if (execve(full_path, tree->data.args, from_list_to_char(0)) == -1)
-		(print_exec_errors(full_path, tree->data.cmd, 1),
-			free(paths), sv_exit(127), exit(127));
+	{
+		st = print_exec_errors(full_path, tree->data.cmd, 1);
+		(sv_exit(st), free(paths), exit(st));
+	}
 	return (1);
 }
 
@@ -118,5 +121,5 @@ int	_execute(t_tree *tree, int in, int out)
 	(signal(2, sig_handler), signal(3, SIG_IGN));
 	if (paths)
 		paths = (free(paths), NULL);
-	return (sv_exit(st));
+	return (sv_exit(st + 128));
 }

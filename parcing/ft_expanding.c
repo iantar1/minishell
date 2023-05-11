@@ -6,67 +6,13 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:14:18 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 14:19:40 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*expand_mark(char *str)//done
-{
-	int				i;
-	unsigned char	check[2];
-	char			*mark;
-
-	if (!str)
-		return (NULL);
-	i = -1;
-	mark = upgrade_malloc(sizeof(char) * (ft_strlen(str) + 1), 0);
-	ft_bzero(check, 2);
-	while (str[++i])
-	{
-		if (str[i] == 34 && !(check[1] % 2))
-			check[0]++;
-		if (str[i] == 39 && !(check[0] % 2))
-			check[1]++;
-		if (check[0] % 2 || (!(check[1] % 2) && str[i] == 34))
-			mark[i] = '0';
-		else if (!(check[0] % 2) && !(check[1] % 2)
-			&& str[i] != 34 && str[i] != 39)
-			mark[i] = '3';
-		else
-			mark[i] = '2';
-	}
-	mark[i] = '\0';
-	return (mark);
-}
-
-int	need_expand(char *str)//done
-{
-	int	i;
-	int	check1;
-	int	check2;
-
-	i = -1;
-	check1 = 0;
-	check2 = 0;
-	if (!str)
-		return (0);
-	while (str[++i])
-	{
-		if (str[i] == 34)
-			check1++;
-		else if (str[i] == 39 && !(check1 % 2))
-			check2++;
-		else if ((str[i] == '$' && ((check1 % 2 && !(check2 % 2)) || (!(check1 % 2)
-						&& !(check2 % 2)))) && (str[i + 1] == '?'
-				|| str[i + 1] == '_' || ft_isalnum(str[i + 1])))
-			return (1);
-	}
-	return (0);
-}
-
-char	*exp_from_env(char *key)//done
+char	*exp_from_env(char *key)
 {
 	int		i;
 	t_env	*tmp;
@@ -80,105 +26,6 @@ char	*exp_from_env(char *key)//done
 		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-char	*_join_evrything_(char **splt, int len_splt)//done
-{
-	char	*rtn_str;
-	int		len;
-	int		i;
-	int		j;
-
-	len = 0;
-	i = -1;
-	while (splt[++i] || i < len_splt)
-	{
-		j = -1;
-		while (splt[i] && splt[i][++j])
-			len++;
-	}
-	rtn_str = upgrade_malloc(len + 1, 0);
-	len = -1;
-	i = 0;
-	while (splt[i] || i < len_splt)
-	{
-		j = -1;
-		while (splt[i] && splt[i][++j])
-			rtn_str[++len] = splt[i][j];
-		i++;
-	}
-	rtn_str[++len] = '\0';
-	return (rtn_str);
-}
-
-int	len_to_exp(char *str)//done
-{
-	int	i;
-
-	i = 1;
-	if (str[i] == '?')
-		return (2);
-	while (ft_isalnum(str[i]) || str[i] == '_')
-		i++;
-	return (i);
-}
-
-char	*get_value(char *key, int len)//done
-{
-	int		i;
-	t_env	*tmp;
-
-	i = 0;
-	tmp = g_env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->var_name, key, len)
-			&& (int)ft_strlen(tmp->var_name) == len)
-			return (strdup_upgrade(tmp->line));
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-char	*join_with_sp_norm(char *rtn_str, char **splt)//done
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (splt && splt[++i])
-	{
-		tmp = rtn_str;
-		rtn_str = strjoin_upgrade(rtn_str, splt[i]);
-		free(tmp);
-		if (splt[i + 1])
-		{
-			tmp = rtn_str;
-			rtn_str = strjoin_upgrade(rtn_str, " ");
-			free(tmp);
-		}
-	}
-	return (rtn_str);
-}
-
-char	*join_with_sp(char *str)//done
-{
-	char	**splt;
-	char	*rtn_str;
-	int		i;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	splt = ft_split(str, SPACE);
-	if (!splt || !*splt)
-		return (NULL);
-	if (splt[i + 1])
-		rtn_str = strjoin_upgrade(splt[i], " ");
-	else
-		rtn_str = strjoin_upgrade(splt[i], "");
-	rtn_str = join_with_sp_norm(rtn_str, splt);
-	return (free_ptr(splt), rtn_str);
 }
 
 char	*ft_change_part_norm(t_vars var, char *value, int *i)
@@ -223,13 +70,12 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 		new_len = ft_strlen(rtn_str);
 		tmp = rtn_str;
 		rtn_str = join_with_sp(rtn_str);
-		free(tmp);
 		*curser = *curser - (new_len - ft_strlen(rtn_str));
 	}
 	return (rtn_str);
 }
 
-void	ft_expand_norm(t_vars var, char **splt)///////////*************
+void	ft_expand_norm(t_vars var, char **splt)
 {
 	char	*value;
 
@@ -248,7 +94,6 @@ void	ft_expand_norm(t_vars var, char **splt)///////////*************
 			var.str = splt[var.i];
 			value = get_value(&splt[var.i][var.j + 1], var.end - var.start);
 			splt[var.i] = ft_change_part(var, value, &(var.j));
-			free(value);
 		}
 	}
 }
@@ -274,10 +119,8 @@ char	*ft_expand(char *str)
 			ft_expand_norm(var, splt);
 		}
 	}
-	free(mark);
 	if (!splt)
 		return (NULL);
 	mark = _join_evrything_(splt, len_splt);
-	free_ptr(splt);
 	return (mark);
 }

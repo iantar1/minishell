@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 16:58:47 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 14:14:22 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,6 @@ char	*remove_quote(char *str)
 		lst = lst->next;
 	}
 	rtn[i] = '\0';
-	while (tmp)
-	{
-		lst = tmp;
-		tmp = tmp->next;
-		free(lst);
-	}
 	return (rtn);
 }
 

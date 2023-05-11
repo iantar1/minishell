@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_libft2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:09:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:36:27 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 10:30:53 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*ptr;
 
-	ptr = (t_list *)malloc(sizeof(t_list));
+	ptr = (t_list *)upgrade_malloc(sizeof(t_list), 0);
 	if (!ptr)
 		return (0);
 	ptr -> content = content;
@@ -41,6 +41,8 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;

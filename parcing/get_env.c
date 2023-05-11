@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:38:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:09:33 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 14:28:26 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,6 @@ size_t	len_double_char(char **strs)
 	return (i);
 }
 
-/*
-t_env	*new_line(char	*line)
-{
-	t_env			*node;
-	char			**str;
-	char			*trimed;
-	int				i;
-
-	i = 0;
-	str = get_key_value(line);
-	if (!str)
-		return (NULL);
-	node = malloc(sizeof(t_env));
-	trimed = oi_strtrim(str[0], "+");
-	node->var_name = oi_strdup(trimed);
-	if ((len_double_char(str) == 2)
-		|| (str[1] && !str[1][0]))
-		node->line = oi_strdup(str[1]);
-	else if (len_double_char(str) == 1)
-		node->line = NULL;
-	node->next = NULL;
-	return (free(trimed), ft_free(str), node);
-}*/
 t_env	*new_line(char *line)
 {
 	t_env	*node;
@@ -94,7 +71,7 @@ t_env	*new_line(char *line)
 	else if (len_double_char(str) == 1)
 		node->line = NULL;
 	node->next = NULL;
-	return (free(trimed), ft_free_(str), node);
+	return (node);
 }
 
 t_env	*create_env(char **env)

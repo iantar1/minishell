@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:27:08 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 15:08:19 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/10 21:01:30 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*loop_path(char *cmd, int print, char **paths)
 	i = 1;
 	cmd1 = classic_ft_strjoin("/", cmd);
 	full_path = classic_ft_strjoin(paths[0], cmd1);
-	while (paths && paths[i] && access(full_path, X_OK))
+	while (!strchr(cmd, '/') && paths && paths[i] && access(full_path, X_OK))
 		full_path = (free(full_path), classic_ft_strjoin(paths[i++], cmd1));
 	if (!is_builtin(cmd) && (!paths || !paths[i]))
 	{

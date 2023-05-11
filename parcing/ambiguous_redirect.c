@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 20:13:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 13:29:18 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ int	check_ambiguous(char *str)
 	if (!str)
 		return (1);
 	str = remove_quote(str);
-	free(tmp);
 	splt = ft_split(str, ' ');
-	free(str);
 	if (!splt[0] || len_ptr(splt) > 1)
-		return (free_ptr(splt), 1);
-	return (free_ptr(splt), 0);
+		return (1);
+	return (0);
 }
 
 int	check_ambiguous_wirldcar(char *str)
@@ -60,9 +58,9 @@ int	check_ambiguous_wirldcar(char *str)
 	if (is_wildcard(mark))
 	{
 		if (ft_lstsize(expand_wildcard(str, mark)))
-			return (free(mark), 1);
+			return (1);
 	}
-	return (free(mark), 0);
+	return (0);
 }
 
 int	ambiguous_redirect(char	*str)
@@ -74,19 +72,18 @@ int	ambiguous_redirect(char	*str)
 	i = 0;
 	mark = mark_redirection(str, 1);
 	if (!need_split(mark))
-		return (free(mark), 0);
+		return (0);
 	splt = upgrade_split(str, mark);
-	free(mark);
 	while (splt[i])
 	{
 		if (!ft_strcmp(splt[i], "<") || !ft_strncmp(splt[i], ">", 1))
 		{
 			if (check_ambiguous(splt[i + 1]))
-				return (free_ptr(splt), 1);
+				return (1);
 			if (check_ambiguous_wirldcar(splt[i + 1]))
-				return (free_ptr(splt), 1);
+				return (1);
 		}
 		i++;
 	}
-	return (free_ptr(splt), 0);
+	return (0);
 }

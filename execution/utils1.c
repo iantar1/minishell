@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:22:47 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 14:53:51 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/10 20:18:15 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 void	handle(int sig)
 {
 	if (sig == SIGINT)
+	{
 		ft_dprintf(1, "\n");
+		sv_exit(130);
+	}
 	else
+	{
 		ft_dprintf(1, "Quit:3\n");
-	sv_exit(1);
+		sv_exit(131);
+	}
 }
 
 int	oi_atoi(const char *str)

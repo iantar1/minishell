@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:25:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/10 16:56:37 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 16:29:17 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	inside_paranth(char c, char *inside, int flag)
 
 void	fill_mark_oper(char *str, int check, char *mark, int sp)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
 	char	inside;
 
 	i = -1;
@@ -52,27 +52,10 @@ void	fill_mark_oper(char *str, int check, char *mark, int sp)
 		inside_paranth(str[i], &inside, flag);
 		if ((str[i] == '|' || str[i] == '&') && !flag && !inside)
 			mark[i] = '2';
-		else if (str[i] <= 32 &&  str[i] > 0 && sp && !flag && !inside)
+		else if (str[i] <= 32 && str[i] > 0 && sp && !flag && !inside)
 			mark[i] = '1';
 		else
 			mark[i] = '0';
-		// if (str[i] == 34 || str[i] == 39)
-		// {
-		// 	if (str[i] == check)
-		// 		check = 0;
-		// 	else if (!check)
-		// 		check = str[i];
-		// }
-		// if (!check && str[i] == '(')
-		// 	check = str[i];
-		// if (check == '(' && str[i] == ')')
-		// 	check = 0;
-		// if ((str[i] == '|' || str[i] == '&') && !check)
-		// 	mark[i] = '2';
-		// else if (!check && str[i] <= 32 &&  str[i] > 0 && sp)
-		// 	mark[i] = '1';
-		// else
-		// 	mark[i] = '0';
 	}
 	mark[i] = '\0';
 }
