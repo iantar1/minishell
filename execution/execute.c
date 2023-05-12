@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:53:43 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 10:50:18 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:40:55 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_directory(char *cmd)
 
 int	print_exec_errors(char *full_path, char *cmd, int print)
 {
-	if (!full_path)
+	if (!full_path || !*full_path || !ft_strcmp("", cmd))
 		return (ft_dprintf(2, "%s :%s\n", cmd, "command not found"), 127);
 	if (!is_builtin(cmd) && (((free(full_path), 1) && print) || print == 3))
 	{

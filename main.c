@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 10:04:28 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 16:24:10 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 22:50:31 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,14 @@ int	main(int ac, char *av[], char **env)
 		trimed = (((str[0]) && add_history(str)), oi_strtrim(str, " \r\t	"));
 		if (trimed && *trimed && syntax_error(trimed, 1))
 			(upgrade_malloc(0, 1), ft_dprintf(2
-					, "\033[31mminishell: syntax error\n"), sv_exit(258));
+					, "minishell: syntax error\n"), sv_exit(258));
 		else if (trimed && *trimed)
 			main_exec(trimed);
 		(tcsetattr(STDIN_FILENO, TCSANOW, &attr), (str && (free(str), 0)));
 		str = NULL;
 		(trimed && (free(trimed), 0));
 		trimed = NULL;
+		upgrade_malloc(0, 1);
 	}
 	return ((ft_dprintf(1, "exit\n")), oi_atoi(get_env_line("?")));
 }

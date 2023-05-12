@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:38:43 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 15:39:09 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 22:48:47 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**expand_args(char **splt)
 	i = 0;
 	while (splt && splt[i])
 	{
-		splt[i] = remove_quote(ft_expand(splt[i]));
+		splt[i] = unreform_quote(remove_quote(ft_expand(splt[i])));
 		i++;
 	}
 	return (splt);

@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:58 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 15:11:03 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:32:41 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	cd(t_tree *tree, int out)
 		{
 			home = get_env_line("OLDPWD");
 			if (!home || !home[0])
-				return (ft_dprintf(2, "OLDPWD is NOT set!\n"), sv_exit(1));
+				return (ft_dprintf(2, "OLDPWD is NOT set!\n")
+					, ((cwd) && (free(cwd), 0)), sv_exit(1));
 			ft_dprintf(out, "%s\n", home);
 		}
 		else
@@ -56,8 +57,7 @@ int	cd(t_tree *tree, int out)
 	if (!st)
 		(modify_env_var("OLDPWD", cwd));
 	cwd = (((cwd) && (free(cwd), 0)), pwd());
-	(modify_env_var("PWD", cwd), ((cwd) && (free(cwd), 0)));
-	return (st);
+	return (modify_env_var("PWD", cwd), ((cwd) && (free(cwd), 0)), st);
 }
 
 char	*pwd(void)

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:17:15 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:27:45 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 23:10:19 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_data	ft_data_new(char *cmd_line)
 	}
 	else
 	{
-		data.cmd = remove_quote(ft_expand(splt[0]));
+		data.cmd = unreform_quote(remove_quote(ft_expand(splt[0])));
 		data.args = expand_args(splt);
 		data.type = ft_type(splt[0]);
 	}

@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:28:55 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/12 09:11:00 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define _FILE 8
 # define OUT 4
 # define IN 5
+# define SINGLE_QUOTE -5
+# define DOUBLE_QUOTE -3
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -48,17 +50,17 @@ typedef struct s_file
 	char	*filename;
 }	t_files;
 
-typedef struct s_heredoc
-{
-	char	*filename;
-	int		fd;
-}	t_heredoc;
+// typedef struct s_heredoc
+// {
+// 	char	*filename;
+// 	int		fd;
+// }	t_heredoc;
 
-typedef struct s_iofiles
-{
-	char	*filename;
-	int		fd;
-}	t_iofiles;
+// typedef struct s_iofiles
+// {
+// 	char	*filename;
+// 	int		fd;
+// }	t_iofiles;
 
 typedef struct s_env
 {
@@ -213,8 +215,9 @@ void			ft_flag(char c, int *flag);
 char			*mark_redirection(char *str, int sp);
 t_list			*arr_to_lst(char **str);
 int				count_redirect(t_list *lst);
+char			*unreform_quote(char *str);
+char			*reform_quotes(char *str);
 
-//int				syntax_error(char *str, int check);
 // int				complet_filter(char *str, char *elem, char *mask,
 //	int check);
 // void 			rl_replace_line(const char *text, int clear_undo);

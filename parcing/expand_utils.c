@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:19:12 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 14:23:14 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/12 08:56:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,21 @@ char	*get_value(char *key, int len)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+char	*reform_quotes(char *str)
+{
+	int		i;
+
+	if (!str || !*str)
+		return (str);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == 34)
+			str[i] = DOUBLE_QUOTE;
+		if (str[i] == 39)
+			str[i] = SINGLE_QUOTE;
+	}
+	return (str);
 }

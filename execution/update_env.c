@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:27:08 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 21:01:30 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:18:49 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ char	*loop_path(char *cmd, int print, char **paths)
 	i = 1;
 	cmd1 = classic_ft_strjoin("/", cmd);
 	full_path = classic_ft_strjoin(paths[0], cmd1);
-	while (!strchr(cmd, '/') && paths && paths[i] && access(full_path, X_OK))
+	while (paths && paths[i] && access(full_path, X_OK))
 		full_path = (free(full_path), classic_ft_strjoin(paths[i++], cmd1));
 	if (!is_builtin(cmd) && (!paths || !paths[i]))
 	{
 		print_exec_errors(full_path, cmd, print);
-		return (free_ptr(paths), free(cmd1)
+		return (ft_free(paths), free(cmd1)
 			, NULL);
 	}
-	return (free_ptr(paths), free(cmd1), full_path);
+	return (ft_free(paths), free(cmd1), full_path);
 }
 
 /// @brief gets the path for the execve system call
@@ -53,9 +53,9 @@ char	*get_path(char *cmd, char *Path, int print)
 	if ((!paths || !paths[0]) && (print & !count))
 		print_exec_errors(NULL, cmd, 3);
 	check = loop_path(cmd, print & !count, paths);
-	if (count && check && cmd[0] != '.')
+	if (count && check && cmd[0] != '.' && !oi_strchr(cmd, '/'))
 		return (check);
-	else if (count && (!check || cmd[0] == '.'))
+	else if ((count && !check) || cmd[0] == '.' || oi_strchr(cmd, '/'))
 		return (oi_strdup(cmd));
 	return (check);
 }

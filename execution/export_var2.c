@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:12:40 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:51:42 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/11 22:30:57 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	**get_key_value_oi(char	*str)
 {
 	char	**key_value;
 	int		i;
-	char	*tmp;
 	char	*val;
 
 	i = 0;
@@ -48,8 +47,7 @@ char	**get_key_value_oi(char	*str)
 	key_value[0] = oi_substr(str, 0, i);
 	if (str[i])
 	{
-		tmp = oi_substr(str, i + 1, oi_strlen(str));
-		val = parse_value(tmp);
+		val = oi_substr(str, i + 1, oi_strlen(str));
 		key_value[1] = oi_strdup(val);
 		key_value[2] = (free(val), NULL);
 	}

@@ -6,26 +6,27 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 14:19:40 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/12 08:56:31 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*exp_from_env(char *key)
+char	*unreform_quote(char *str)
 {
 	int		i;
-	t_env	*tmp;
 
-	i = 0;
-	tmp = g_env;
-	while (tmp)
+	if (!str || !*str)
+		return (str);
+	i = -1;
+	while (str[++i])
 	{
-		if (!ft_strncmp(key, tmp->var_name, ft_strlen(key)))
-			return (tmp->line);
-		tmp = tmp->next;
+		if (str[i] == DOUBLE_QUOTE)
+			str[i] = 34;
+		if (str[i] == SINGLE_QUOTE)
+			str[i] = 39;
 	}
-	return (NULL);
+	return (str);
 }
 
 char	*ft_change_part_norm(t_vars var, char *value, int *i)
@@ -92,7 +93,8 @@ void	ft_expand_norm(t_vars var, char **splt)
 			var.start = var.j;
 			var.end = len_to_exp(&splt[var.i][var.j]) + var.start - 1;
 			var.str = splt[var.i];
-			value = get_value(&splt[var.i][var.j + 1], var.end - var.start);
+			value = reform_quotes(get_value(&splt[var.i][var.j + 1],
+						var.end - var.start));
 			splt[var.i] = ft_change_part(var, value, &(var.j));
 		}
 	}

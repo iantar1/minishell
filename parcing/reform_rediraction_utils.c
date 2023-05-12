@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reform_rediraction_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:19:23 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:21:04 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/11 21:03:55 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	free_lst(t_list *lst)
 	{
 		back = lst;
 		if (lst->content)
+		{
 			free(lst->content);
+			lst->content = NULL;
+		}
 		lst = lst->next;
 		free(back);
 	}
