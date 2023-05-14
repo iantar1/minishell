@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:51:29 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/12 14:35:23 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 12:49:59 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,23 @@ int	exec_tree(t_tree *tree, int in, int out)
 int	complete_exec(t_tree *tree, int in, int out, char *paths)
 {	
 	char	*full_path;
+	int		status;
 
 	(signal(SIGQUIT, SIG_DFL), signal(SIGINT, SIG_DFL));
 	(dup2(in, 0), (in != 0) && close (in));
 	(dup2(out, 1), (out != 1) && close(out));
 	if (is_builtin(tree->data.cmd))
 		return (exit(handle_cmd(tree, out)), 1);
-	full_path = get_path(tree->data.cmd, paths, 1);
+	full_path = get_path(tree->data.cmd, paths, 0);
 	if (!full_path)
-		return (free(paths),
-			free(full_path), sv_exit(127), exit(127), 127);
+		return (free(paths), print_exec_errors(full_path, tree->data.cmd, 5)
+			, free(full_path), exit(sv_exit(127)), 127);
 	if (execve(full_path, tree->data.args, from_list_to_char(0)) == -1)
-		(print_exec_errors(full_path, tree->data.cmd, 1),
-			free(paths), sv_exit(127), exit(127));
+	{
+		status = print_exec_errors(full_path, tree->data.cmd, 1);
+		free(full_path);
+		(free(paths), exit(sv_exit(status)));
+	}
 	return (1);
 }
 
@@ -98,6 +102,7 @@ int	_execute(t_tree *tree, int in, int out)
 	char	*paths;
 	int		st;
 	int		pid;
+	char	*sv_path;
 
 	st = 0;
 	if (is_builtin(tree->data.cmd)
@@ -106,17 +111,17 @@ int	_execute(t_tree *tree, int in, int out)
 	paths = get_env_line("PATH");
 	pid = fork();
 	if (pid == -1)
-	{
-		if (paths)
-			paths = (free(paths), NULL);
-		return (perror("FORK FAILED"), 1);
-	}
+		return ((paths && (paths = (free(paths), NULL)))
+			, perror("FORK FAILED"), 1);
 	if (!pid)
 		complete_exec(tree, in, out, paths);
 	(signal(SIGINT, &handle), signal(SIGQUIT, &handle));
 	(waitpid(pid, &st, 0), sv_exit(st));
 	(signal(2, sig_handler), signal(3, SIG_IGN));
+	sv_path = get_path(tree->data.cmd, paths, 0);
+	(!st && modify_env_var("_", sv_path));
+	(sv_path && (free(sv_path), 0));
 	if (paths)
 		paths = (free(paths), NULL);
-	return (sv_exit(st));
+	return (sv_exit(st + 128));
 }

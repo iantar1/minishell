@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:40:50 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/08 18:51:17 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:08:30 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,19 @@ int	handle_cmd_2(t_tree *tree, int out)
 	char	*cwd;
 
 	if (!oi_strcmp(tree->data.cmd, "cd"))
+	{
+		if (len_double_char(tree->data.args) > 2)
+			return (ft_dprintf(2, "cd: too many arguments\n"), sv_exit(1));
 		return (cd(tree, out));
+	}
 	else if (!oi_strcmp(tree->data.cmd, "pwd"))
 	{
 		cwd = pwd();
+		modify_env_var("_", "cd");
 		return ((cwd) && ft_dprintf(out, "%s\n", cwd) && (free(cwd), 0), 0);
 	}
 	else if (!oi_strcmp(tree->data.cmd, "export"))
-		return (export_var(tree));
+		return (export_var(tree, out));
 	else if (!oi_strcmp(tree->data.cmd, "unset"))
 		return (unset_var(tree));
 	else if (!oi_strcmp(tree->data.cmd, "exit"))
@@ -86,14 +91,18 @@ int	handle_cmd_2(t_tree *tree, int out)
 
 int	handle_cmd(t_tree *tree, int out)
 {
-	t_env	*tmp;
-	int		st;
+	t_env		*tmp;
+	int			st;
+	struct stat	fd_state;
 
 	if (!tree->data.cmd)
 		return (0);
 	tmp = g_env;
+	if (fstat(out, &fd_state) == -1)
+		out = 1;
 	if (!oi_strcmp(tree->data.cmd, "env"))
 	{
+		modify_env_var("_", "env");
 		if (len_double_char(tree->data.args) > 1)
 			return (ft_dprintf(2, "too many args !\n"), 0);
 		while (g_env)

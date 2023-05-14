@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:31:06 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 21:41:52 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 12:54:08 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	add_to_env(char	**key_value)
 	return (free(line), free_now(var), free(trim), 1);
 }
 
-int	export_var(t_tree *tree)
+int	export_var(t_tree *tree, int out)
 {
 	int		i;
 	t_env	*tmp;
@@ -84,7 +84,7 @@ int	export_var(t_tree *tree)
 	sv = 0;
 	if (!oi_strcmp(tree->data.cmd, "export")
 		&& len_double_char(tree->data.args) == 1)
-		show_env_in_order();
+		show_env_in_order(out);
 	else if (len_double_char(tree->data.args) > 1)
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:28:28 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/10 14:52:04 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 12:54:40 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	is_in_env(char	*var)
 	return (0);
 }
 
-void	print_line(char *var)
+void	print_line(char *var, int out)
 {
 	t_env	*tmp;
 
@@ -83,13 +83,13 @@ void	print_line(char *var)
 	tmp = g_env;
 	while (g_env)
 	{
-		if (!oi_strcmp(var, g_env->var_name) && oi_strcmp(var, "_"))
+		if (!oi_strcmp(var, g_env->var_name))
 		{
-			ft_dprintf(1, "declare -x %s", g_env->var_name);
+			ft_dprintf(out, "declare -x %s", g_env->var_name);
 			if (g_env->line)
-				ft_dprintf(1, "=\"%s\"\n", g_env->line);
+				ft_dprintf(out, "=\"%s\"\n", g_env->line);
 			else
-				ft_dprintf(1, "\n");
+				ft_dprintf(out, "\n");
 			break ;
 		}
 		g_env = g_env->next;
@@ -97,7 +97,7 @@ void	print_line(char *var)
 	g_env = tmp;
 }
 
-int	show_env_in_order(void)
+int	show_env_in_order(int out)
 {
 	size_t	len;
 	char	**strs;
@@ -118,7 +118,7 @@ int	show_env_in_order(void)
 	sort_vars(strs, i);
 	i = -1;
 	while (strs[++i])
-		(print_line(strs[i]), free(strs[i]));
+		(print_line(strs[i], out), free(strs[i]));
 	free(strs);
 	return (0);
 }

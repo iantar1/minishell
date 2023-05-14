@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:09 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 16:23:55 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 12:55:38 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ void	sig_handler(int sig);
 void	rl_replace_line(const char *text, int clear_undo);
 int		handle_cmd(t_tree *tree, int out);
 char	*get_variable(char *str);
-int		show_env_in_order(void);
+int		show_env_in_order(int out);
 t_env	*new_line_oi(char	*line);
 char	**oi_split(char const *s, char c);
 size_t	oi_strlen(char *str);
 char	*oi_strjoin(char *str, char *cmd);
 int		oi_strcmp(const char *s1, const char *s2);
 int		oi_strncmp(const char *s1, const char *s2, size_t n);
-int		export_var(t_tree *tree);
+int		export_var(t_tree *tree, int out);
 int		is_in_env(char	*var);
 char	*get_variable(char *str);
 size_t	len_double_char(char **strs);

@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:58 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 17:32:41 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 12:35:14 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 int	complete_cd(t_tree *tree, char **home)
 {
 	if (!(len_double_char(tree->data.args) >= 2
-			&& oi_strcmp(tree->data.args[1], "~")))
+			&& oi_strcmp(tree->data.args[1], "~")) || !tree->data.args[1][0])
 	{
 		*home = get_env_line("HOME");
-		if (!*home || !*home[0])
+		if (!*home)
 			return (ft_dprintf(2, "cd : HOME not set. \n"), sv_exit(1));
+		if (!*home[0])
+			return (free_oi(home, 0), sv_exit(1));
 	}
 	if (chdir(*home))
 		return (perror(*home), free_oi(home, 0), sv_exit(1));
@@ -40,7 +42,7 @@ int	cd(t_tree *tree, int out)
 	cwd = pwd();
 	st = 0;
 	if (len_double_char(tree->data.args) >= 2
-		&& oi_strcmp(tree->data.args[1], "~"))
+		&& oi_strcmp(tree->data.args[1], "~") && tree->data.args[1])
 	{
 		if (!oi_strcmp(tree->data.args[1], "-"))
 		{
@@ -107,4 +109,5 @@ void	echo(t_tree *tree, int out)
 	if (!tree->data.cmd || echo_flags(tree->data.args[1], 'n') == NOT_FLAG)
 		ft_dprintf(out, "\n");
 	(sv_exit(0));
+	modify_env_var("_", "echo");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:27:08 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/12 16:18:49 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/13 12:43:18 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*loop_path(char *cmd, int print, char **paths)
 
 	if (!paths || !paths[0])
 		return (NULL);
+	if (oi_strchr(cmd, '/'))
+		return (free_now(paths), cmd);
 	i = 1;
 	cmd1 = classic_ft_strjoin("/", cmd);
 	full_path = classic_ft_strjoin(paths[0], cmd1);
@@ -28,10 +30,10 @@ char	*loop_path(char *cmd, int print, char **paths)
 	if (!is_builtin(cmd) && (!paths || !paths[i]))
 	{
 		print_exec_errors(full_path, cmd, print);
-		return (ft_free(paths), free(cmd1)
-			, NULL);
+		return (free_now(paths), free(cmd1)
+			, (full_path && (free(full_path), 0)), NULL);
 	}
-	return (ft_free(paths), free(cmd1), full_path);
+	return (free_now(paths), free(cmd1), full_path);
 }
 
 /// @brief gets the path for the execve system call
@@ -51,13 +53,18 @@ char	*get_path(char *cmd, char *Path, int print)
 		count++;
 	paths = oi_split(Path, ':');
 	if ((!paths || !paths[0]) && (print & !count))
-		print_exec_errors(NULL, cmd, 3);
-	check = loop_path(cmd, print & !count, paths);
-	if (count && check && cmd[0] != '.' && !oi_strchr(cmd, '/'))
+		return (print_exec_errors(NULL, cmd, print), NULL);
+	check = loop_path(cmd, print, paths);
+	if (count && check && cmd[0] != '.'
+		&& !oi_strchr(cmd, '/'))
 		return (check);
-	else if ((count && !check) || cmd[0] == '.' || oi_strchr(cmd, '/'))
+	else if (count && (!check || cmd[0] == '.' || oi_strchr(cmd, '/')))
 		return (oi_strdup(cmd));
-	return (check);
+	else if (!count && check && oi_strchr(cmd, '/'))
+		return (oi_strdup(check));
+	else if (!count && check)
+		return (check);
+	return (NULL);
 }
 
 int	modify_env_var(char	*var_name, char *new_val)
@@ -74,6 +81,14 @@ int	modify_env_var(char	*var_name, char *new_val)
 			g_env->line = oi_strdup(new_val);
 			g_env = tmp;
 			return (g_env = tmp, 0);
+		}
+		else if (!g_env->next)
+		{
+			g_env->next = malloc(sizeof(t_env));
+			g_env->next->var_name = oi_strdup(var_name);
+			g_env->next->line = oi_strdup(new_val);
+			g_env->next->next = NULL;
+			break ;
 		}
 		g_env = g_env->next;
 	}

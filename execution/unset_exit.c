@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:39:20 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/11 16:17:12 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:55:13 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	rm_var(char *str)
 	tmp = NULL;
 	while (g_env)
 	{
-		if (!oi_strcmp(str, g_env->var_name) && oi_strcmp(g_env->var_name, "_"))
+		if (!oi_strcmp(str, g_env->var_name))
 		{
 			if (tmp)
 				tmp->next = g_env->next;
@@ -48,7 +48,7 @@ int	unset_var(t_tree *tree)
 	}
 	if (g_env)
 		from_list_to_char(1);
-	return (0);
+	return (modify_env_var("_", "unset"), 0);
 }
 
 int	is_num(char *str)
@@ -58,9 +58,11 @@ int	is_num(char *str)
 	if (!str)
 		return (0);
 	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
 	while (str[i])
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (!((str[i] >= '0' && str[i] <= '9')))
 			return (0);
 		i++;
 	}
@@ -72,14 +74,14 @@ int	ft_exit(t_data cmd)
 	if (len_double_char(cmd.args) > 2)
 	{
 		ft_dprintf(2, "exit\n");
-		if (is_num(cmd.args[0]))
+		if (is_num(cmd.args[1]) || !cmd.args[1][0])
 			return (ft_dprintf(2, "Numirecal arg required"), sv_exit(1));
 		ft_dprintf(2, "exit : too many argiments\n");
 		return (sv_exit(1));
 	}
 	else if (len_double_char(cmd.args) > 1)
 	{
-		if (is_num(cmd.args[1]))
+		if (is_num(cmd.args[1]) && cmd.args[1][0])
 		{
 			ft_dprintf(2, "exit\n");
 			exit(sv_exit(oi_atoi(cmd.args[1])));
@@ -92,5 +94,5 @@ int	ft_exit(t_data cmd)
 	}
 	else
 		exit(sv_exit(oi_atoi(get_env_line("?"))));
-	return (0);
+	return (modify_env_var("_", "exit"), 0);
 }

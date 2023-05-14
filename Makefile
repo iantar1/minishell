@@ -20,7 +20,7 @@ OBJ = ${SRC:.c=.o}
 CFLAGS = -Wall -Wextra -Werror
 
 ${NAME}: ${OBJ}
-	@cc ${CFLAGS} ${OBJ} -lreadline -o ${NAME} -L ../lib -I ../include
+	@cc ${CFLAGS} ${OBJ} -lreadline -o ${NAME} -L /Users/iantar/Desktop/lib -I /Users/iantar/Desktop/include
 
 all:${NAME}
 
