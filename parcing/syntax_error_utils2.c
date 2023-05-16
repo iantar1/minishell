@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:09:58 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/15 13:44:25 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	invalid_oper3(char *str)
 		return (1);
 	while (_s[++i])
 	{
+		ft_flag(_s[i], &flag);
 		if (opr > 2)
 			return (1);
 		if (is_operator(_s[i]) && !flag)
@@ -125,6 +126,7 @@ int	invalid_red1(char *str)
 	flag = 0;
 	while (_s[++i])
 	{
+		ft_flag(_s[i], &flag);
 		if (opr > 2)
 			return (1);
 		else if (is_redi(_s[i]) && !flag)

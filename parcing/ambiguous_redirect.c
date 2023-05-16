@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambiguous_redirect.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/12 16:16:52 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/15 13:37:04 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	check_ambiguous_wirldcar(char *str)
 	mark = mark_wildcard(str);
 	if (is_wildcard(mark))
 	{
-		if (ft_lstsize(expand_wildcard(str, mark)))
+		if (ft_lstsize(expand_wildcard(str, mark)) > 1)
 			return (1);
 	}
 	return (0);

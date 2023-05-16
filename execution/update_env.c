@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:27:08 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/13 12:43:18 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:01:49 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*loop_path(char *cmd, int print, char **paths)
 	i = 1;
 	cmd1 = classic_ft_strjoin("/", cmd);
 	full_path = classic_ft_strjoin(paths[0], cmd1);
+	if (!access(full_path, X_OK))
+		return (free_now(paths), free(cmd1), full_path);
 	while (paths && paths[i] && access(full_path, X_OK))
 		full_path = (free(full_path), classic_ft_strjoin(paths[i++], cmd1));
 	if (!is_builtin(cmd) && (!paths || !paths[i]))
@@ -49,7 +51,9 @@ char	*get_path(char *cmd, char *Path, int print)
 	int		count;
 
 	count = 0;
-	if (!access(cmd, X_OK) || !access(cmd, F_OK))
+	if (((!access(cmd, X_OK) || !access(cmd, F_OK)) && !Path)
+		|| ((!access(cmd, X_OK) || !access(cmd, F_OK))
+			&& oi_strchr(cmd, '/') && Path))
 		count++;
 	paths = oi_split(Path, ':');
 	if ((!paths || !paths[0]) && (print & !count))

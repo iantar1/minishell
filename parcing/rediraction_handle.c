@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:55:57 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:48 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/15 09:34:30 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ int	get_index_in(char **splt, char *red, int len)
 	if (!len)
 	{
 		while (splt[++index])
-			if (!ft_strcmp(splt[index], red))
+			if (!ft_strncmp(splt[index], red, 1))
 				return (index);
 	}
 	else
 	{
 		while (--len)
-			if (!ft_strcmp(splt[len], red))
+			if (!ft_strncmp(splt[len], red, 1))
 				return (len);
 	}
 	return (0);
@@ -110,7 +110,7 @@ char	*check_swap_red(char *line)
 	splt = upgrade_split(line, mark);
 	if (count_red(splt, ">") + count_red(splt, ">>") > 1)
 		swap_red(splt, OUT);
-	if (count_red(splt, "<") > 1)
+	if (count_red(splt, "<") + count_red(splt, "<<") > 1)
 		swap_red(splt, IN);
 	rtn_str = space_join(splt);
 	return (rtn_str);

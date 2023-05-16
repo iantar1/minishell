@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/12 09:11:00 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/14 21:40:05 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,9 +217,6 @@ t_list			*arr_to_lst(char **str);
 int				count_redirect(t_list *lst);
 char			*unreform_quote(char *str);
 char			*reform_quotes(char *str);
-
-// int				complet_filter(char *str, char *elem, char *mask,
-//	int check);
-// void 			rl_replace_line(const char *text, int clear_undo);
+int				invalid_oper0(char	*str);
 
 #endif

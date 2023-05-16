@@ -6,7 +6,7 @@
 /*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:45:38 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/13 19:28:28 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/15 14:27:32 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,15 @@ int	redirect_io_file(t_tree *tree, int in, int out)
 
 	if (!tree)
 		return (0);
+	status = 0;
 	fd = redirect_handle(tree, &in, &out);
+	if (fd == -2)
+		return (-2);
 	if (fd == -1 && tree->data.type == IN && errno != 13)
 		return (ft_dprintf(2, "%s : No such file or directory\n"
 				, tree->right_c->data.cmd), sv_exit(1));
 	else if ((fd == -1 && (tree->data.type == OUT
-				|| tree->data.type == APPEND)) || errno == 13)
+				|| tree->data.type == APPEND)) && errno == 13)
 		return (ft_dprintf(2, "%s : Permission denied\n"
 				, tree->right_c->data.cmd), sv_exit(1));
 	else if (fd == -1)

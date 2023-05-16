@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utiles2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:40:50 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/13 13:08:30 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:15:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,7 @@ int	handle_cmd_2(t_tree *tree, int out)
 	char	*cwd;
 
 	if (!oi_strcmp(tree->data.cmd, "cd"))
-	{
-		if (len_double_char(tree->data.args) > 2)
-			return (ft_dprintf(2, "cd: too many arguments\n"), sv_exit(1));
 		return (cd(tree, out));
-	}
 	else if (!oi_strcmp(tree->data.cmd, "pwd"))
 	{
 		cwd = pwd();

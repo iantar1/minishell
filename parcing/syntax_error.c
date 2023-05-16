@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:11:28 by iantar           ###   ########.fr       */
+/*   Updated: 2023/05/15 13:21:06 by oidboufk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	invalid_oper0(char	*str)
+{
+	int		i;
+	char	*_s;
+	int		flag;
+
+	_s = remove_spaces(str);
+	flag = 0;
+	i = -1;
+	while (_s[++i])
+	{
+		ft_flag(_s[i], &flag);
+		if (!flag && _s[i] == '&' && _s[i + 1] == '&')
+		{
+			i++;
+			continue ;
+		}
+		if (!flag && _s[i] == '&' && _s[i + 1] != '&')
+			return (1);
+	}
+	return (0);
+}
 
 int	surnd_parnt(char *str)
 {
@@ -45,7 +68,7 @@ int	check_syntax(char *str)
 		return (1);
 	if (unvalid_next_open_parth(str))
 		return (1);
-	if (invalide_char(str))
+	if (invalide_char(str) || invalid_oper0(str))
 		return (1);
 	return (0);
 }
