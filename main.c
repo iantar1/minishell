@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 10:04:28 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/14 17:24:16 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/12 21:18:03 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell_oi.h"
 #include "include/minishell.h"
+
 
 t_env	*new_line_oi(char	*line)
 {
@@ -92,7 +93,7 @@ int	main(int ac, char *av[], char **env)
 		str = (tcgetattr(STDIN_FILENO, &attr), readline("minishell -$ "));
 		if (!str)
 			break ;
-		trimed = (((str[0]) && add_history(str)), oi_strtrim(str, " \r\t	"));
+		trimed = (((str[0]) && (add_history(str), 1)), oi_strtrim(str, " \r\t	"));
 		if (trimed && *trimed && syntax_error(trimed, 1))
 			(upgrade_malloc(0, 1), ft_dprintf(2
 					, "minishell: syntax error\n"), sv_exit(258));

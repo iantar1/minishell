@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd_echo.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:58 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/13 12:35:14 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/12 21:04:11 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	cd(t_tree *tree, int out)
 	st = complete_cd(tree, &home);
 	if (!st)
 		(modify_env_var("OLDPWD", cwd));
-	cwd = (((cwd) && (free(cwd), 0)), pwd());
+	if (cwd)
+		free(cwd);
+	cwd = pwd();
+	//cwd = (((cwd) && (free(cwd), 0)), pwd());
 	return (modify_env_var("PWD", cwd), ((cwd) && (free(cwd), 0)), st);
 }
 

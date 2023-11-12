@@ -6,7 +6,7 @@
 /*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/11/10 22:11:38 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/12 21:18:19 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-t_env	*g_env;
+#include "global.h"
+//t_env	*g_env;
 
 typedef struct s_vars
 {

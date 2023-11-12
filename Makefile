@@ -13,11 +13,11 @@ SRC = ./parcing/upgrade_split.c ./parcing/utils1.c ./parcing/utils2.c ./parcing/
 	./execution/ft_printf/ft_print_hex.c ./execution/ft_printf/ft_print_ptr.c ./execution/ft_printf/ft_printf.c ./execution/ft_printf/ft_putchar_fd.c \
 	./execution/ft_printf/ft_putnbr_fd.c ./execution/ft_printf/ft_putstr_fd.c ./execution/ft_itoa.c ./execution/tree_execute.c ./execution/execute_utiles.c \
 	./execution/tree_execute_utils.c ./execution/attr_utils.c \
-	main.c
+	main.c global.c
 
 OBJ = ${SRC:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 ${NAME}: ${OBJ}
 	@cc ${CFLAGS} ${OBJ} -lreadline -o ${NAME} -L /Users/iantar/Desktop/lib -I /Users/iantar/Desktop/includes

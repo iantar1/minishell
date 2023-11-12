@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_oi.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:09 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/13 12:55:38 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/12 21:18:27 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define OUT 4
 # define IN 5
 
+#include "global.h"
 // typedef struct s_env
 // {
 // 	char			*line;
