@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expanding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:37:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/12 08:56:31 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:47:46 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	int		i;
 	int		j;
 	char	*rtn_str;
-	char	*tmp;
 
 	i = -1;
 	rtn_str = ft_change_part_norm(var, value, &i);
@@ -69,7 +68,6 @@ char	*ft_change_part(t_vars var, char *value, int *curser)
 	if (!inside_quotes(var.str))
 	{
 		new_len = ft_strlen(rtn_str);
-		tmp = rtn_str;
 		rtn_str = join_with_sp(rtn_str);
 		*curser = *curser - (new_len - ft_strlen(rtn_str));
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_join_fun.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:23:19 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 14:30:24 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:55:17 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,13 @@ char	*_join_evrything_(char **splt, int len_splt)
 char	*join_with_sp_norm(char *rtn_str, char **splt)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (splt && splt[++i])
 	{
-		tmp = rtn_str;
 		rtn_str = strjoin_upgrade(rtn_str, splt[i]);
 		if (splt[i + 1])
-		{
-			tmp = rtn_str;
 			rtn_str = strjoin_upgrade(rtn_str, " ");
-		}
 	}
 	return (rtn_str);
 }

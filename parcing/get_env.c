@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:38:49 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 14:28:26 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:46:59 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ t_env	*new_line(char *line)
 	t_env	*node;
 	char	**str;
 	char	*trimed;
-	int		i;
 
-	i = 0;
 	str = get_key_value(line);
 	node = upgrade_malloc(sizeof(t_env), 0);
 	trimed = strtrim_upgrade(str[0], "+");

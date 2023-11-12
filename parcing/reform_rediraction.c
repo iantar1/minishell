@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reform_rediraction.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:45:25 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:19:52 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:50:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ char	*lst_to_str(t_list *lst)
 {
 	t_list	*tmp;
 	char	*str;
-	int		i;
 
-	i = 0;
 	tmp = lst;
 	str = strdup_upgrade(lst->content);
 	tmp = tmp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utiles2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:40:50 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/15 16:15:27 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 22:15:53 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,12 @@ int	handle_cmd_2(t_tree *tree, int out)
 	{
 		cwd = pwd();
 		modify_env_var("_", "cd");
-		return ((cwd) && ft_dprintf(out, "%s\n", cwd) && (free(cwd), 0), 0);
+		if (cwd)
+		{
+			ft_dprintf(out, "%s\n", cwd);
+			free(cwd);
+		}
+		return (0);
 	}
 	else if (!oi_strcmp(tree->data.cmd, "export"))
 		return (export_var(tree, out));

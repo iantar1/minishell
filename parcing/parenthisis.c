@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthisis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:26:02 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:03:58 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:51:21 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,12 @@ int	get_child_level(char **str)
 {
 	int		child_level;
 	char	*mark;
-	char	*tmp;
 	char	**splt;
 
 	mark = mark_first_parenthisis(*str);
 	child_level = 0;
 	while (surrounded_parenthisis(mark))
 	{
-		tmp = *str;
 		splt = upgrade_split(*str, mark);
 		*str = (splt[0]);
 		if (!*str)
@@ -56,13 +54,11 @@ int	remove_first_parenthisis(char **str)
 {
 	int		child_level;
 	char	*mark;
-	char	*tmp;
 
 	if (!*str)
 		return (0);
 	*str = strtrim_upgrade(*str, " 	");
 	child_level = get_child_level(str);
-	tmp = *str;
 	*str = strtrim_upgrade(*str, " 	");
 	mark = mark_first_parenthisis(*str);
 	if (surrounded_parenthisis(mark))

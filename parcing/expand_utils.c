@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:19:12 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/12 08:56:46 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:54:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ int	len_to_exp(char *str)
 
 char	*get_value(char *key, int len)
 {
-	int		i;
 	t_env	*tmp;
 
-	i = 0;
 	tmp = g_env;
 	while (tmp)
 	{

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:54:24 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/14 21:40:05 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 22:11:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define SPACE 32
-# define TAB 9
+//# define SPACE 32
+//# define TAB 9
 # define AND 0
 # define OR 1
 # define PIPE 2
@@ -37,6 +37,7 @@
 # include <sys/stat.h>
 # include <termios.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
 
 typedef struct s_list
 {

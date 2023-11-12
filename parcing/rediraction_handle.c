@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction_handle.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:55:57 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/15 09:34:30 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:54:01 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*space_join(char **splt)
 {
 	char	*rtn_str;
-	char	*tmp;
 	int		i;
 
 	if (!splt || !*splt)
@@ -25,16 +24,11 @@ char	*space_join(char **splt)
 		rtn_str = strjoin_upgrade(splt[i], " ");
 	else
 		rtn_str = strjoin_upgrade(splt[i], "");
-	tmp = rtn_str;
 	while (splt[++i])
 	{
 		rtn_str = strjoin_upgrade(rtn_str, splt[i]);
 		if (splt[i + 1])
-		{
-			tmp = rtn_str;
 			rtn_str = strjoin_upgrade(rtn_str, " ");
-		}
-		tmp = rtn_str;
 	}
 	return (rtn_str);
 }

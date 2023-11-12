@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:55:42 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 15:57:34 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:57:08 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 char	*lst_to_str_wirld(t_list *lst)
 {
-	int		i;
 	char	*str;
-	char	*tmp_str;
 	t_list	*tmp;
 
-	i = 0;
 	if (!lst)
 		return (NULL);
 	tmp = lst;
@@ -29,9 +26,7 @@ char	*lst_to_str_wirld(t_list *lst)
 	{
 		if (!(tmp->content))
 			return (str);
-		tmp_str = str;
 		str = strjoin_upgrade(str, " ");
-		tmp_str = str;
 		str = strjoin_upgrade(str, tmp->content);
 		tmp = tmp->next;
 	}

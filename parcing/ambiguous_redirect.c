@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambiguous_redirect.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:59:52 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/15 13:37:04 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/10 21:52:38 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,8 @@ char	*mark_for_ambiguis(char *str)
 int	check_ambiguous(char *str)
 {
 	char	**splt;
-	int		check;
-	char	*tmp;
 	char	*mark;
 
-	check = 0;
 	if (!str)
 		return (0);
 	if (inside_quotes(str))
@@ -64,7 +61,6 @@ int	check_ambiguous(char *str)
 	str = ft_expand(str);
 	str = remove_quote(str);
 	unreform_quote(str);
-	tmp = str;
 	if (!str || !*str)
 		return (1);
 	mark = mark_for_ambiguis(str);

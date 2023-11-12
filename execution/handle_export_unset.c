@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export_unset.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:54:22 by oidboufk          #+#    #+#             */
-/*   Updated: 2023/05/15 15:07:08 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:18:05 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ valid identifier\n", str), (splited && (free_now(splited), 0)), sv_exit(1));
 			[oi_strlen(splited[0]) - 1] != '+') || !splited[0])
 		{
 			ft_dprintf(2, "bash: export: `%s': not a valid identifier\n", str);
-			return ((splited && (free_now(splited), 0)), sv_exit(1));
+			if (splited)
+				free_now(splited);
+			return (sv_exit(1));
 		}
 		i++;
 	}
-	return ((splited && (free_now(splited), 0)), 0);
+	if (splited )
+		free_now(splited);
+	return (0);
 }
 
 int	handle_unset(char *str)

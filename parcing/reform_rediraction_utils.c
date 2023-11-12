@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reform_rediraction_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:19:23 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 21:03:55 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:08:23 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ int	count_redirect(t_list *lst)
 	{
 		if (!ft_strncmp(lst->content, ">", 1)
 			|| !ft_strncmp(lst->content, "<", 1))
+		{
 			count++;
-			lst = lst->next;
+		}
+		lst = lst->next;
 	}
 	return (count);
 }

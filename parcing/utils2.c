@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:24:56 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 15:54:14 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:46:29 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*arr_to_str(char **splt)
 {
 	int		i;
 	char	*str;
-	char	*tmp_str;
 
 	if (!splt || !*splt)
 		return (NULL);
@@ -75,9 +74,7 @@ char	*arr_to_str(char **splt)
 	str = splt[i];
 	while (splt[++i])
 	{
-		tmp_str = str;
 		str = strjoin_upgrade(str, " ");
-		tmp_str = str;
 		str = strjoin_upgrade(str, splt[i]);
 	}
 	str = strtrim_upgrade(str, "	 ");

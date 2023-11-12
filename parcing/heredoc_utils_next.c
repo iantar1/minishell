@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils_next.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iantar <iantar@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:15:35 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/11 16:15:56 by iantar           ###   ########.fr       */
+/*   Updated: 2023/11/10 21:56:01 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	change_fill_splt(char **splt, char *name)
 
 void	change_line(char **splt, char **line, int len)
 {
-	char	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = *line;
 	while (!splt[i])
 		i++;
 	*line = splt[i];
@@ -67,9 +65,7 @@ void	change_line(char **splt, char **line, int len)
 	{
 		if (splt[i])
 		{
-			tmp = *line;
 			*line = strjoin_upgrade(*line, " ");
-			tmp = *line;
 			*line = strjoin_upgrade(*line, splt[i]);
 		}
 	}

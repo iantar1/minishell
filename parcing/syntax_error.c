@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oidboufk <oidboufk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iantar <iantar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:14:00 by iantar            #+#    #+#             */
-/*   Updated: 2023/05/15 13:21:06 by oidboufk         ###   ########.fr       */
+/*   Updated: 2023/11/10 21:53:14 by iantar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ int	recur_check(char *(*marker)(char *, int), char(*is_red_opr)(char),
 
 int	syntax_error(char *str, int check)
 {
-	char	*tmp;
-
 	if (check && check_syntax(str))
 		return (1);
 	if (unvalid_next_close_parth(str))
@@ -112,7 +110,6 @@ int	syntax_error(char *str, int check)
 		remove_first_parenthisis(&str);
 	if (recur_check(ft_mark_operator, is_operator, str))
 		return (1);
-	tmp = str;
 	str = reform_redirection(str);
 	if (recur_check(mark_redirection, is_redi, str))
 		return (1);
