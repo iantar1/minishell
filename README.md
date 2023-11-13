@@ -1,5 +1,6 @@
 # minishell
 This project is about creating a simple shell.
+![minishell](images/1_XpFdUAh-2_vhENcGjEsjtw.webp)
 
 ## Table of Contents
 - [Introduction](#introduction)
