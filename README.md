@@ -5,10 +5,8 @@ This project is about creating a simple shell.
 - [Introduction](#introduction)
 - [Features](#features)
 - [How to Use](#how-to-use)
-- [Project Structure](#project-structure)
 - [Build and Run](#build-and-run)
 - [Contributors](#contributors)
-- [License](#license)
 
 ## Introduction
 This is a simple shell project developed as part of the 42 School curriculum. The project is divided into two main parts: parsing and execution. This README provides an overview of the project, its features, and instructions on how to use and build it.
@@ -23,13 +21,6 @@ This is a simple shell project developed as part of the 42 School curriculum. Th
 - Follow the build and run instructions provided in the next section.
 - Once the shell is running, you can enter commands and interact with the shell.
 
-## Project Structure
-The project is structured into two main components:
-- **Parsing**: Located in the `parsing/` directory.
-- **Execution**: Located in the `execution/` directory.
-
-Each component may have additional utility files, headers, and source files to organize the codebase effectively.
-
 ## Build and Run
 To build and run the simple shell project, follow these steps:
 1. Clone the repository to your local machine.
@@ -37,3 +28,13 @@ To build and run the simple shell project, follow these steps:
    git clone https://github.com/your-username/simple-shell.git
    cd simple-shell
 
+2. Run the shell executable.
+   ```bash
+   ./minishell
+
+3. Interact with the shell by entering commands.
+
+
+## Contributors
+- [iantar](https://github.com/iantar1)
+- [OthmaneID](https://github.com/OthmaneID)
