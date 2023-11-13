@@ -28,11 +28,15 @@ To build and run the simple shell project, follow these steps:
    git clone https://github.com/your-username/simple-shell.git
    cd simple-shell
 
-2. Run the shell executable.
+2. Build the project using the provided build system or Makefile.
+   ```bash
+   make
+
+3. Run the shell executable.
    ```bash
    ./minishell
 
-3. Interact with the shell by entering commands.
+4. Interact with the shell by entering commands.
 
 
 ## Contributors
