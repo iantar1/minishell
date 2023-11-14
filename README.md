@@ -39,8 +39,8 @@ To build and run the simple shell project, follow these steps:
 
 4. Interact with the shell by entering commands.
 
-## Final grade :
-   125 / 100
+## Final grade : 125 / 100
+   
 
 ## Contributors
 - [iantar](https://github.com/iantar1)
