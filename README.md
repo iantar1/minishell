@@ -10,7 +10,9 @@ This project is about creating a simple shell.
 - [Contributors](#contributors)
 
 ## Introduction
-This is a simple shell project developed as part of the 42 School curriculum. The project is divided into two main parts: parsing and execution. This README provides an overview of the project, its features, and instructions on how to use and build it.
+
+This is a simple shell project developed as part of the 42 School curriculum.
+With Minishell project, we’ll be able to travel through time and come back to problems people faced when Windows didn’t exist.
 
 ## Features
 - **Parsing**: The parsing component handles the interpretation of user commands, breaking them down into components for execution.
