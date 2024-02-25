@@ -28,8 +28,8 @@ With Minishell project, we’ll be able to travel through time and come back to 
 To build and run the simple shell project, follow these steps:
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/your-username/simple-shell.git
-   cd simple-shell
+   git clone git@github.com:iantar1/minishell.git
+   cd minishell
 
 2. Build the project using the provided build system or Makefile.
    ```bash
@@ -40,7 +40,9 @@ To build and run the simple shell project, follow these steps:
    ./minishell
 
 4. Interact with the shell by entering commands.
-
+   ```bash
+   (ls -al | wc) && ((cat Makefile | grep NAME) > file) && (error && error) | ....
+   
 ## Final grade : 125 / 100
    
 
